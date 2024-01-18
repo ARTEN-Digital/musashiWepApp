@@ -15,11 +15,11 @@
     </head>
     <body class="font-sans antialiased">
         <x-banner />
-        <div class="min-h-screen bg-gray-100">
+        <div class="lg:bg-gray-100">
             <div x-data="setup()">
-                <div class="flex h-screen antialiased text-gray-900 bg-gray-100">
+                <div class="flex h-screen antialiased text-gray-900 lg:bg-gray-100">
                     <!-- Sidebar -->
-                    <div x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-show="isSidebarOpen" class="fixed inset-y-0 z-10 flex w-64 shadow-md">
+                    <div x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-show="isSidebarOpen" class="fixed inset-y-0 z-10 flex w-64 shadow-lg">
                         <!-- Sidebar content -->
                         <div class="z-10 bg-white flex flex-col flex-1 rounded-lg">
                             <div class="flex items-center justify-between flex-shrink-0 p-4">
@@ -68,7 +68,7 @@
                                 </a>
                             </nav>
                             <div class="relative flex items-center flex-shrink-0 p-3" x-data="{ isOpen: false }">
-                                <button @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})" class="transition-opacity flex p-2 rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-red-600 focus:ring-offset-white focus:ring-offset-2">
+                                <button @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})" class="transition-opacity flex p-2 rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-primaryColor focus:ring-offset-white focus:ring-offset-2">
                                     <img class="w-12 h-12 rounded-lg shadow-md" src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4" alt="Ahmed Kamel"/>
                                     <div class="text-left ml-2">
                                         <p class="text-sm">Hilario Ojeda</p>
@@ -82,15 +82,17 @@
                             </div>
                         </div>
                     </div>
-                    <main class="flex flex-col items-center justify-center flex-1">
-                        <!-- Page Content -->
-                        <button @click="isSidebarOpen = true" class="fixed p-2 text-white bg-red-600 rounded-lg top-5 left-5">
+                    <main class="flex flex-col flex-1 py-14 lg:py-9 lg:px-20">
+                        {{-- boton para abrir sidebar --}}
+                        <button @click="isSidebarOpen = true" class="fixed p-2 text-white bg-primaryColor rounded-lg top-5 left-5">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                             <span class="sr-only">Open menu</span>
                         </button>
                         <h1 class="sr-only">Home</h1>
+
+                        {{-- vistas en general --}}
                         {{ $slot }}
                     </main>
                 </div>
@@ -99,11 +101,11 @@
         @stack('modals')
         @livewireScripts
     </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.1/alpine.js"></script>
+    
 <script>
     const setup = () => {
     return {
-          isSidebarOpen: true,
+          isSidebarOpen: false,
         }
     }
 </script>

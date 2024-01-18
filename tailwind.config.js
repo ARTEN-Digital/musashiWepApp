@@ -14,17 +14,22 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Helvetica', ...defaultTheme.fontFamily.sans],
             },
             colors:{
-                primaryColor: '#a73535',  //red
+                primaryColor: '#ee1d23',  //red
                 secundaryColor: '#fcfcfc',   // white
+                grayColor: '#9fa0a0',
                 blueColor: 'rgb(0, 140, 197)',
                 greenColor: 'rgb(38, 143, 76)',
                 pinkColor: 'rgb(251, 105, 135)',
                 purpleColor: 'rgb(144, 122, 175)',
                 orangeblueColor: 'rgb(240, 131, 0)',
             },
+            width:{
+                '60p': '60%',
+                '38p': '38%',
+            }
         },
     },
 
