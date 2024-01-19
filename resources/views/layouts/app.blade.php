@@ -24,7 +24,7 @@
                         <div class="z-10 bg-white flex flex-col flex-1 rounded-lg">
                             <div class="flex items-center justify-between flex-shrink-0 p-4">
                                 <!-- Logo -->
-                                <img class="w-3/4" src="imgs/logos/logo.png" alt="">
+                                <img class="w-3/4" src="/imgs/logos/logo.png" alt="">
                                 <!-- Close btn -->
                                 <button @click="isSidebarOpen = false" class="p-1 w-fit rounded-lg focus:outline-none focus:ring ml-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -35,25 +35,25 @@
                                 </button>
                             </div>
                             <nav class="flex flex-col flex-1 w-64 p-4 mt-4">
-                                <a href="#" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
+                                <a href="/" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                         <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                                     </svg>
                                     <span class="">Usuarios</span>
                                 </a>
-                                <a href="#" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
+                                <a href="/areasprocess" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                         <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z" clip-rule="evenodd" />
                                     </svg>
                                     <span class="">Áreas y procesos</span>
                                 </a>
-                                <a href="#" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
+                                <a href="/trainings" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
                                     <span class="">Capacitadores</span>
                                 </a>
-                                <a href="#" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
+                                <a href="/reports/skillsmatrix" class="flex items-center space-x-2 my-1 hover:bg-gray-200 p-3 rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                         <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
                                         <path fill-rule="evenodd" d="M12.75 3a.75.75 0 0 1 .75-.75 8.25 8.25 0 0 1 8.25 8.25.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" clip-rule="evenodd" />

@@ -27,3 +27,24 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::prefix('/')
     ->middleware(['auth:sanctum', 'verified'])
     ->group(function () {});
+
+
+Route::get('/users/assigment', function(){
+    return view('users.assignmentusers');
+});
+
+Route::get('/areasprocess', function(){
+    return view('areasprocess.areasprocess');
+});
+
+Route::get('/trainings', function(){
+    return view('trainings.trainings');
+});
+
+Route::get('/trainingschecklist', function(){
+    return view('trainings.trainingschecklist');
+});
+
+Route::get('/reports/skillsmatrix', function(){
+    return view('reports.reports');
+});

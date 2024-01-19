@@ -24,11 +24,16 @@ export default {
                 greenColor: 'rgb(38, 143, 76)',
                 pinkColor: 'rgb(251, 105, 135)',
                 purpleColor: 'rgb(144, 122, 175)',
-                orangeblueColor: 'rgb(240, 131, 0)',
+                orangeColor: 'rgb(240, 131, 0)',
             },
             width:{
                 '60p': '60%',
                 '38p': '38%',
+
+                '23p': '23%',
+                '75p': '75%',
+
+                
             }
         },
     },
