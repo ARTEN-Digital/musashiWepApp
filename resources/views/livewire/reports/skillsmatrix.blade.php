@@ -261,10 +261,40 @@
             
         </div>
 
-
-        
     </div>
-</div>
+
+    <!--modal checklist de capacitación-->
+    <div class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
+        <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
+        
+        <div class="flex text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
+            <div class=" flex flex-col w-11/12 mx-auto rounded-lg shadow-xl overflow-y-auto" style="max-height: 90%;">
+                    <div class="flex flex-row justify-between px-6 py-4 bg-white text-white rounded-tl-lg rounded-tr-lg">
+                        <h2 class="text-xl text-gray-500 font-semibold w-full text-center py-2">
+                            Checklist de capacitación
+                        </h2>
+                    
+                        <svg class="w-6 h-6 cursor-pointer text-gray-500  hover:stroke-2 " fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                            wire:click="toggleModal" wire:loading.remove wire:target="toggleModal">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+
+                    <div class="">
+
+                    </div>
+
+                    <div class="flex flex-row-reverse items-center  px-6 py-2 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
+                        <button class="px-4 py-2 text-white font-semibold text-white  bg-neutral-400 hover:bg-neutral-500 rounded cursor-pointer"> 
+                            Guardar 
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         
