@@ -300,6 +300,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
@@ -314,6 +315,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
@@ -328,6 +330,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
@@ -342,6 +345,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
@@ -356,6 +360,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
@@ -370,6 +375,7 @@
                                                     <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
                                                 </td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td class="p-1">Entrenamiento</td>
                                                 <td class="p-1">9.9</td>
