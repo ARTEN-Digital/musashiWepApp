@@ -15,7 +15,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('users.users');
+    return view('reports.reports');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
@@ -28,6 +28,10 @@ Route::prefix('/')
     ->middleware(['auth:sanctum', 'verified'])
     ->group(function () {});
 
+Route::get('/users', function () {
+    return view('users.users');
+});
+    
 
 Route::get('/users/assigment', function(){
     return view('users.assignmentusers');
@@ -47,4 +51,8 @@ Route::get('/trainingschecklist', function(){
 
 Route::get('/reports/skillsmatrix', function(){
     return view('reports.reports');
+});
+
+Route::get('/assignment', function(){
+    return view('assignment.assignment');
 });

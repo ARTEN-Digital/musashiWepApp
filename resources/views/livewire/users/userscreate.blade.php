@@ -34,7 +34,7 @@
                 <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
-                <p class=""># Nomina:</p>
+                <p class=""># Nómina:</p>
                 <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">

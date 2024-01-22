@@ -1,13 +1,21 @@
 <div>
     <div class="flex">
         <div id="divchecklist" class="w-full p-5 bg-white rounded shadow-lg">
-            <p class="text-3xl font-bold">Checklist de evaluación</p>
-            <p class="text-2xl font-bold my-5">Capacitación 1</p>
-            <div class="lg:flex my-3">
+            <div class="flex">
+                <a href="/trainings">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 my-auto mr-3 text-neutral-400 hover:text-neutral-500">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <p class="text-3xl font-bold">Checklist de evaluación</p>
+            </div>
+            
+            
+            <div class="flex my-3">
                 {{-- <input class="w-full lg:w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700" type="text" name="" id="" placeholder="Buscar"> --}}
-                
+                <p class="text-2xl font-bold my-5">Capacitación 1</p>
                 <div class="flex ml-auto">
-                    <button onclick="showcreatetopics()" class="w-fit mr-3 my-2 py-2 px-3 bg-neutral-400 hover:bg-neutral-500 text-white rounded-lg flex">
+                    <button onclick="showcreatetopics()" class="w-fit h-fit my-2 py-2 px-3 bg-neutral-400 hover:bg-neutral-500 text-white rounded-lg flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                           </svg>
@@ -24,7 +32,7 @@
                             <table class="min-w-full divide-y">
                                 <thead class="bg-neutral-400 text-white">
                                     <tr>
-                                        <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Topico</th>
+                                        <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Tópico</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">#</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Concepto</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Responsable</th>

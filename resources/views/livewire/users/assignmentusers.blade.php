@@ -1,7 +1,14 @@
 <div>
     <div class="flex">
         <div id="divusers" class="w-60p p-5 bg-white rounded shadow-lg">
-            <p class="text-3xl font-bold">Asignación de usuarios</p>
+            <div class="flex">
+                <a href="/users">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 my-auto mr-3 text-neutral-400 hover:text-neutral-500">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <p class="text-3xl font-bold">Asignación de usuarios</p>
+            </div>
             <div class="flex flex-col my-3">
                 <label class="w-full">Coordinador / Lider</label>
                 <select class="w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">

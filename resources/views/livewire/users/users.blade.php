@@ -43,7 +43,7 @@
                             <table class="min-w-full divide-y">
                                 <thead class="bg-neutral-400 text-white">
                                     <tr>
-                                        <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Nomina</th>
+                                        <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Nómina</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Nombre</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Puesto</th>
                                         <th scope="col" class="py-4 px-4 text-sm font-normal text-left rtl:text-right">Rol</th>
@@ -60,7 +60,7 @@
                                             Hilario Ojeda
                                        </td>
                                         <td class="px-4 py-4">
-                                            Lider   
+                                            Líder   
                                         </td>
                                         <td class="px-4 py-4">
                                             Operador
@@ -91,7 +91,7 @@
                                             Mayte del Angel
                                        </td>
                                         <td class="px-4 py-4">
-                                            Lider   
+                                            Líder   
                                         </td>
                                         <td class="px-4 py-4">
                                             Operador
