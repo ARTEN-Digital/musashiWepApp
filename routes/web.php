@@ -14,7 +14,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/', function () {
     return view('reports.reports');
 });
 
