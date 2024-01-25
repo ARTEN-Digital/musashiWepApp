@@ -24,9 +24,9 @@ return new class extends Migration
             $table->text('phone')->nullable();
             $table->unsignedBigInteger('id_leader');
             $table->boolean('active');
-            $table->unsignedBigInteger('usertype_id');
-            $table->unsignedBigInteger('positions_id');
-            $table->unsignedBigInteger('areas_id');
+            $table->unsignedBigInteger('id_usertype');
+            $table->unsignedBigInteger('id_position');
+            $table->unsignedBigInteger('id_area');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

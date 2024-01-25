@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard', function () {
-        return view('dashboard');
+        return view('reports.reports');
     })
     ->name('dashboard');
 
@@ -29,31 +29,38 @@ Route::prefix('/')
     ->middleware(['auth:sanctum', 'verified'])
     ->group(function () {});
 
-Route::get('/users', function () {
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/users', function () {
     return view('users.users');
 });
     
 
-Route::get('/users/assigment', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/users/assigment', function(){
     return view('users.assignmentusers');
 });
 
-Route::get('/areasprocess', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/areasprocess', function(){
     return view('areasprocess.areasprocess');
 });
 
-Route::get('/trainings', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/trainings', function(){
     return view('trainings.trainings');
 });
 
-Route::get('/trainingschecklist', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/trainingschecklist', function(){
     return view('trainings.trainingschecklist');
 });
 
-Route::get('/reports/skillsmatrix', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/reports/skillsmatrix', function(){
     return view('reports.reports');
 });
 
-Route::get('/assignment', function(){
+Route::middleware(['auth:sanctum', 'verified'])
+->get('/assignment', function(){
     return view('assignment.assignment');
 });

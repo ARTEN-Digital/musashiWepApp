@@ -12,68 +12,64 @@
             <div class="w-full relative text-center mt-4">
                 <div class="relative h-32 w-32 shadow-xl mx-auto  border-gray-100 rounded-full overflow-hidden border-2 mb-4">
                     <label for="imguser">
-
-                      @if($photo)
-                      <img class="h-32 w-32 rounded-full object-cover" src="{{$photo->temporaryUrl()}}" alt="perfil" />
-
-                      @else
-                      <img class="h-32 w-32 rounded-full object-cover" src="{{$img}}" alt="perfil" />
-
-                      @endif        
+                        @if($photo)
+                          <img class="h-32 w-32 rounded-full object-cover" src="{{$photo->temporaryUrl()}}" alt="perfil" />
+                        @else
+                          <img class="h-32 w-32 rounded-full object-cover" src="{{$img}}" alt="perfil" />
+                        @endif        
                     </label>
-                    <input type="file" wire:model="photo" name="imguser" id="imguser" accept="image/*" style="display: none;">
-        
+                    <input type="file" wire:model.defer="photo" name="imguser" id="imguser" accept="image/*" style="display: none;">
                 </div>
             </div>
         </div>
-
+ 
 
         <div class="overflow-y-auto" style="height:44vh">
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Nombre:</p>
-                <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                <input wire:model.defer="name" type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class=""># Nómina:</p>
-                <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                <input wire:model.defer="payroll" type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Puesto:</p>
-                <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                <input wire:model.defer="id_position" type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Correo:</p>
-                <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                <input wire:model.defer="email" type="mail" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Télefono:</p>
-                <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                <input wire:model.defer="phone" type="number" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Rol:</p>
-                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
-                    <option value="">opcion 1</option>
-                    <option value="">opcion 2</option>
-                    <option value="">opcion 3</option>
-                    <option value="">opcion 4</option>
+                <select wire:model.defer="id_usertype" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <option value="null">Seleccionar...</option>
+                    @foreach ($roles as $rol)
+                        <option value="{{$rol->id}}">{{$rol->name}}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Área:</p>
-                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
-                    <option value="">opcion 1</option>
-                    <option value="">opcion 2</option>
-                    <option value="">opcion 3</option>
-                    <option value="">opcion 4</option>
+                <select wire:model.defer="id_area" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <option value="null">Seleccionar...</option>
+                    @foreach ($areas as $area)
+                        <option value="{{$area->id}}">{{$area->name}}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="w-3/4 my-1 mx-auto">
                 <p class="">Posición:</p>
-                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
-                    <option value="">opcion 1</option>
-                    <option value="">opcion 2</option>
-                    <option value="">opcion 3</option>
-                    <option value="">opcion 4</option>
+                <select wire:model.defer="id_position" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <option value="null">Seleccionar...</option>
+                    @foreach ($positions as $position)
+                        <option value="{{$position->id}}">{{$position->name}}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -81,7 +77,7 @@
                 <p class="">Nueva contraseña:</p>
                 <div class="py-2" x-data="{ show: true }">
                     <div class="relative">
-                        <input :type="show ? 'password' : 'text'" class="w-10/12 mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                        <input wire:model.defer="password" :type="show ? 'password' : 'text'" class="w-10/12 mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <div class="absolute inset-y-0 right-0 flex items-center text-sm leading-5" style="padding-right: 1vw">
                             <svg class="h-5 text-gray-500" fill="none" @click="show = !show"
                                 :class="{'hidden': !show, 'block':show }" xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +101,7 @@
             </div>
         </div>
         <div class="w-3/4 my-3 mx-auto">
-            <button class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
+            <button wire:click="saveuser" class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
         </div>
 
 </div>

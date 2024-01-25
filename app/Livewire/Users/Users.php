@@ -16,6 +16,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Auth;
+use App\Models\User;
 
 class Users extends Component
 {
@@ -23,9 +24,25 @@ class Users extends Component
     use WithFileUploads;
     use WithPagination;
 
+    public $search = '';
+    
     public function render()
     {
-        return view('livewire.users.users');
+        $users = User::leftJoin('user_types', 'users.id_usertype', 'user_types.id')
+                    ->leftJoin('positions', 'users.id_position', 'positions.id')
+                    ->leftJoin('areas', 'users.id_area', 'areas.id')
+                    ->where('users.id_usertype', '!=', '5')
+                    ->select('users.*', 'user_types.name as usertype_name', 'positions.name as positions_name', 'areas.name as area_name')
+                    ->get();
+
+        $operators = User::leftJoin('user_types', 'users.id_usertype', 'user_types.id')
+                    ->leftJoin('positions', 'users.id_position', 'positions.id')
+                    ->leftJoin('areas', 'users.id_area', 'areas.id')
+                    ->where('users.id_usertype', '5')
+                    ->select('users.*', 'user_types.name as usertype_name', 'positions.name as positions_name', 'areas.name as area_name')
+                    ->get();
+
+        return view('livewire.users.users')->with('users', $users)->with('operators', $operators);
     }
 
 }

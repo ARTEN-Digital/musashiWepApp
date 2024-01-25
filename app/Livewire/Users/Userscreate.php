@@ -18,6 +18,9 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash; 
 use RealRashid\SweetAlert\Facades\Alert;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Areas;
+use App\Models\Positions;
+use App\Models\Usertype;
 
 class Userscreate extends Component
 {
@@ -25,19 +28,36 @@ class Userscreate extends Component
     use WithPagination;
     use LivewireAlert;
 
-    public $name;
-    public $apellido_paterno;
-    public $apellido_materno, $company;
+    public $name, $payroll, $id_position, $email, $phone, $id_area, $id_usertype, $password;
   
     public $photo, $path_old_photo;
     public $url_drive;
-    public $img = '/imgs/user.png',$password, $puesto, $email;
+    public $img = '/imgs/user.png';
+
     public $firtTime = true;    
     
     public $accion = '';
 
     public function render()
     {
-        return view('livewire.users.userscreate');
+        $roles = Usertype::get();
+        $positions = Positions::get();
+        $areas = Areas::get();
+
+        $this->alert('success', 'Usuario creado con exito.', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+           ]);
+        return view(livewire.users.userscreate)->with('roles', $roles)->with('positions', $positions)->with('areas', $areas);
+    }
+
+    public function saveuser()
+    {
+        $this->alert('success', 'Usuario creado con exito.', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+           ]);
     }
 }

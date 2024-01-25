@@ -10,7 +10,7 @@
                 <p class="text-3xl font-bold">Asignación de usuarios</p>
             </div>
             <div class="flex flex-col my-3">
-                <label class="w-full">Coordinador / Lider</label>
+                <label class="w-full">Coordinador / Líder</label>
                 <select class="w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                     <option value="">Hector Azua</option>
                     <option value="">Jhon Quistiano</option>

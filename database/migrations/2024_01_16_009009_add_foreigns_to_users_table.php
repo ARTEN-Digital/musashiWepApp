@@ -12,21 +12,21 @@ return new class extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table
-                ->foreign('usertype_id')
+                ->foreign('id_usertype')
                 ->references('id')
                 ->on('user_types')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('positions_id')
+                ->foreign('id_position')
                 ->references('id')
                 ->on('positions')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('areas_id')
+                ->foreign('id_area')
                 ->references('id')
                 ->on('areas')
                 ->onUpdate('CASCADE')

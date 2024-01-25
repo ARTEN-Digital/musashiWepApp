@@ -19,7 +19,7 @@
             <div x-data="setup()">
                 <div class="flex h-screen antialiased text-gray-900 lg:bg-gray-100">
                     <!-- Sidebar -->
-                    <div x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-show="isSidebarOpen" class="fixed inset-y-0 z-10 flex w-64 shadow-lg">
+                    <div x-transition:enter="transform transition-transform duration-300" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" x-show="isSidebarOpen" class="fixed inset-y-0 z-10 flex w-72 shadow-lg">
                         <!-- Sidebar content -->
                         <div class="z-10 bg-white flex flex-col flex-1 rounded-lg">
                             <div class="flex items-center justify-between flex-shrink-0 p-4">
@@ -69,15 +69,33 @@
                             </nav>
                             <div class="relative flex items-center flex-shrink-0 p-3" x-data="{ isOpen: false }">
                                 <button @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})" class="transition-opacity flex p-2 rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-primaryColor focus:ring-offset-white focus:ring-offset-2">
-                                    <img class="w-12 h-12 rounded-lg shadow-md" src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4" alt="Ahmed Kamel"/>
+                                    <img class="w-10 h-10 rounded-full shadow-md" src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"/>
                                     <div class="text-left ml-2">
-                                        <p class="text-sm">Hilario Ojeda</p>
-                                        <p class="text-sm">hilario@artendigital.mx</p>
+                                        <p class="text-sm">{{Auth::user()->name . ' ' . Auth::user()->lastname}}</p>
+                                        <p class="text-sm">{{Auth::user()->email}}</p>
                                     </div>
-                                </button>
-                                <div x-show="isOpen" @click.away="isOpen = false" @keydown.escape="isOpen = false" x-ref="userMenu" tabindex="-1" class="absolute w-48 py-1 mt-2 bg-white rounded-md shadow-xl left-20 bottom-16 focus:outline-none" role="menu" aria-orientation="vertical" aria-label="user menu">
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Mi perfil</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Salir</a>
+                                 </button>
+                                <div x-show="isOpen" @click.away="isOpen = false" @keydown.escape="isOpen = false" x-ref="userMenu" tabindex="-1" class="absolute w-48 p-2 bg-white rounded-md shadow-xl left-20 bottom-16 focus:outline-none" role="menu" aria-orientation="vertical" aria-label="user menu">
+                                      
+                                    <div class="text-base  text-gray-900">
+                                        <button class="flex w-full px-4 py-2 text-sm hover:bg-gray-200 rounded-lg" type="submint">
+                                            <p>Mi perfil</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mx-auto my-auto">
+                                                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="text-base  text-gray-900">
+                                        <form action="/logout" method="POST">
+                                            @csrf
+                                            <button class="flex w-full px-4 py-2 text-sm hover:bg-gray-200 rounded-lg" type="submint">
+                                                <p>Cerrar sesión</p>
+                                                <svg class="w-5 h-5 mx-auto my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

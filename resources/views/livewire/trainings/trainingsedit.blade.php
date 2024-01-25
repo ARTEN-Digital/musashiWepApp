@@ -42,7 +42,7 @@
             </select>
         </div>
         <div class="w-3/4 my-1 mx-auto">
-            <p class="">Periodo de validéz:</p>
+            <p class="">Periodo de validez:</p>
             <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
                 <option value="">opcion 1</option>
                 <option value="">opcion 2</option>

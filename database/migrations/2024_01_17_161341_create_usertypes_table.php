@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('usertypes', function (Blueprint $table) {
             $table->id();
-            $table->text('user_type');
+            $table->text('name');
             $table->timestamps();
         });
     }
