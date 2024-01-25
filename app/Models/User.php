@@ -23,10 +23,21 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'lastname',
+        'payroll',
+        'id_position',
+        'email',
+        'phone',
+        'id_area',
+        'id_usertype',
         'password',
-        'usertype_id',
-        'positions_id',
-        'areas_id',
+        'is_leader',
+        'active',
+        'created_at',
+        'image_profile',
+        'is_leader',
+        'id_area',
+        'id_usertype',
+        'id_leader',
     ];
 
     protected $searchableFields = ['*'];

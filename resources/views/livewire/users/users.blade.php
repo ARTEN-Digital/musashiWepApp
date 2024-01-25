@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="overflow-x-auto" style="height: 60vh">
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="overflow-hidden border md:rounded-lg">
                             <table class="min-w-full divide-y">
@@ -93,7 +93,7 @@
             </div>
             
         </div>
-        <div wire.ignore id="divcreateusers" class="w-38p hidden ml-auto p-5 bg-white rounded shadow-lg">
+        <div id="divcreateusers" class="w-38p hidden ml-auto p-5 bg-white rounded shadow-lg">
             <livewire:users.userscreate/>
         </div>
 
@@ -160,6 +160,7 @@
             document.getElementById('divimport2').classList.add('hidden');
             document.getElementById('divimport3').classList.add('hidden');
         }
+
 
     </script>
     @push('js')
