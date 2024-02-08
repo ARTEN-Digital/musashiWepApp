@@ -11,14 +11,14 @@
         <div class="col-span-6 sm:col-span-3 my-2">
             <div class="w-full relative text-center mt-4">
                 <div class="relative h-32 w-32 shadow-xl mx-auto  border-gray-100 rounded-full overflow-hidden border-2 mb-4">
-                    <label for="imguser">
+                    <label for="imgusercreate">
                         @if($photo)
                           <img class="h-32 w-32 rounded-full object-cover" src="{{$photo->temporaryUrl()}}" alt="perfil" />
                         @else
                           <img class="h-32 w-32 rounded-full object-cover" src="{{$img}}" alt="perfil" />
                         @endif        
                     </label>
-                    <input type="file" wire:model.defer="photo" name="imguser" id="imguser" accept="image/*" style="display: none;">
+                    <input type="file" wire:model.defer="photo" name="imgusercreate" id="imgusercreate" accept="image/*" style="display: none;">
                 </div>
             </div>
         </div>

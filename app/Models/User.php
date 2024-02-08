@@ -34,7 +34,6 @@ class User extends Authenticatable
         'active',
         'created_at',
         'image_profile',
-        'is_leader',
         'id_area',
         'id_usertype',
         'id_leader',

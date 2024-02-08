@@ -1,13 +1,13 @@
 <div>
     <div class="flex">
-        <button onclick="closeimportusers()" class="bg-neutral-400 hover:bg-neutral-500 p-1 rounded-lg w-fit ml-auto my-2">
+        <button onclick="closeimportusers()" class="closebttn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
                 <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
             </svg>
         </button>
     </div>
 
-    <div id="divimport1" class="shadow-lg p-2 rounded">
+    <div id="divimport1" class="">
         <p class="text-center font-semibold my-3">Importar usuarios</p>
         <label class="block">
             <input onChange='showimportdiv2()' type="file" class="block w-10/12 mx-auto text-xs text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-neutral-400  file:text-white hover:file:bg-neutral-500 file:disabled:opacity-50 file:disabled:pointer-events-none file:text-sm">
@@ -25,7 +25,7 @@
             </svg>                                         
             Actualizar todos
         </button>
-        <p class="text-center text-xs my-5">Importando 117 usuarios</p>
+        <p class="text-center text-xs my-5">Im portando 117 usuarios</p>
     
         <div class="mx-8">
             <div class="flex my-3">

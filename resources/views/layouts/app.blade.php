@@ -8,12 +8,16 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <!-- Styles -->
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
+
+        @livewireScripts
+        
         <x-banner />
         <div class="lg:bg-gray-100">
             <div x-data="setup()">
@@ -100,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <main class="flex flex-col flex-1 py-14 lg:py-9 lg:px-20">
+                    <main class="flex flex-col flex-1 py-14 lg:py-9 lg:pl-20 lg:pr-10">
                         {{-- boton para abrir sidebar --}}
                         <button @click="isSidebarOpen = true" class="fixed p-2 text-white bg-primaryColor rounded-lg top-5 left-5">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +121,7 @@
             </div>
         </div>
         @stack('modals')
-        @livewireScripts
+        
     </body>
     
 <script>

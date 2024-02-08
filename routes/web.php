@@ -64,3 +64,8 @@ Route::middleware(['auth:sanctum', 'verified'])
 ->get('/assignment', function(){
     return view('assignment.assignment');
 });
+
+
+Route::get('/emailprueba', function(){
+    return view('emails.assigmentpetition');
+});
