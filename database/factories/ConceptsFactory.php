@@ -23,9 +23,9 @@ class ConceptsFactory extends Factory
     public function definition(): array
     {
         return [
-            'concepts' => $this->faker->text(),
-            'topics_id' => \App\Models\Topics::factory(),
-            'user_id' => \App\Models\User::factory(),
+            'concept' => $this->faker->text(),
+            'id_topics' => \App\Models\Topics::factory(),
+            'id_user' => \App\Models\User::factory(),
         ];
     }
 }

@@ -23,7 +23,7 @@ class AreasFactory extends Factory
     public function definition(): array
     {
         return [
-            'area' => $this->faker->text(),
+            'name' => $this->faker->word(),
         ];
     }
 }

@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::table('concepts', function (Blueprint $table) {
             $table
-                ->foreign('topics_id')
+                ->foreign('id_topics')
                 ->references('id')
                 ->on('topics')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('user_id')
+                ->foreign('id_user')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')

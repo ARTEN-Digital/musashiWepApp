@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('areas_process', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('process_id');
-            $table->unsignedBigInteger('areas_id');
+            $table->unsignedBigInteger('id_process');
+            $table->unsignedBigInteger('id_areas');
             
         });
     }

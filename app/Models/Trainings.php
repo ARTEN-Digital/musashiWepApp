@@ -11,7 +11,7 @@ class Trainings extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['training', 'process_id', 'expirations_id'];
+    protected $fillable = ['name', 'id_process', 'id_expirations'];
 
     protected $searchableFields = ['*'];
 

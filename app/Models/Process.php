@@ -11,7 +11,7 @@ class Process extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['process'];
+    protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
 

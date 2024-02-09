@@ -11,9 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('equipament_process', function (Blueprint $table) {
-            $table->unsignedBigInteger('process_id');
-            $table->unsignedBigInteger('equipament_id');
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('id_process');
+            $table->unsignedBigInteger('id_equipament');
+            
         });
     }
 

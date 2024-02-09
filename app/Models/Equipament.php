@@ -11,7 +11,7 @@ class Equipament extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['equipament'];
+    protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
 

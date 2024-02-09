@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
-            $table->text('training');
-            $table->unsignedBigInteger('process_id');
-            $table->unsignedBigInteger('expirations_id');
+            $table->text('name');
+            $table->unsignedBigInteger('id_process');
+            $table->unsignedBigInteger('id_expirations');
 
             $table->timestamps();
         });

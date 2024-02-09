@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('user_process_statuses', function (Blueprint $table) {
             $table->id();
             $table->text('status');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('process_id');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_process');
 
             $table->timestamps();
         });

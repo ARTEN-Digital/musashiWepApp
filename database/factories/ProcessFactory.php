@@ -23,7 +23,7 @@ class ProcessFactory extends Factory
     public function definition(): array
     {
         return [
-            'process' => $this->faker->text(),
+            'name' => $this->faker->word(),
         ];
     }
 }

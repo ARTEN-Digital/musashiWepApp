@@ -14,14 +14,14 @@ return new class extends Migration {
             Blueprint $table
         ) {
             $table
-                ->foreign('checklistevaluation_id')
+                ->foreign('id_checklistevaluation')
                 ->references('id')
                 ->on('checklist_evaluations')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('concepts_id')
+                ->foreign('id_concepts')
                 ->references('id')
                 ->on('concepts')
                 ->onUpdate('CASCADE')
@@ -37,8 +37,8 @@ return new class extends Migration {
         Schema::table('checklistevaluation_concepts', function (
             Blueprint $table
         ) {
-            $table->dropForeign(['checklistevaluation_id']);
-            $table->dropForeign(['concepts_id']);
+            $table->dropForeign(['id_checklistevaluation']);
+            $table->dropForeign(['id_concepts']);
         });
     }
 };

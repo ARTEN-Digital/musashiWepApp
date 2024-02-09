@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::table('user_process_statuses', function (Blueprint $table) {
             $table
-                ->foreign('user_id')
+                ->foreign('id_user')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('process_id')
+                ->foreign('id_process')
                 ->references('id')
                 ->on('processes')
                 ->onUpdate('CASCADE')
@@ -33,8 +33,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('user_process_statuses', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['process_id']);
+            $table->dropForeign(['id_user']);
+            $table->dropForeign(['id_process']);
         });
     }
 };

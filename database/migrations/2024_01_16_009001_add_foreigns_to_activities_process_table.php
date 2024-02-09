@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::table('activities_process', function (Blueprint $table) {
             $table
-                ->foreign('activities_id')
+                ->foreign('id_activities')
                 ->references('id')
                 ->on('activities')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('process_id')
+                ->foreign('id_process')
                 ->references('id')
                 ->on('processes')
                 ->onUpdate('CASCADE')
@@ -33,8 +33,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('activities_process', function (Blueprint $table) {
-            $table->dropForeign(['activities_id']);
-            $table->dropForeign(['process_id']);
+            $table->dropForeign(['id_activities']);
+            $table->dropForeign(['id_process']);
         });
     }
 };

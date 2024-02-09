@@ -23,7 +23,7 @@ class EquipamentFactory extends Factory
     public function definition(): array
     {
         return [
-            'equipament' => $this->faker->text(),
+            'name' => $this->faker->word(),
         ];
     }
 }

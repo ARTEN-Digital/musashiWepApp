@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::table('trainings', function (Blueprint $table) {
             $table
-                ->foreign('process_id')
+                ->foreign('id_process')
                 ->references('id')
                 ->on('processes')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('expirations_id')
+                ->foreign('id_expirations')
                 ->references('id')
                 ->on('expirations')
                 ->onUpdate('CASCADE')
@@ -33,8 +33,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('trainings', function (Blueprint $table) {
-            $table->dropForeign(['process_id']);
-            $table->dropForeign(['expirations_id']);
+            $table->dropForeign(['id_process']);
+            $table->dropForeign(['id_expirations']);
         });
     }
 };

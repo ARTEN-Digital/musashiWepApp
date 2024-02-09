@@ -11,7 +11,7 @@ class Positions extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['positions'];
+    protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
 

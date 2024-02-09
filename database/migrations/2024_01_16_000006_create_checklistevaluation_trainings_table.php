@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('checklistevaluation_trainings', function (
             Blueprint $table
         ) {
-            $table->unsignedBigInteger('trainings_id');
-            $table->unsignedBigInteger('checklistevaluation_id');
+            $table->unsignedBigInteger('id_trainings');
+            $table->unsignedBigInteger('id_checklistevaluation');
             $table->bigIncrements('id');
         });
     }

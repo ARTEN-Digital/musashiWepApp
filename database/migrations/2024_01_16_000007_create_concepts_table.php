@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->id();
-            $table->text('concepts');
-            $table->unsignedBigInteger('topics_id');
-            $table->unsignedBigInteger('user_id');
+            $table->text('concept');
+            $table->unsignedBigInteger('id_topics');
+            $table->unsignedBigInteger('id_user');
 
             $table->timestamps();
         });

@@ -23,9 +23,9 @@ class TrainingsFactory extends Factory
     public function definition(): array
     {
         return [
-            'training' => $this->faker->text(),
-            'process_id' => \App\Models\Process::factory(),
-            'expirations_id' => \App\Models\Expirations::factory(),
+            'name' => $this->faker->text(),
+            'id_process' => \App\Models\Process::factory(),
+            'id_expirations' => \App\Models\Expirations::factory(),
         ];
     }
 }

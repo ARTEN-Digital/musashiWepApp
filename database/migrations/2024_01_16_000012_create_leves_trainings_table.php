@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('leves_trainings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('leves_id');
-            $table->unsignedBigInteger('trainings_id');
+            $table->unsignedBigInteger('id_leves');
+            $table->unsignedBigInteger('id_trainings');
             
         });
     }

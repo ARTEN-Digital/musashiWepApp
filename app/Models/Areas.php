@@ -11,7 +11,7 @@ class Areas extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['area'];
+    protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
 
@@ -22,6 +22,6 @@ class Areas extends Model
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class);
+        return $this->belongsToMany(Process::class, 'areas_process', 'id_areas', 'id_process');
     }
 }

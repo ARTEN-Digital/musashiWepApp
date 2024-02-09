@@ -11,7 +11,7 @@ class Activities extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['activity'];
+    protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
 

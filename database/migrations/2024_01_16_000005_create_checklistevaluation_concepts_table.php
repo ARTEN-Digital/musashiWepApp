@@ -14,8 +14,8 @@ return new class extends Migration {
             Blueprint $table
         ) {
             $table->id();
-            $table->unsignedBigInteger('checklistevaluation_id');
-            $table->unsignedBigInteger('concepts_id');
+            $table->unsignedBigInteger('id_checklistevaluation');
+            $table->unsignedBigInteger('id_concepts');
             
         });
     }

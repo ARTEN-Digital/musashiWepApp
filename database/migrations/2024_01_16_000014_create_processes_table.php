@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('processes', function (Blueprint $table) {
             $table->id();
-            $table->text('process');
+            $table->text('name');
 
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class PositionsFactory extends Factory
     public function definition(): array
     {
         return [
-            'positions' => $this->faker->text(),
+            'name' => $this->faker->word(),
         ];
     }
 }

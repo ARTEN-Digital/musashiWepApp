@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('expirations', function (Blueprint $table) {
             $table->id();
-            $table->date('expiration');
+            $table->date('name');
             $table->timestamps();
         });
     }
