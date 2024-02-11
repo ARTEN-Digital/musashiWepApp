@@ -55,5 +55,5 @@
 
 /*areas process*/
 .headertableprocess{
-    @apply p-2 text-sm font-normal text-left rtl:text-right
+    @apply p-2 text-sm font-normal text-left
 }
