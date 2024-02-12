@@ -18,10 +18,17 @@ return new class extends Migration {
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
+            // $table
+            //     ->foreign('id_expirations')
+            //     ->references('id')
+            //     ->on('expirations')
+            //     ->onUpdate('CASCADE')
+            //     ->onDelete('CASCADE');
+            
             $table
-                ->foreign('id_expirations')
+                ->foreign('id_responsable')
                 ->references('id')
-                ->on('expirations')
+                ->on('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
         });
@@ -34,7 +41,8 @@ return new class extends Migration {
     {
         Schema::table('trainings', function (Blueprint $table) {
             $table->dropForeign(['id_process']);
-            $table->dropForeign(['id_expirations']);
+            // $table->dropForeign(['id_expirations']);
+            $table->dropForeign(['id_responsable']);
         });
     }
 };

@@ -11,7 +11,7 @@ class Expirations extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = [];
+    protected $fillable = ['expiration', 'expiration_in_days'];
 
     protected $searchableFields = ['*'];
 

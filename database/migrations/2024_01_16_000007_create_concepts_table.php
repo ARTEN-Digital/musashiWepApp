@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('concepts', function (Blueprint $table) {
             $table->id();
             $table->text('concept');
+            $table->text('number');
             $table->unsignedBigInteger('id_topics');
             $table->unsignedBigInteger('id_user');
 

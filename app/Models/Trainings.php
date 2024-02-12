@@ -11,23 +11,29 @@ class Trainings extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['name', 'id_process', 'id_expirations'];
+    protected $fillable = ['name', 'id_process', 'id_responsable', 'expiration_in_days', 'active'];
 
     protected $searchableFields = ['*'];
 
-    public function process()
+    public function process()  
     {
         return $this->belongsTo(Process::class);
     }
 
-    public function expirations()
+    // public function expirations()
+    // {
+    //     return $this->belongsTo(Expirations::class);
+    // }
+
+    public function responsable()
     {
-        return $this->belongsTo(Expirations::class);
+        return $this->belongsTo(User::class);
     }
+
 
     public function allLeves()
     {
-        return $this->belongsToMany(Leves::class);
+        return $this->belongsToMany(Leves::class, 'leves_trainings', 'id_trainings', 'id_leves');
     }
 
     public function checklistevaluations()

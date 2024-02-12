@@ -14,8 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->text('name');
             $table->unsignedBigInteger('id_process');
-            $table->unsignedBigInteger('id_expirations');
-
+            $table->unsignedBigInteger('id_responsable');
+            $table->text('expiration_in_days');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

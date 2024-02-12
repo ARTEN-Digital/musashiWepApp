@@ -11,7 +11,7 @@ class Concepts extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['concept', 'id_topics', 'id_user'];
+    protected $fillable = ['concept', 'number', 'id_topics', 'id_user'];
 
     protected $searchableFields = ['*'];
 

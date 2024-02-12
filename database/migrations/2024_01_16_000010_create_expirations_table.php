@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('expirations', function (Blueprint $table) {
             $table->id();
-            $table->date('name');
+            $table->text('expiration');
+            $table->text('expiration_in_days');
             $table->timestamps();
         });
     }
