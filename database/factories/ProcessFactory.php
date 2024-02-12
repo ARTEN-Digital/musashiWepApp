@@ -24,6 +24,7 @@ class ProcessFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'number_process' => $this->faker->number(),
         ];
     }
 }

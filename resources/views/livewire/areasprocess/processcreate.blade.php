@@ -17,28 +17,50 @@
         </div>
         <div class="w-3/4 my-1 mx-auto">
             <p class="">Nombre del proceso:</p>
-            <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <input wire:model="name_process" type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <div>
+                <span class="text-red-500 text-xs italic">
+                    @error('name_process')
+                        {{$message}}
+                    @enderror
+                </span>
+            </div>
         </div>
         <div class="w-3/4 my-1 mx-auto">
             <p class="">Número de proceso:</p>
-            <input type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <input wire:model="number_process" type="number" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <div>
+                <span class="text-red-500 text-xs italic">
+                    @error('number_process')
+                        {{$message}}
+                    @enderror
+                </span>
+            </div>
         </div>
         <div class="w-3/4 my-1 mx-auto">
             <p class="">Actividad:</p>
-            <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <select wire:model="id_activitie" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
                 <option value="">Seleccionar</option>
                 @foreach ($activities as $activity)
                     <option value="{{$activity->id}}">{{$activity->name}}</option>
                 @endforeach
             </select>
+            <div>
+                <span class="text-red-500 text-xs italic">
+                    @error('id_activitie')
+                        {{$message}}
+                    @enderror
+                </span>
+            </div>
         </div>
 
         <div class="w-3/4 my-1 mx-auto" >
             <p class="my-2">Equipo:</p>
-            <div class="border-2 border-neutral-400 p-2 rounded-lg overflow-y-auto" style="height: 22vh">
+            <div class="border-2 border-neutral-400 p-2 rounded-lg overflow-y-auto" style="height: 24vh">
                 @foreach ($equipament as $equip)
+                
                     <div class="flex my-1">
-                        <input wire:model="equipament.{{ $equip->id }}" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 mr-3 my-auto" type="checkbox" name="" id="">
+                        <input wire:model="equipamentp.{{ $equip->id }}" value="{{$equip->id}}" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 mr-3 my-auto" type="checkbox" name="" id="">
                         <p>{{$equip->name}}</p>
                     </div>
                 @endforeach
@@ -47,7 +69,7 @@
 
     </div>
     <div class="w-3/4 my-3 mx-auto">
-        <button class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
+        <button wire:click="createprocess" class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
     </div>
 
 </div>

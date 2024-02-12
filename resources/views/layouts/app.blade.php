@@ -73,7 +73,7 @@
                             </nav>
                             <div class="relative flex items-center flex-shrink-0 p-3" x-data="{ isOpen: false }">
                                 <button @click="isOpen = !isOpen; $nextTick(() => {isOpen ? $refs.userMenu.focus() : null})" class="transition-opacity flex p-2 rounded-lg opacity-80 hover:opacity-100 focus:outline-none focus:ring focus:ring-primaryColor focus:ring-offset-white focus:ring-offset-2">
-                                    <img class="w-10 h-10 rounded-full shadow-md" src="https://avatars.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4"/>
+                                    <img class="w-10 h-10 rounded-full shadow-md" src="{{Auth::user()->image_profile}}"/>
                                     <div class="text-left ml-2">
                                         <p class="text-sm">{{Auth::user()->name . ' ' . Auth::user()->lastname}}</p>
                                         <p class="text-sm">{{Auth::user()->email}}</p>

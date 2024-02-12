@@ -11,7 +11,7 @@ class Process extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'number_process'];
 
     protected $searchableFields = ['*'];
 
@@ -27,7 +27,7 @@ class Process extends Model
 
     public function allActivities()
     {
-        return $this->belongsToMany(Activities::class);
+        return $this->belongsToMany(Activities::class, 'activities_process', 'id_process', 'id_activities');
     }
 
     public function areas()
@@ -37,6 +37,6 @@ class Process extends Model
 
     public function equipaments()
     {
-        return $this->belongsToMany(Equipament::class);
+        return $this->belongsToMany(Equipament::class, 'equipament_process', 'id_process', 'id_equipament');
     }
 }

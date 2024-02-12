@@ -28,7 +28,7 @@ class Processcreate extends Component
 
     public $idArea, $areaname;
 
-    public $name_process, $number_process, $id_activitie, $equipament = [];
+    public $name_process, $number_process, $id_activitie, $equipamentp = [];
 
     protected $listeners = ['getareaprocess'];
 
@@ -43,11 +43,57 @@ class Processcreate extends Component
     {
         $activities = Activities::get();
         $equipament = Equipament::get();
+
         return view('livewire.areasprocess.processcreate')->with('activities', $activities)->with('equipament', $equipament);
     }
 
     public function getareaprocess($idArea, $areaname){
         $this->idArea = $idArea;
         $this->areaname  =  $areaname;
+    }
+
+    public function createprocess(){
+        $this->rules +=[
+            'name_process' => 'required|max:255',
+            'number_process' => 'required',
+            'id_activitie' => 'required',
+        ];
+        $this->validate();
+
+        $newprocess = DB::table('processes')->insertGetId([
+            'name' => $this->name_process,
+            'number_process' => $this->number_process,
+            'created_at' => date('Y-m-d H:m'),
+        ]);
+
+        DB::table('areas_process')->insert([
+            'id_process' => $newprocess,
+            'id_areas' => $this->idArea,
+        ]);
+
+        DB::table('activities_process')->insert([
+            'id_process' => $newprocess,
+            'id_activities' => $this->id_activitie,
+        ]);
+
+        foreach ($this->equipamentp as $equip) {
+            if($equip != false){
+                DB::table('equipament_process')->insert([
+                    'id_process' => $newprocess,
+                    'id_equipament' => $equip,
+                ]);
+            }
+        }
+
+        $this->reset(['name_process', 'number_process', 'id_activitie', 'equipamentp']);
+        
+        $this->alert('success', 'Proceso creado con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+           ]);
+        
+        $this->emitUp('aftercreateprocess');
+
     }
 }
