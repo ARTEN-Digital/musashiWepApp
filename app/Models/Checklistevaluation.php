@@ -21,4 +21,9 @@ class Checklistevaluation extends Model
     {
         return $this->belongsToMany(Trainings::class);
     }
+    
+    public function concepts()
+    {
+        return $this->belongsToMany(Concepts::class, 'checklistevaluation_concepts', 'id_checklistevaluation', 'id_concepts');
+    }
 }

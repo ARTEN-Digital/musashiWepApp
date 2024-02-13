@@ -29,7 +29,7 @@ class Trainingschecklist extends Component
 
     public $idchkselect;
 
-    protected $listeners = [];
+    protected $listeners = ['aftercreateConcept'];
     public function render()
     {
         $actualtraining = training::where('id', $this->idTraining)->first();
@@ -53,6 +53,17 @@ class Trainingschecklist extends Component
 
         $this->trainingname = $actualtraining->name;
         
-        return view('livewire.trainings.trainingschecklist');
+        $concepts = $actualtraining->checklistevaluations->first()->concepts;
+
+        return view('livewire.trainings.trainingschecklist')->with('concepts', $concepts);
+    }
+
+    public function showcreateConcept(){
+        $this->emit('getchecklistcreate', $this->idchkselect);
+        $this->dispatchBrowserEvent('showcreateC');
+    }
+
+    public function aftercreateConcept(){
+        $this->dispatchBrowserEvent('showcreateC');
     }
 }

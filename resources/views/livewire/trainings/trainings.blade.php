@@ -104,7 +104,7 @@
         }
 
         window.addEventListener('aftercreatetraining', event => {
-            showcreatetrainings();S
+            showcreatetrainings();
         })
 
         window.addEventListener('aftercreatetraining', event => {

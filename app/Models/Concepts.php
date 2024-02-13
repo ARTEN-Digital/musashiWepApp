@@ -17,11 +17,11 @@ class Concepts extends Model
 
     public function topics()
     {
-        return $this->belongsTo(Topics::class);
+        return $this->hasOne(Topics::class, 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'id');
     }
 }
