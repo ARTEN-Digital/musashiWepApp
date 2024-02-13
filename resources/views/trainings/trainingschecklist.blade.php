@@ -33,7 +33,7 @@
         }
     </style>
   
-    <livewire:trainings.trainingschecklist/>
+    <livewire:trainings.trainingschecklist :idTraining="$idTraining"/>
     
     @stack('js') 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

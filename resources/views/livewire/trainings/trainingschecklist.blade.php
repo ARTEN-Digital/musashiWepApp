@@ -13,7 +13,7 @@
             
             <div class="flex my-3">
                 {{-- <input class="w-full lg:w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700" type="text" name="" id="" placeholder="Buscar"> --}}
-                <p class="text-2xl font-bold my-5">Capacitación 1</p>
+                <p class="text-2xl font-bold my-5">{{$trainingname}}</p>
                 <div class="flex ml-auto">
                     <button onclick="showcreatetopics()" class="w-fit h-fit my-2 py-2 px-3 bg-neutral-400 hover:bg-neutral-500 text-white rounded-lg flex">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">

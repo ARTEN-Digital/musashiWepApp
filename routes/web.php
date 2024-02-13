@@ -51,8 +51,8 @@ Route::middleware(['auth:sanctum', 'verified'])
 });
 
 Route::middleware(['auth:sanctum', 'verified'])
-->get('/trainingschecklist', function(){
-    return view('trainings.trainingschecklist');
+->get('/trainingschecklist/{idTraining}', function($idTraining){
+    return view('trainings.trainingschecklist')->with('idTraining', $idTraining);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])

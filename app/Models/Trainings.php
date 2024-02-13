@@ -38,6 +38,6 @@ class Trainings extends Model
 
     public function checklistevaluations()
     {
-        return $this->belongsToMany(Checklistevaluation::class);
+        return $this->belongsToMany(Checklistevaluation::class, 'checklistevaluation_trainings', 'id_trainings', 'id_checklistevaluation');
     }
 }
