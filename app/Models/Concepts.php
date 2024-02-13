@@ -17,11 +17,11 @@ class Concepts extends Model
 
     public function topics()
     {
-        return $this->hasOne(Topics::class, 'id');
+        return $this->hasOne(Topics::class, 'id', 'id_topics');
     }
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasOne(User::class, 'id', 'id_user');
     }
 }

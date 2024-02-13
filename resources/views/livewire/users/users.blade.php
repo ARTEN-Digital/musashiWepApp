@@ -37,7 +37,7 @@
                 </ul>
             </div> --}}
             <div class="flex flex-col">
-                <div class="overflow-x-auto" style="height: 60vh">
+                <div class="overflow-x-auto" style="height: 66vh">
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="overflow-hidden border md:rounded-lg">
                             <table class="min-w-full divide-y">
@@ -74,7 +74,7 @@
                                             <td class="px-4 py-4">
                                                 @switch($user->active)
                                                     @case(1)
-                                                        <p class="w-fit mx-auto text-center py-1 px-2 rounded-lg text-white bg-green-400">Activo</p>
+                                                        <p class="w-fit mx-auto text-center py-1 px-2 rounded-lg text-white bg-green-500">Activo</p>
                                                         @break
                                                     @case(0)
                                                         <p class="w-fit mx-auto text-center py-1 px-2 rounded-lg text-white bg-red-400">Desactivado</p>
@@ -90,11 +90,21 @@
                                                         <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
                                                     </svg>
                                                 </button>
-                                                <button wire:click="$emit('deleteuserf',{{$user->id}})" class="bg-red-500 p-2 rounded-lg mx-1"> 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-white">
-                                                        <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
+
+                                                @if($user->active)
+                                                    <button wire:click="$emit('deleteuserf',{{$user->id}})" class="bg-red-500 p-2 rounded-lg mx-1"> 
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-white">
+                                                            <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </button> 
+                                                @else
+                                                    <button wire:click="$emit('activeuserf',{{$user->id}})" class="bg-green-500 p-2 rounded-lg mx-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+                                                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                                                          </svg>
+                                                          
+                                                    </button> 
+                                                @endif
 
                                             </td>
                                         </tr>
@@ -204,11 +214,22 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.Livewire.emit('deleteuser', iduser);
-                        // Swal.fire(
-                        //   '¡Eliminado!',
-                        //   'Tu elemento ha sido eliminado.',
-                        //   'Exito'
-                        // )
+                    }
+                })
+            });
+
+            window.Livewire.on('activeuserf', iduser => {
+                Swal.fire({
+                    title: '¿Seguro que deseas activar este usuario?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3088d9',
+                    cancelButtonColor: '#EF4444',
+                    confirmButtonText: 'Si, activar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.Livewire.emit('activeuser', iduser);
                     }
                 })
             });

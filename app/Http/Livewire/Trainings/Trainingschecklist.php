@@ -18,6 +18,7 @@ use Illuminate\Validation\Rules\Password;
 use Auth;
 use App\Models\Trainings as training;
 use App\Models\Checklistevaluation;
+use App\Models\Concepts;
 
 class Trainingschecklist extends Component
 {
@@ -29,7 +30,7 @@ class Trainingschecklist extends Component
 
     public $idchkselect;
 
-    protected $listeners = ['aftercreateConcept'];
+    protected $listeners = ['aftercreateeditConcept', 'deleteconcept'];
     public function render()
     {
         $actualtraining = training::where('id', $this->idTraining)->first();
@@ -59,11 +60,26 @@ class Trainingschecklist extends Component
     }
 
     public function showcreateConcept(){
-        $this->emit('getchecklistcreate', $this->idchkselect);
+        $this->emit('getconceptcreate', $this->idchkselect);
         $this->dispatchBrowserEvent('showcreateC');
     }
 
-    public function aftercreateConcept(){
+    public function showeditConcept($idconcept){
+        $this->emit('getconceptedit', $idconcept, $this->idchkselect);
         $this->dispatchBrowserEvent('showcreateC');
+    }
+
+    public function aftercreateeditConcept(){
+        $this->dispatchBrowserEvent('showcreateC');
+    }
+
+    public function deleteconcept($idconcept){
+        Concepts::where('id',$idconcept)->delete();
+
+        $this->alert('success', 'Concepto eliminado con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+           ]);
     }
 }

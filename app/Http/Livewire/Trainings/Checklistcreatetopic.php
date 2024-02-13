@@ -29,7 +29,7 @@ class Checklistcreatetopic extends Component
     public $idchecklist, $idconcept = null;
     public $concept, $number_concept, $id_topic, $id_user;
 
-    protected $listeners = ['getchecklistcreate'];
+    protected $listeners = ['getconceptcreate', 'getconceptedit'];
 
     protected $rules = [];
     protected $validationAttributes  = [
@@ -47,8 +47,19 @@ class Checklistcreatetopic extends Component
         return view('livewire.trainings.checklistcreatetopic')->with('topics', $topics)->with('trainers', $trainers);
     }
 
-    public function getchecklistcreate($idchecklist){
+    public function getconceptcreate($idchecklist){
         $this->idchecklist = $idchecklist;
+    }
+
+    public function getconceptedit($idconcept, $idchecklist){
+        $this->idchecklist = $idchecklist;
+        $this->idconcept = $idconcept;
+
+        $concept = Concepts::where('id', $this->idconcept)->first();
+        $this->concept = $concept->concept;
+        $this->number_concept = $concept->number;
+        $this->id_topic = $concept->id_topics;
+        $this->id_user = $concept->id_user;
     }
 
     public function createconcept(){
@@ -81,7 +92,40 @@ class Checklistcreatetopic extends Component
 
         $this->reset(['concept', 'number_concept', 'id_topic', 'id_user']);
 
-        $this->emitUp('aftercreateConcept');
+        $this->emitUp('aftercreateeditConcept');
+    }
+
+    public function editconcept(){
+        $this->rules +=[
+            'concept' => 'required|max:255',
+            'number_concept' => 'required|max:255',
+            'id_topic' => 'required',
+            'id_user' => 'required',
+        ];
+        $this->validate();
+
+        Concepts::where('id', $this->idconcept)->update([
+            'concept' => $this->concept,
+            'number' => $this->number_concept,
+            'id_topics' => $this->id_topic,
+            'id_user' => $this->id_user,
+            'updated_at' => date('Y-m-d H:m'),
+        ]);
+
+        DB::table('checklistevaluation_concepts')->where('id_concepts', $this->idconcept)->where('id_checklistevaluation', $this->idchecklist)->delete();
+
+        DB::table('checklistevaluation_concepts')->insert([
+            'id_checklistevaluation' => $this->idchecklist,
+            'id_concepts' =>  $this->idconcept,
+        ]);
+
+        $this->alert('success', 'Concepto actualizado con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+           ]);
+
+        $this->emitUp('aftercreateeditConcept');
     }
 
 }

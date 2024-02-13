@@ -26,7 +26,7 @@ class Users extends Component
  
     public $search = '';
 
-    protected $listeners = ['aftercreateuser', 'afteredituser', 'deleteuser'];
+    protected $listeners = ['aftercreateuser', 'afteredituser', 'deleteuser', 'afterimportuser', 'activeuser'];
     
     public function render()
     {
@@ -64,7 +64,9 @@ class Users extends Component
         $this->dispatchBrowserEvent('showedit');
     }
 
-    function deleteuser($idUser){
+    public function afterimportuser(){}
+
+    public function deleteuser($idUser){
 
         try{
             User::where('id', $idUser)->update([
@@ -85,6 +87,20 @@ class Users extends Component
              'toast' => true,
             ]);
         }
+    }
+
+    public function activeuser($iduser){
+
+        User::where('id', $iduser)->update([
+            'active' => true,
+            'updated_at' => date('Y-m-d H:m:s'),
+        ]);
+
+        $this->alert('success', 'Activado con éxito!', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => true,
+        ]);
     }
 
 }

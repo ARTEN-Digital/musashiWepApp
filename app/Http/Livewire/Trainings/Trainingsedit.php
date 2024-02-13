@@ -54,6 +54,7 @@ class Trainingsedit extends Component
 
     public function gettraining($idTraining){
 
+        $this->reset(['name', 'id_process', 'id_responsable', 'expiration_quantity', 'expiration_type', 'selectlevels']);
         $this->idTraining = $idTraining;
 
         $training = trainings::where('id', $idTraining)->first();

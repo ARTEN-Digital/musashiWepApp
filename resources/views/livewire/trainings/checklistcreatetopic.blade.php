@@ -69,9 +69,9 @@
     </div>
     <div class="w-3/4 my-3 mx-auto">
         @if($idconcept == null)
-        <button wire:click="createconcept" class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
+            <button wire:click="createconcept" class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>
         @else
-            
+            <button wire:click="editconcept" class="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-lg w-full text-white">Guardar</button>  
         @endif
     </div>
 

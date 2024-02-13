@@ -160,7 +160,7 @@ class Assignmentusers extends Component
             'id_leader' => 0,
         ]);
 
-        $this->alert('success', 'Usuario desasignado corrextamente.', [
+        $this->alert('success', 'Usuario desasignado correctamente.', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => true,
@@ -183,7 +183,7 @@ class Assignmentusers extends Component
             'id_leader' => $newleader->id,
         ]);
 
-        $this->alert('success', 'Usuario tranferido correctamente.', [
+        $this->alert('success', 'Usuario transferido correctamente.', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => true,

@@ -26,90 +26,101 @@ use Illuminate\Validation\Rules\Password;
 
 class Importusers extends Component
 {
+    use LivewireAlert;
+    use WithFileUploads;
+    use WithPagination;
+
+    public $archivedata;
+
+    public $totalusers, $usersduplicated = [], $usernew = [];
+
+    protected $listeners = ['removeuserduplicated', 'removeusernew'];
+
     public function render()
     {
         return view('livewire.users.importusers');
     }
 
-    public function uploadcvs()
-    {
+    //onChange='showimportdiv2()'
+    public function uploadcvs(){
+        if($this->archivedata){
+            $array = []; 
+            if (($h = fopen("{$this->archivedata->getRealPath()}", "r")) !== false){
+                while (($data = fgetcsv($h)) !== false){
+                    $array[] = $data;       
+                }
+                fclose($h);
+            }
+            $this->totalusers = count($array);
 
+            foreach($array as $line){
+                //[0] = payroll, [1] = lastname, [2] = name, [3] = puesto,  [4] = area
+                $user = User::where('payroll', $line[0])->first();
+                if($user != null){
+                    $aux = [];
+                    $aux = [$line[0], $line[1], $line[2], $line[3], $line[4], $user->id];
+                    array_push($this->usersduplicated, $aux);
+                }
+                else{
+                    $aux2 = [];
+                    $aux2 = [$line[0], $line[1], $line[2], $line[3], $line[4]];
+                    array_push($this->usernew, $aux2);
+                }
+            }
+        }
+        $this->reset(['archivedata']);
+        $this->dispatchBrowserEvent('showstep2');
     }
-    // public function csvLoad(Request $request){
 
-    
+    public function removeuserduplicated($idinarray){
+        unset($this->usersduplicated[$idinarray]);
+        $this->dispatchBrowserEvent('showstep2');
+    }
 
-    //     $file = $request->file('csv');
-    
-    //     // The nested array to hold all the arrays
-    //     $array = []; 
-    
-    //     // Open the file for reading
-    //     if (($h = fopen("{$file}", "r")) !== FALSE) 
-    //     {
-    //         while (($data = fgetcsv($h)) !== FALSE) 
-    //         {
-    //             $array[] = $data;       
-    //         }
-    //         fclose($h);
-    //     }
-    //     //dd($array);
-    
-      
-    //         //dd("hola entre");
-    //         $i=1;
-    //         foreach($array as $line){
-                
-    //             if($i!=1){
-                    
-    //                         if(!blank($line[0])){
-    //                             //dd($line);
-    //                             $existusuario=DB::table('users')->where('q_number',$line[0])->first();
-    //                             //dd($existusuario);
-    //                             if(blank($existusuario)){
-                                    
-    //                                $num=DB::table('users')->insertGetId([
-    //                                     'q_number'=>$line[0],
-    //                                     'name'=>$line[1],
-    //                                     'position'=>$line[2],
-    //                                     'employe_group'=>$line[3],
-    //                                     'short_des_org_unit'=>$line[4],
-    //                                     'emailrecovery' => $line[5],
-    //                                 ]);
-    //                                 //dd($num);
-    //                             }else{
-    //                                 if(!blank($line[1])){
-    //                                     DB::table('users')->where('q_number',$line[0])->update([
-    //                                         'name'=>$line[1],
-    //                                     ]);
-    //                                 }
-    //                                 if(!blank($line[2])){
-    //                                     DB::table('users')->where('q_number',$line[0])->update([
-    //                                         'position'=>$line[2],
-    //                                     ]);
-    //                                 }
-    //                                 if(!blank($line[3])){
-    //                                     DB::table('users')->where('q_number',$line[0])->update([
-    //                                         'employe_group'=>$line[3],
-    //                                     ]);
-    //                                 }
-    //                                 if(!blank($line[4])){
-    //                                     DB::table('users')->where('q_number',$line[0])->update([
-    //                                         'short_des_org_unit'=>$line[4],
-    //                                     ]);
-    //                                 }
-    //                                 if(!blank($line[5])){
-    //                                     DB::table('users')->where('q_number',$line[0])->update([
-    //                                         'emailrecovery'=>$line[5],
-    //                                     ]);
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //         $i++;
-    //         }
-        
-    //     return redirect('/panel/users');
-    
-    // }
+    public function removeusernew($idinarray){
+        unset($this->usernew[$idinarray]);
+        $this->dispatchBrowserEvent('showstep2');
+    }
+
+    public function uploadusers(){
+
+        foreach ($this->usersduplicated as $key => $ud) {
+            User::where('id', $ud[5])->update([
+                'lastname' => $ud[1],
+                'name' => $ud[2],
+                'active' => 1,
+            ]);
+        }
+
+        foreach ($this->usernew as $key => $un) {
+            User::insert([
+                'lastname' => $un[1],
+                'name' => $un[2],
+                'payroll' => $un[0],
+                'id_position' => 1,
+                'email' => '',
+                'phone' => '',
+                'id_area'=> 1,
+                'id_usertype' => 5,
+                'id_leader' => 0,
+                'password' => Hash::make('passwords'),
+                'is_leader' => false,
+                'image_profile' => '',
+                'active' => 1,
+                'created_at' => date('Y-m-d'),
+            ]);
+        }
+
+        $this->dispatchBrowserEvent('closeimport');
+
+        $this->reset(['archivedata', 'totalusers', 'usersduplicated', 'usernew']);
+        $this->alert('success', 'Registros creados/actualizados con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+           ]);
+
+        $this->emitUp('afterimportuser');  
+    }
+
 }
