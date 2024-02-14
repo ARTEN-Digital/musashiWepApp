@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="overflow-y-auto" style="height: 68vh">
+            <div class="overflow-y-auto p-1" style="height: 68vh">
                 @foreach ($areas as $area)
                     <div class="flex flex-col bg-white p-4 rounded-lg w-full mb-6 shadow-lg">
                         <div class="my-3 flex">
@@ -37,13 +37,13 @@
                             </div>
                         </div>
                         <table class="divide-y overflow-y-auto">
-                            <thead class="bg-neutral-400 text-white">
+                            <thead class="bg-neutral-400 text-white rounded">
                                 <tr>
-                                    <th scope="col" class="headertableprocess">ID</th>
+                                    <th scope="col" class="headertableprocess rounded-l-lg">ID</th>
                                     <th scope="col" class="headertableprocess">Proceso</th>
                                     <th scope="col" class="headertableprocess">Número proceso</th>
                                     <th scope="col" class="headertableprocess">Actividad</th>
-                                    <th scope="col" class="headertableprocess">Acciones</th>
+                                    <th scope="col" class="headertableprocess rounded-r-lg">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">

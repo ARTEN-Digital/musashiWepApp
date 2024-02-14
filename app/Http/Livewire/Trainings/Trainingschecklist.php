@@ -31,11 +31,12 @@ class Trainingschecklist extends Component
     public $idchkselect;
 
     protected $listeners = ['aftercreateeditConcept', 'deleteconcept'];
+
     public function render()
     {
         $actualtraining = training::where('id', $this->idTraining)->first();
-        
-        if($actualtraining->checklistevaluations->first() == null){
+
+        if(count($actualtraining->checklistevaluations) == 0){
             $newcheck = Checklistevaluation::insertGetId([
                 'name' => 'checklist_' . $this->idTraining,
                 'created_at' => date('Y-m-d H:m'),
@@ -53,8 +54,8 @@ class Trainingschecklist extends Component
         }
 
         $this->trainingname = $actualtraining->name;
-        
-        $concepts = $actualtraining->checklistevaluations->first()->concepts;
+        $actualtraining1 = training::where('id', $this->idTraining)->first();
+        $concepts = $actualtraining1->checklistevaluations->first()->concepts;
 
         return view('livewire.trainings.trainingschecklist')->with('concepts', $concepts);
     }

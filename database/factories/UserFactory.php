@@ -4,6 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Areas;
+use App\Models\Usertype;
+use App\Models\Positions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -20,16 +23,21 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
-            'remember_token' => Str::random(10),
-            'profile_photo_path' => null,
-            'current_team_id' => null,
+            'lastname' => $this->faker->lastname(),
+            'email' => $this->faker->safeEmail(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'payroll' => $this->faker->unique()->randomNumber(4, true),
+            'image_profile' => '',
+            'is_leader' => false,
+            'phone' => '4444123456',
+            'active' => true,
+            'id_leader' => 0,
+            'id_usertype' => Usertype::inRandomOrder()->first()->id,
+            'id_position' => Positions::inRandomOrder()->first()->id,
+            'id_area' => Areas::inRandomOrder()->first()->id,
         ];
     }
 

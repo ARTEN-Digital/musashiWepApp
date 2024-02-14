@@ -113,7 +113,7 @@ class Trainingsedit extends Component
             }
         }
         
-        $this->alert('success', 'Capacitación actualiazda con éxito.', [
+        $this->alert('success', 'Capacitación actualizada con éxito.', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,

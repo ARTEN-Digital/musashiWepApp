@@ -232,7 +232,7 @@
 
             window.Livewire.on('assiguseragain', iduser => {
                 Swal.fire({
-                    title: 'Este usuario ya tiene un líder ¿quiere hacer una petición para asignarlo?',
+                    title: 'Este usuario ya tiene un líder ¿Quieres hacer una petición para asignarlo?',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3088d9',

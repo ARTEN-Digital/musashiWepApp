@@ -22,8 +22,23 @@ class PositionsFactory extends Factory
      */
     public function definition(): array
     {
+        $data = [
+            'Director Ejecutivo' => [1],
+            'Director Financiero' => [2],
+            'Director de Operaciones' => [3],
+            'Supervisor de Tecnología' => [4],
+            'Director de Marketing' => [5],
+            'Director de Recursos Humanos' => [6],
+            'Director de Información' => [7],
+            'Director de Ventas' => [8],
+            'Gerente de Proyectos' => [9],
+            'Analista Financiero' => [10],
+            'Operador de maquinas' => [11],
+        ];
+        $unit = $this->faker->randomElement(array_keys($data));
         return [
-            'name' => $this->faker->word(),
+            'id' => $data[$unit][0],
+            'name' => $unit,
         ];
     }
 }

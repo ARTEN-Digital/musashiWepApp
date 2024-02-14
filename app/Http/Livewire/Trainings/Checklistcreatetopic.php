@@ -48,6 +48,7 @@ class Checklistcreatetopic extends Component
     }
 
     public function getconceptcreate($idchecklist){
+        $this->reset(['idchecklist', 'idconcept', 'concept', 'number_concept', 'id_topic', 'id_user']);
         $this->idchecklist = $idchecklist;
     }
 

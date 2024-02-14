@@ -22,8 +22,23 @@ class AreasFactory extends Factory
      */
     public function definition(): array
     {
+        // return [
+        //     'name' => $this->faker->word(),
+        // ];
+
+        $data = [
+            'Dirección' => [1],
+            'Administración' => [2],
+            'Ventas' => [3],
+            'Producción ' => [4],
+            'Contabilidad' => [5],
+            'Recursos humanos' => [6],
+            'Ingeniería' => [7],
+        ];
+        $unit = $this->faker->randomElement(array_keys($data));
         return [
-            'name' => $this->faker->word(),
+            'id' => $data[$unit][0],
+            'name' => $unit,
         ];
     }
 }

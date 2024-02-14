@@ -74,7 +74,7 @@ class Users extends Component
                 'updated_at' => date('Y-m-d H:m:s'),
             ]);
 
-            $this->alert('success', 'Desactivado con éxito!', [
+            $this->alert('success', 'Desactivado con éxito', [
                 'position' => 'center',
                 'timer' => 3000,
                 'toast' => true,
@@ -96,7 +96,7 @@ class Users extends Component
             'updated_at' => date('Y-m-d H:m:s'),
         ]);
 
-        $this->alert('success', 'Activado con éxito!', [
+        $this->alert('success', 'Activado con éxito', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => true,

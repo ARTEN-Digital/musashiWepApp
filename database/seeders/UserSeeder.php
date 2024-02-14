@@ -12,8 +12,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        User::query()->delete();
         User::factory()
-            ->count(5)
+            ->count(15)
             ->create();
     }
 }

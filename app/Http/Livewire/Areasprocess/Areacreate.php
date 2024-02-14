@@ -25,9 +25,7 @@ class Areacreate extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $idArea = null;
-
-    public $name;
+    public $idArea = null, $name;
 
     protected $listeners = ['getarea'];
 
@@ -35,8 +33,8 @@ class Areacreate extends Component
     protected $validationAttributes  = [
         'name' => 'Nombre',
     ];
-    public function render()
-    {
+
+    public function render(){
         return view('livewire.areasprocess.areacreate');
     }
 
@@ -63,7 +61,7 @@ class Areacreate extends Component
             'toast' => true,
            ]);
 
-        $this->reset(['name']);
+        $this->reset(['name', 'idArea']);
 
         $this->emitUp('aftercreatearea');
     }
@@ -79,7 +77,7 @@ class Areacreate extends Component
             'updated_at' => date('Y-m-d H:m'),
         ]);
 
-        $this->alert('success', 'Área actulizada con éxito.', [
+        $this->alert('success', 'Área actualizada con éxito.', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,
