@@ -23,7 +23,7 @@ class ActivitiesFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => 'Actividad ' . $this->faker->unique()->randomNumber(2, true),
         ];
     }
 }

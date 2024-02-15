@@ -10,7 +10,7 @@ use App\Models\Positions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
-
+use Hash;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -25,10 +25,10 @@ class UserFactory extends Factory
     {
         
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->firstname(),
             'lastname' => $this->faker->lastname(),
             'email' => $this->faker->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'password' => Hash::make('Arten.123!'),
             'payroll' => $this->faker->unique()->randomNumber(4, true),
             'image_profile' => '',
             'is_leader' => false,

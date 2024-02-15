@@ -22,9 +22,21 @@ class ProcessFactory extends Factory
      */
     public function definition(): array
     {
+        $data = [
+            'Gestión de Recursos Humanos' => [1],
+            'Gestión Financiera' => [2],
+            'Gestión de Operaciones' => [3],
+            'Gestión de Ventas y Marketing' => [4],
+            'Gestión de Proyectos' => [5],
+            'Atención al Cliente' => [6],
+            'Tecnologías de la Información' => [7],
+            'Investigación y Desarrollo' => [8],
+        ];
+        $unit = $this->faker->randomElement(array_keys($data));
         return [
-            'name' => $this->faker->word(),
-            'number_process' => $this->faker->number(),
+            'id' => $data[$unit][0],
+            'name' => $unit,
+            'number_process' => $data[$unit][0] . '.' . $data[$unit][0],
         ];
     }
 }

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ActivitiesSeeder::class);
         $this->call(AreasSeeder::class);
+        $this->call(RelationsSeeder::class);
         $this->call(ChecklistevaluationSeeder::class);
         $this->call(ConceptsSeeder::class);
         $this->call(EquipamentSeeder::class);
