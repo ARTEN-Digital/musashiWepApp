@@ -76,23 +76,23 @@ class Trainingsedit extends Component
             'name' => 'required|max:255',
             'id_process' => 'required',
             'id_responsable' => 'required',
-            'expiration_quantity' => 'required',
-            'expiration_type' => 'required',
+            //'expiration_quantity' => 'required',
+            //'expiration_type' => 'required',
         ];
         $this->validate();
 
         $auxdays = 0;
-        switch($this->expiration_type){
-            case '1':
-                $auxdays = $this->expiration_quantity;
-                break;
-            case '2':
-                $auxdays = ($this->expiration_quantity * 7);
-                break;
-            case '3':
-                $auxdays = ($this->expiration_quantity * 31);
-                break;
-        }
+        // switch($this->expiration_type){
+        //     case '1':
+        //         $auxdays = $this->expiration_quantity;
+        //         break;
+        //     case '2':
+        //         $auxdays = ($this->expiration_quantity * 7);
+        //         break;
+        //     case '3':
+        //         $auxdays = ($this->expiration_quantity * 31);
+        //         break;
+        // }
 
         DB::table('trainings')->where('id', $this->idTraining)->update([
             'name' => $this->name,

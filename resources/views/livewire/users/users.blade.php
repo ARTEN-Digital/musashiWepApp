@@ -1,4 +1,22 @@
 <div>
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="showedituser, activeuser, deleteuser" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div>
+    </div>
     <div class="flex">
         <div id="divusers" class="w-full p-5 bg-white rounded shadow-lg">
             <p class="text-3xl font-bold">Usuarios</p>

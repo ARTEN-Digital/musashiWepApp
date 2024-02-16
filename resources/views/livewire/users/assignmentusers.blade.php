@@ -1,4 +1,42 @@
 <div>
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="assigment, assigmentagain, unassigment, transfer, rejecttransfer, resendtransfer, canceltransfer" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
+    <div id="loader" class="top-20 hidden left-0 z-50 fixed   max-h-full overflow-y-auto" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="flex">
         <div class="w-68p p-5 bg-white rounded shadow-lg">
             <div class="flex">
@@ -175,13 +213,23 @@
                                     <tr>
                                         <td class="px-1 py-4">
                                             @if($user->statusleader != null)
-                                                <svg wire:click="$emit('assiguseragain',{{$user->id}})" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="userrightleftyellow">
+                                            <div x-data="{ showTooltip: false }">
+                                                <svg @mouseover="showTooltip = true" @mouseout="showTooltip = false" wire:click="$emit('assiguseragain',{{$user->id}})" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="userrightleftyellow">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
+                                                <div x-show.transition.duration.200ms.origin.top.left="showTooltip" class="absolute rounded bg-white p-2 border border-yellow-400">
+                                                    Este usuario ya esta asignado.
+                                                </div>
+                                            </div>
                                             @else
-                                                <svg wire:click="$emit('assiguser',{{$user->id}})" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="userrightleft">
+                                            <div x-data="{ showTooltip: false }">
+                                                <svg @mouseover="showTooltip = true" @mouseout="showTooltip = false"wire:click="$emit('assiguser',{{$user->id}})" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="userrightleft">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
+                                                <div x-show.transition.duration.200ms.origin.top.left="showTooltip" class="absolute rounded bg-white p-2 border border-blue-400">
+                                                    Usuario listo para ser asignado.
+                                                </div>
+                                            </div>
                                             @endif
                                             
                                         </td>
@@ -220,12 +268,13 @@
                     cancelButtonText: 'No, cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        document.getElementById("loader").classList.remove('hidden');
+                        
                         window.Livewire.emit('assigment', iduser);
-                         // Swal.fire(
-                        //   '¡Eliminado!',
-                        //   'Tu elemento ha sido eliminado.',
-                        //   'Exito'
-                        // )
+                        
+                        setTimeout(() => {
+                            document.getElementById("loader").classList.add('hidden');
+                        }, 5000);
                     }
                 })
             });
@@ -241,12 +290,13 @@
                     cancelButtonText: 'No, cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        document.getElementById("loader").classList.remove('hidden');
+
                         window.Livewire.emit('assigmentagain', iduser);
-                        // Swal.fire(
-                        //   '¡Eliminado!',
-                        //   'Tu elemento ha sido eliminado.',
-                        //   'Exito'
-                        // )
+
+                        setTimeout(() => {
+                            document.getElementById("loader").classList.add('hidden');
+                        }, 5000);
                     }
                 })
             });
@@ -262,12 +312,14 @@
                     cancelButtonText: 'No, cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        document.getElementById("loader").classList.remove('hidden');
+
                         window.Livewire.emit('unassigment', iduser);
-                        // Swal.fire(
-                        //   '¡Eliminado!',
-                        //   'Tu elemento ha sido eliminado.',
-                        //   'Exito'
-                        // )
+
+                        setTimeout(() => {
+                            document.getElementById("loader").classList.add('hidden');
+                        }, 5000);
+                        
                     }
                 })
             });

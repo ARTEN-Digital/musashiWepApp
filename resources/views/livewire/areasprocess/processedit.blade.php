@@ -1,7 +1,25 @@
 <div>
-    
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="editprocess">
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="flex">
-        <p class="text-2xl font-bold mb-3 my-2">Editar proceso</p>
+        <p class="text-2xl font-bold mb-3 my-2">Editar operación</p>
         <button onclick="closeeditprocess()" class="closebttn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
                 <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -16,7 +34,7 @@
             <p class="text-xl">{{$areaname}}</p>
         </div>
         <div class="w-3/4 my-1 mx-auto">
-            <p class="">Nombre del proceso:</p>
+            <p class="">Nombre de la operación:</p>
             <input wire:model.defer="name_process" type="text" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
             <div>
                 <span class="text-red-500 text-xs italic">
@@ -27,7 +45,7 @@
             </div>
         </div>
         <div class="w-3/4 my-1 mx-auto">
-            <p class="">Número de proceso:</p>
+            <p class="">Número de operación:</p>
             <input wire:model.defer="number_process" type="number" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
             <div>
                 <span class="text-red-500 text-xs italic">
@@ -54,7 +72,7 @@
             </div>
         </div>
 
-        <div class="w-3/4 my-1 mx-auto" >
+        {{-- <div class="w-3/4 my-1 mx-auto" >
             <p class="my-2">Equipo:</p>
             <div class="border-2 border-neutral-400 p-2 rounded-lg overflow-y-auto" style="height: 24vh">
                 @foreach ($equipament as $equip)
@@ -65,7 +83,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> --}}
 
     </div>
     <div class="w-3/4 my-3 mx-auto">

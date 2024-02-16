@@ -114,6 +114,8 @@
                         </button>
                         <h1 class="sr-only">Home</h1>
 
+                        
+
                         {{-- vistas en general --}}
                         {{ $slot }}
                     </main>

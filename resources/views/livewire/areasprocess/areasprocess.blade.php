@@ -1,7 +1,45 @@
 <div>
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="showeditarea">
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
+    <div id="loader" class="top-20 hidden left-0 z-50 fixed   max-h-full overflow-y-auto" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="flex">
         <div id="divareas" class="w-full p-3 rounded">
-            <p class="text-3xl font-bold">Áreas y procesos</p>
+            <p class="text-3xl font-bold">Áreas y operaciones</p>
             <div class="lg:flex my-3">
                 <input wire:model="search" class="w-full lg:w-4/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700" type="text" name="" id="" placeholder="Buscar">
                 
@@ -32,7 +70,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>                                                                   
-                                    Nuevo proceso
+                                    Nueva operación
                                 </button>
                             </div>
                         </div>
@@ -40,8 +78,8 @@
                             <thead class="bg-neutral-400 text-white rounded">
                                 <tr>
                                     <th scope="col" class="headertableprocess rounded-l-lg">ID</th>
-                                    <th scope="col" class="headertableprocess">Proceso</th>
-                                    <th scope="col" class="headertableprocess">Número proceso</th>
+                                    <th scope="col" class="headertableprocess">Operación</th>
+                                    <th scope="col" class="headertableprocess">Número operación</th>
                                     <th scope="col" class="headertableprocess">Actividad</th>
                                     <th scope="col" class="headertableprocess rounded-r-lg">Acciones</th>
                                 </tr>
@@ -188,12 +226,13 @@
                     cancelButtonText: 'Cancelar',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.Livewire.emit('deleteprocess', idprocess);
-                        // Swal.fire(
-                        //   '¡Eliminado!',
-                        //   'Tu elemento ha sido eliminado.',
-                        //   'Exito'
-                        // )
+                    
+                    document.getElementById("loader").classList.remove('hidden');
+                    setTimeout(() => {
+                            document.getElementById("loader").classList.add('hidden');
+                        }, 5000);
+                    
+                    window.Livewire.emit('deleteprocess', idprocess);
                     }
                 })
             });

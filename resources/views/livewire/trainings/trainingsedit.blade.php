@@ -1,5 +1,23 @@
 <div>
-    
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="edittraining" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="flex">
         <p class="text-2xl font-bold mb-3 my-2">Actualizar capacitación</p>
         <button onclick="closeedittrainings()" class="closebttn">
@@ -64,7 +82,7 @@
                 </span>
             </div>
         </div>
-        <div class="w-3/4 my-2 mx-auto">
+        {{-- <div class="w-3/4 my-2 mx-auto">
             <p class="">Periodo de validez:</p>
             <div class="flex mt-2">
                 <div class="w-1/3">
@@ -88,7 +106,7 @@
                 </div>
             </div>
             
-        </div>
+        </div> --}}
 
         <div class="w-3/4 my-1 mx-auto" >
             <p class="my-2">Niveles disponibles para la capacitación:</p>

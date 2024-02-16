@@ -87,7 +87,7 @@ class Processcreate extends Component
 
         $this->reset(['name_process', 'number_process', 'id_activitie', 'equipamentp']);
         
-        $this->alert('success', 'Proceso creado con éxito.', [
+        $this->alert('success', 'Operación creada con éxito.', [
             'position' => 'center',
             'timer' => 5000,
             'toast' => true,

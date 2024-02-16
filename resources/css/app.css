@@ -7,6 +7,21 @@
 }
 
 
+.loader {
+    border-top-color: #ee1d23;
+    -webkit-animation: spinner 1.5s linear infinite;
+    animation: spinner 1.5s linear infinite;
+  }
+
+  @-webkit-keyframes spinner {
+    0%{-webkit-transform: rotate(0deg);}
+    100%{-webkit-transform: rotate(360deg);}
+  }
+
+  @keyframes spinner {
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+  }
 
 .btnLogin{
     @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primaryColor rounded-md hover:bg-primaryColor/80 focus:outline-none focus:bg-primaryColor focus:ring focus:ring-primaryColor focus:ring-opacity-50
