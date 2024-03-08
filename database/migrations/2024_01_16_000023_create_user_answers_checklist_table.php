@@ -10,10 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('equipaments', function (Blueprint $table) {
+        Schema::create('user_answers_checklist', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-
+            $table->text('status');
+            $table->unsignedBigInteger('id_user_checklist');
+            $table->unsignedBigInteger('id_concept');
+            $table->unsignedBigInteger('id_evaluator');
+            $table->text('comment');
+            $table->date('datefirsteval');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipaments');
+        Schema::dropIfExists('user_answers_checklist');
     }
 };

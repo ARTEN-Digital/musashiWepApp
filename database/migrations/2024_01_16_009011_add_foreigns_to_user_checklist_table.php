@@ -10,18 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('areas_process', function (Blueprint $table) {
+        Schema::table('user_checklist', function (Blueprint $table) {
             $table
-                ->foreign('id_process')
+                ->foreign('id_user')
                 ->references('id')
-                ->on('processes')
+                ->on('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
 
             $table
-                ->foreign('id_areas')
+                ->foreign('id_checklist')
                 ->references('id')
-                ->on('areas')
+                ->on('checklist_evaluations')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
         });
@@ -32,9 +32,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('areas_process', function (Blueprint $table) {
-            $table->dropForeign(['id_process']);
-            $table->dropForeign(['id_areas']);
+        Schema::table('user_checklist', function (Blueprint $table) {
+            $table->dropForeign(['id_user']);
+            $table->dropForeign(['id_checklist']);
         });
     }
 };

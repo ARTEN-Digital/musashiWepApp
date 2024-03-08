@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('activities', function (Blueprint $table) {
-            $table->id();
-            $table->text('name');
-            $table->timestamps();
+        Schema::create('process_lines', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id_process');
+            $table->unsignedBigInteger('id_line');
         });
+
+        
     }
 
     /**
@@ -22,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('process_lines');
     }
 };

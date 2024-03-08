@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('activities_process', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_activities');
+        Schema::create('process_categories', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('id_process');
-            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id_category');
+            
         });
+
     }
 
     /**
@@ -22,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('activities_process');
+        Schema::dropIfExists('process_categories');
     }
 };

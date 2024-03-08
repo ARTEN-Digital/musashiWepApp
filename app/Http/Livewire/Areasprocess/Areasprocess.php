@@ -68,12 +68,10 @@ class Areasprocess extends Component
 
     public function deleteprocess($idProcess){
         DB::table('processes')->where('id',$idProcess)->delete();
-
-        DB::table('areas_process')->where('id_process',$idProcess)->delete();
-
-        DB::table('activities_process')->where('id_process',$idProcess)->delete();
-
-        DB::table('equipament_process')->where('id_process',$idProcess)->delete();
+        DB::table('area_processes')->where('id_process',$idProcess)->delete();
+        DB::table('process_lines')->where('id_process',$idProcess)->delete();
+        DB::table('process_categories')->where('id_process',$idProcess)->delete();
+        DB::table('process_models')->where('id_process',$idProcess)->delete();
 
         $this->alert('success', 'Proceso eliminado con éxito.', [
             'position' => 'center',

@@ -15,13 +15,13 @@ class Areas extends Model
 
     protected $searchableFields = ['*'];
 
-    public function users()
-    {
+    public function users(){
         return $this->hasMany(User::class);
     }
 
+
     public function processes()
     {
-        return $this->belongsToMany(Process::class, 'areas_process', 'id_areas', 'id_process');
+        return $this->belongsToMany(Process::class, 'area_processes', 'id_area', 'id_process');
     }
 }

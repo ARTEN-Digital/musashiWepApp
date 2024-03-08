@@ -16,9 +16,10 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Auth;
+use App\Models\Lines;
+use App\Models\Categories;
+use App\Models\Models;
 use App\Models\Process;
-use App\Models\Activities;
-use App\Models\Equipament;
 
 class Processcreate extends Component
 {
@@ -28,7 +29,7 @@ class Processcreate extends Component
 
     public $idArea, $areaname;
 
-    public $name_process, $number_process, $id_activitie, $equipamentp = [];
+    public $name_process, $number_process, $id_line, $id_category, $models_select = [];
 
     protected $listeners = ['getareaprocess'];
 
@@ -36,15 +37,18 @@ class Processcreate extends Component
     protected $validationAttributes  = [
         'name_process' => 'Nombre',
         'number_process' => 'Número de proceso',
-        'id_activitie' => 'Actividad',
+        'id_line' => 'Línea',
+        'id_category' => 'Categoría',
+        'models_select' => 'Modelo',
     ];
 
     public function render()
     {
-        $activities = Activities::get();
-        $equipament = Equipament::get();
+        $lines = Lines::get();
+        $categories = Categories::get();
+        $models = Models::get();
 
-        return view('livewire.areasprocess.processcreate')->with('activities', $activities)->with('equipament', $equipament);
+        return view('livewire.areasprocess.processcreate')->with('lines', $lines)->with('categories', $categories)->with('models', $models);
     }
 
     public function getareaprocess($idArea, $areaname){
@@ -56,7 +60,6 @@ class Processcreate extends Component
         $this->rules +=[
             'name_process' => 'required|max:255',
             'number_process' => 'required',
-            'id_activitie' => 'required',
         ];
         $this->validate();
 
@@ -66,26 +69,31 @@ class Processcreate extends Component
             'created_at' => date('Y-m-d H:m'),
         ]);
 
-        DB::table('areas_process')->insert([
+        DB::table('area_processes')->insert([
             'id_process' => $newprocess,
-            'id_areas' => $this->idArea,
+            'id_area' => $this->idArea,
         ]);
 
-        DB::table('activities_process')->insert([
+        DB::table('process_lines')->insert([
             'id_process' => $newprocess,
-            'id_activities' => $this->id_activitie,
+            'id_line' => $this->id_line,
         ]);
 
-        foreach ($this->equipamentp as $equip) {
-            if($equip != false){
-                DB::table('equipament_process')->insert([
+        DB::table('process_categories')->insert([
+            'id_process' => $newprocess,
+            'id_category' => $this->id_category,
+        ]);
+
+        foreach ($this->models_select as $mdl) {
+            if($mdl != false){
+                DB::table('process_models')->insert([
                     'id_process' => $newprocess,
-                    'id_equipament' => $equip,
+                    'id_model' => $mdl,
                 ]);
             }
         }
 
-        $this->reset(['name_process', 'number_process', 'id_activitie', 'equipamentp']);
+        $this->reset(['name_process', 'number_process', 'id_line', 'id_category','models_select']);
         
         $this->alert('success', 'Operación creada con éxito.', [
             'position' => 'center',

@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('equipament_process', function (Blueprint $table) {
+        Schema::create('process_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_process');
-            $table->unsignedBigInteger('id_equipament');
+            $table->unsignedBigInteger('id_model');
             
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipament_process');
+        Schema::dropIfExists('process_models');
     }
 };

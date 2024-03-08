@@ -11,7 +11,7 @@ class Userprocessstatus extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['status', 'id_user', 'id_process'];
+    protected $fillable = ['status', 'id_user', 'id_process', 'n1_date', 'n3_date', 'n3_date', 'n4_date'];
 
     protected $searchableFields = ['*'];
 

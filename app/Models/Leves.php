@@ -11,7 +11,7 @@ class Leves extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = [];
+    protected $fillable = ['level'];
 
     protected $searchableFields = ['*'];
 

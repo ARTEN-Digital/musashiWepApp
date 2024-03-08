@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Scopes\Searchable;
 
-class Lines extends Model
+class Models extends Model
 {
     use HasFactory;
     use Searchable;
@@ -15,4 +15,8 @@ class Lines extends Model
 
     protected $searchableFields = ['*'];
 
+    public function processes()
+    {
+        return $this->belongsToMany(Process::class, 'model_processes', 'id_model', 'id_process');
+    }
 }

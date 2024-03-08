@@ -20,23 +20,16 @@ class Process extends Model
         return $this->hasMany(Userprocessstatus::class);
     }
 
-    public function allTrainings()
-    {
-        return $this->hasMany(Trainings::class);
+    public function line(){
+        return $this->belongsToMany(Lines::class, 'process_lines', 'id_process', 'id_line');
     }
 
-    public function allActivities()
-    {
-        return $this->belongsToMany(Activities::class, 'activities_process', 'id_process', 'id_activities');
+    public function category(){
+        return $this->belongsToMany(Categories::class, 'process_categories', 'id_process', 'id_category');
     }
 
-    public function areas()
-    {
-        return $this->belongsToMany(Areas::class);
+    public function models(){
+        return $this->belongsToMany(Models::class, 'process_models', 'id_process', 'id_model');
     }
 
-    public function equipaments()
-    {
-        return $this->belongsToMany(Equipament::class, 'equipament_process', 'id_process', 'id_equipament');
-    }
 }

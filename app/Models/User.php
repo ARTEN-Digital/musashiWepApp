@@ -53,19 +53,19 @@ class User extends Authenticatable
         return $this->belongsTo(Usertype::class);
     }
 
-    public function userprocessstatuses()
+    public function processstatuses($idprocess)
     {
-        return $this->hasMany(Userprocessstatus::class);
+        return $this->hasOne(Userprocessstatus::class, 'id', 'id_user')->where('id_process', $idprocess)->latestOfMany();
     }
 
     public function area()
     {
-        return $this->belongsTo(Areas::class, 'areas_id');
+        return $this->hasOne(Areas::class, 'id', 'id_area')->latestOfMany();
     }
 
-    public function positions()
+    public function position()
     {
-        return $this->belongsTo(Positions::class);
+        return $this->hasOne(Positions::class, 'id', 'id_position')->latestOfMany();
     }
 
     public function allConcepts()

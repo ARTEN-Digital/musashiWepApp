@@ -52,38 +52,56 @@
                     @error('number_process')
                         {{$message}}
                     @enderror
-                </span>
+                </span> 
             </div>
         </div>
+        
         <div class="w-3/4 my-1 mx-auto">
-            <p class="">Actividad:</p>
-            <select wire:model.defer="id_activity" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+            <p class="">Línea:</p>
+            <select wire:model.defer="id_line" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
                 <option value="">Seleccionar</option>
-                @foreach ($activities as $activity)
-                    <option value="{{$activity->id}}">{{$activity->name}}</option>
+                @foreach ($lines as $line)
+                    <option value="{{$line->id}}">{{$line->name}}</option>
                 @endforeach
             </select>
             <div>
                 <span class="text-red-500 text-xs italic">
-                    @error('id_activitie')
+                    @error('id_line')
                         {{$message}}
                     @enderror
                 </span>
             </div>
         </div>
 
-        {{-- <div class="w-3/4 my-1 mx-auto" >
-            <p class="my-2">Equipo:</p>
+        <div class="w-3/4 my-1 mx-auto">
+            <p class="">Categoría:</p>
+            <select wire:model.defer="id_category" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+                <option value="">Seleccionar</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+            <div>
+                <span class="text-red-500 text-xs italic">
+                    @error('id_category')
+                        {{$message}}
+                    @enderror
+                </span>
+            </div>
+        </div>
+
+        <div class="w-3/4 my-1 mx-auto" >
+            <p cla|ss="my-2">Modelos:</p>
             <div class="border-2 border-neutral-400 p-2 rounded-lg overflow-y-auto" style="height: 24vh">
-                @foreach ($equipament as $equip)
+                @foreach ($models as $model)
                 
                     <div class="flex my-1">
-                        <input wire:model.defer="equipamentp.{{ $equip->id }}" value="{{$equip->id}}" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 mr-3 my-auto" type="checkbox" name="" id="">
-                        <p>{{$equip->name}}</p>
+                        <input wire:model.defer="models_select.{{ $model->id }}" value="{{$model->id}}" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10 mr-3 my-auto" type="checkbox" name="" id="">
+                        <p>{{$model->name}}</p>
                     </div>
                 @endforeach
             </div>
-        </div> --}}
+        </div>
 
     </div>
     <div class="w-3/4 my-3 mx-auto">

@@ -16,9 +16,11 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Auth;
+use App\Models\Lines;
+use App\Models\Categories;
+use App\Models\Models;
 use App\Models\Process;
-use App\Models\Activities;
-use App\Models\Equipament;
+
 
 class Processedit extends Component
 {
@@ -28,7 +30,7 @@ class Processedit extends Component
 
     public $idArea, $areaname, $idProcess;
 
-    public $name_process, $number_process, $id_activity, $equipamentp = [];
+    public $name_process, $number_process, $id_line, $id_category, $models_select = [];
 
     protected $listeners = ['getprocess'];
 
@@ -36,26 +38,30 @@ class Processedit extends Component
     protected $validationAttributes  = [
         'name_process' => 'Nombre',
         'number_process' => 'Número de proceso',
-        'id_activitie' => 'Actividad',
+        'id_line' => 'Línea',
+        'id_category' => 'Categoría',
+        'models_select' => 'Modelo',
     ];
 
     public function render()
     {
-        $activities = Activities::get();
-        $equipament = Equipament::get();
+        $lines = Lines::get();
+        $categories = Categories::get();
+        $models = Models::get();
 
         $process = Process::where('id', $this->idProcess)->first();
         if($process != null){
             $this->equipamentp = [];
             $this->name_process = $process->name;
             $this->number_process = $process->number_process;
-            $this->id_activity = $process->allActivities->first()['id'];
-            foreach ($process->equipaments as $equip) {
-                $this->equipamentp[$equip->id] = $equip->id;
+            $this->id_line = $process->line->first()['id'];
+            $this->id_category = $process->category->first()['id'];
+            foreach ($process->models as $md) {
+                $this->models_select[$md->id] = $md->id;
             }
         }
 
-        return view('livewire.areasprocess.processedit')->with('activities', $activities)->with('equipament', $equipament);
+        return view('livewire.areasprocess.processedit')->with('lines', $lines)->with('categories', $categories)->with('models', $models);
     }
 
     public function getprocess($idArea, $areaname, $idProcess){
@@ -69,7 +75,6 @@ class Processedit extends Component
         $this->rules +=[
             'name_process' => 'required|max:255',
             'number_process' => 'required',
-            'id_activity' => 'required',
         ];
         $this->validate();
 
@@ -79,19 +84,32 @@ class Processedit extends Component
             'updated_at' => date('Y-m-d H:m'),
         ]);
 
-        DB::table('activities_process')->where('id_process',$this->idProcess)->delete();
-        DB::table('activities_process')->insert([
+
+        DB::table('area_processes')->where('id_process',$this->idProcess)->delete();
+        DB::table('area_processes')->insert([
             'id_process' => $this->idProcess,
-            'id_activities' => $this->id_activity,
+            'id_area' => $this->idArea,
+        ]);
+
+        DB::table('process_lines')->where('id_process',$this->idProcess)->delete();
+        DB::table('process_lines')->insert([
+            'id_process' => $this->idProcess,
+            'id_line' => $this->id_line,
+        ]);
+
+        DB::table('process_categories')->where('id_process',$this->idProcess)->delete();
+        DB::table('process_categories')->insert([
+            'id_process' => $this->idProcess,
+            'id_category' => $this->id_category,
         ]);
 
 
-        DB::table('equipament_process')->where('id_process',$this->idProcess)->delete();
-        foreach ($this->equipamentp as $equip) {
-            if($equip != false){
-                DB::table('equipament_process')->insert([
+        DB::table('process_models')->where('id_process',$this->idProcess)->delete();
+        foreach ($this->models_select as $mdl) {
+            if($mdl != false){
+                DB::table('process_models')->insert([
                     'id_process' => $this->idProcess,
-                    'id_equipament' => $equip,
+                    'id_model' => $mdl,
                 ]);
             }
         }

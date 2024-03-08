@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('areas_process', function (Blueprint $table) {
-            $table->id();
+        Schema::create('area_processes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id_area');
             $table->unsignedBigInteger('id_process');
-            $table->unsignedBigInteger('id_areas');
-            
         });
+
+        
     }
 
     /**
@@ -23,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('areas_process');
+        Schema::dropIfExists('area_processes');
     }
 };

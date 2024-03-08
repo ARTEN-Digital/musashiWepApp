@@ -10,18 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('activities_process', function (Blueprint $table) {
-            $table
-                ->foreign('id_activities')
-                ->references('id')
-                ->on('activities')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
-
+        Schema::table('process_models', function (Blueprint $table) {
             $table
                 ->foreign('id_process')
                 ->references('id')
                 ->on('processes')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+
+            $table
+                ->foreign('id_model')
+                ->references('id')
+                ->on('models')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
         });
@@ -32,9 +32,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('activities_process', function (Blueprint $table) {
-            $table->dropForeign(['id_activities']);
+        Schema::table('process_models', function (Blueprint $table) {
             $table->dropForeign(['id_process']);
+            $table->dropForeign(['id_model']);
         });
     }
 };

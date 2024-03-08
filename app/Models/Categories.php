@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Scopes\Searchable;
 
-class Activities extends Model
+class Categories extends Model
 {
     use HasFactory;
     use Searchable;
@@ -14,9 +14,4 @@ class Activities extends Model
     protected $fillable = ['name'];
 
     protected $searchableFields = ['*'];
-
-    public function processes()
-    {
-        return $this->belongsToMany(Process::class);
-    }
 }
