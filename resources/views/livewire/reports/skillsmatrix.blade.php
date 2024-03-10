@@ -1,7 +1,7 @@
 <div>
     <div class="grid grid-cols-12 gap-5" style="height:90vh">
         <div class="col-start-1 col-end-4 bg-white rounded shadow-lg">
-            {{-- <div class="flex-col lg:flex-row flex py-3 px-4">
+            <div class="flex-col lg:flex-row flex py-3 px-4">
                 <button class="bg-neutral-200 hover:bg-neutral-300 px-3 py-1 rounded-lg w-fit lg:mr-auto text-neutral-400 flex font-semibold">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-1">
                         <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clip-rule="evenodd" />
@@ -10,13 +10,13 @@
                     Limpiar
                 </button>
 
-                <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit lg:ml-auto mt-4 lg:mt-0 text-white flex font-semibold">
+                {{-- <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit lg:ml-auto mt-4 lg:mt-0 text-white flex font-semibold">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-1">
                         <path fill-rule="evenodd" d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z" clip-rule="evenodd" />
                     </svg>  
                     Filtrar
-                </button>
-            </div> --}}
+                </button>--}}
+            </div> 
     
             <div class="overflow-y-auto py-3 px-4 text-neutral-400">
                 {{-- <div class="w-full my-1 mx-auto">
@@ -29,7 +29,7 @@
 
                 <div class="w-full my-1 mx-auto">
                     <p class="">Área:</p>
-                    <select wire:change="getuserarea" wire:model.defer="areafilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 bg-neutral-400 text-white">
+                    <select wire:change="getuserarea" wire:model.defer="areafilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 bg-neutral-200 text-neutral-500">
                         <option value="">Seleccionar...</option>
                         @foreach($areas  as $area)
                             <option value="{{$area->id}}">{{$area->name}}</option>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="w-full my-1 mx-auto">
                     <p class="">Línea:</p>
-                    <select @if($areafilter == null) disabled @endif wire:model.defer="linefilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <select wire:change="getuserarea" @if($areafilter == null) disabled @endif wire:model.defer="linefilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Seleccionar...</option>
                         @foreach($lines  as $line)
                             <option value="{{$line->id}}">{{$line->name}}</option>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="w-full my-1 mx-auto">
                     <p class="">Categoría:</p>
-                    <select @if($areafilter == null) disabled @endif wire:model.defer="categoryfilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <select wire:change="getuserarea" @if($areafilter == null) disabled @endif wire:model.defer="categoryfilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Seleccionar...</option>
                         @foreach($categories  as $category)
                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="w-full my-1 mx-auto">
                     <p class="">Modelo:</p>
-                    <select @if($areafilter == null) disabled @endif wire:model.defer="modelfilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
+                    <select wire:change="getuserarea" @if($areafilter == null) disabled @endif wire:model.defer="modelfilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Seleccionar...</option>
                         @foreach($models  as $model)
                             <option value="{{$model->id}}">{{$model->name}}</option>
@@ -70,7 +70,7 @@
         <div class="col-start-4 col-end-13 p-5 bg-white rounded shadow-lg">
             <p class="text-xl font-bold">Reporte matriz de habilidades</p>
             <div class="flex my-3">
-                <input type="text" wire:model.defer="search" class="w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700" placeholder="Buscar...">
+                <input wire:input="getuserarea" type="text" wire:model.defer="search" class="w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700" placeholder="Buscar...">
 
                 <div class="flex my-2 ml-auto">
                     <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit mr-auto text-white flex font-semibold">
@@ -88,8 +88,8 @@
                     <p class="text-sm">Operadores mostrados</p>
                 </div>
                 <div class="flex ml-8">
-                    <p class="font-semibold mr-2 underline decoration-2">{{$numtrainings}}</p>
-                    <p class="text-sm">Capacitaciones mostradas</p>
+                    <p class="font-semibold mr-2 underline decoration-2">{{$numprocess}}</p>
+                    <p class="text-sm">Operaciones mostradas</p>
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Puesto</th>
 
                                         @if($infoarea != null)
-                                            @foreach($infoarea->processes as $pxa)
+                                            @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
                                                 <th scope="col" class="p-3 w-fit text-xs font-normal text-left rtl:text-right">{{$pxa->number_process . '-' . $pxa->name}}</th>
                                             @endforeach
                                         @endif
@@ -121,7 +121,9 @@
                                             <td class="p-3">{{$up->name . ' ' . $up->lastname}}</td>
                                             <td class="p-3">{{$up->position->name}}</td>
                                             @if($infoarea != null)
-                                                @foreach($infoarea->processes as $pxa)
+                                                @php $totalprocess = 0; @endphp
+                                                @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
+                                                   
                                                     <td class="p-3">
                                                         @if($this->statusprocessxuser($up->id, $pxa->id) == null)
                                                             <button wire:click="scmodalassignation({{$up->id}}, {{$pxa->id}})" class="bg-neutral-200 hover:bg-neutral-200 text-neutral-400 text-xs px-2 py-1 rounded-lg w-20">
@@ -135,21 +137,25 @@
                                                                     </button>
                                                                      @break
                                                                 @case('l1')
+                                                                    @php $totalprocess++; @endphp
                                                                     <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
                                                                         ET
                                                                     </button>
                                                                     @break
                                                                 @case('l2')
+                                                                    @php $totalprocess++; @endphp
                                                                     <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
                                                                         EE
                                                                     </button>
                                                                     @break
                                                                 @case('l3')
+                                                                    @php $totalprocess++; @endphp
                                                                     <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
                                                                         H
                                                                     </button>
                                                                     @break
                                                                 @case('l4')
+                                                                    @php $totalprocess++; @endphp
                                                                     <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
                                                                         C
                                                                     </button>
@@ -161,10 +167,29 @@
                                                     </td>
                                                 @endforeach
                                             @endif
-                                            <td class="p-3 font-bold text-base text-center">5</t d>
-                                            <td class="p-3 font-bold text-base text-center text-red-500">20%</td>
+                                            <td class="p-3 font-bold text-base text-center">{{$totalprocess}}</td>
+                                            @php $porcentage = ($numprocess != 0) ? (($totalprocess * 100)/ $numprocess) : 0; @endphp
+                                            <td class="p-3 font-bold text-base text-center @if($porcentage >= 60) text-green-500 @else text-red-500 @endif">{{$porcentage}}%</td>
                                         </tr>
                                     @endforeach
+                                    <tr>
+                                        <td class="p-3">Número de operadores certificados por proceso</td>
+                                        <td></td>
+                                        <td></td>
+                                        @if($infoarea != null)
+                                            @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
+                                                @php $userscertificade = 0; @endphp
+                                                @foreach($usersarea as $up)
+                                                    @if($this->statusprocessxuser($up->id, $pxa->id) != null && $this->statusprocessxuser($up->id, $pxa->id)->status == 'l4')
+                                                    @php $userscertificade++; @endphp
+                                                    @endif
+                                                @endforeach
+                                                @php $porcentageusers = ($numoperators != 0) ? (($userscertificade * 100)/ $numoperators) : 0; @endphp
+                                                <td class="p-3">{{$userscertificade}} / <span class="font-semibold @if($porcentageusers >= 60) text-green-500 @else text-red-500 @endif">{{$porcentageusers}}%</span></td>
+                                            @endforeach
+                                        @endif
+
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -187,11 +212,13 @@
                             Checklist de capacitación
                         </h2>
                     
-                        <svg wire:click="scmodalchecklist('0','0')" class="w-6 h-6 cursor-pointer text-gray-500  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodalchecklist(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                            </svg>
+                        </button>
                     </div>
 
                     <div class="flex bg-white py-3">
@@ -223,7 +250,7 @@
                             
                             </div>
                         </div>
-                        <div class="w-1/4 my-1">
+                        {{-- <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Operador sombra:</p>
                                 <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
@@ -233,16 +260,21 @@
                                     <option value="">opcion 4</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Responsable:</p>
-                                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
-                                    <option value="">opcion 1</option>
-                                    <option value="">opcion 2</option>
-                                    <option value="">opcion 3</option>
-                                    <option value="">opcion 4</option>
+                                @if($mctraining != null && $mcuser != null && $mcprocess != null)
+                                <select wire:change="getmodalchecklistdata({{$mcuser->id}}, {{$mcprocess->id}})" wire:model.defer="mcrsblefilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+                                    <option value="">Seleccionar...</option>
+                                        @foreach($mctraining->checklistevaluations->first()->concepts as $cpts)
+                                            @if(!in_array($cpts->user, $mcresponsables))
+                                                @php array_push($mcresponsables, $cpts->user); @endphp
+                                                <option value="{{$cpts->user->id}}">{{$cpts->user->name . ' ' . $cpts->user->lastname}}</option>
+                                            @endif
+                                        @endforeach
                                 </select>
+                                @endif
                             </div>
                         </div>
                         <div class="w-1/4 my-1 mx-auto">
@@ -272,7 +304,7 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @if($mctraining != null)
-                                                @foreach ($mctraining->checklistevaluations->first()->concepts as $cpts)
+                                                @foreach ($mctraining->checklistevaluations->first()->conceptsxchklistfilter($mcrsblefilter) as $cpts)
                                                     <tr>
                                                         <td class="p-1">{{$cpts->topics->name}}</td>
                                                         <td class="p-1">{{$cpts->number}}</td>
@@ -293,7 +325,7 @@
                                                             </p>
                                                         </td>
                                                         <td class="p-1">
-                                                            <textarea wire:model="mcselconcepcomment.{{ $cpts->id }}" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700"></textarea>
+                                                            <textarea wire:model.defer="mcselconcepcomment.{{ $cpts->id }}" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700"></textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -315,22 +347,25 @@
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
             <div class=" flex flex-col w-7/12 mx-auto rounded-lg shadow-xl overflow-y-auto" style="max-height: 90%;">
                     <div class="flex flex-row justify-between px-6 py-3 bg-white text-white rounded-tl-lg rounded-tr-lg">
-                        <svg wire:click="scmodallevel(0,0)" class="w-6 h-6 cursor-pointer text-gray-500 ml-auto  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodallevel(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                            </svg>
+                        </button>
+                        
                     </div>
 
                     @if($mluser != null)
-                        <div class="flex py-1 bg-white text-sm font-semibold px-8">
+                        <div class="flex py-1 bg-white font-semibold px-8">
                             <p class="mr-5">{{$mluser->payroll}}</p>
                             <p>{{$mluser->name . ' ' . $mluser->lastname}}</p>
                         </div>
                     @endif
 
                     @if($mltraining != null)
-                        <div class="flex py-1 bg-white font-bold px-8">
+                        <div class="flex py-1 text-xl bg-white font-bold px-8">
                             {{$mltraining->name}}
                         </div>
                     @endif
@@ -395,9 +430,10 @@
                                                                 @if($mlstatusprocess->status == 'l1' || $mlstatusprocess->status == 'l2' || $mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
                                                                 <button wire:click="scmodalchecklist({{$mluser->id}}, {{$mlidprocess}})" class="bg-blue-500 hover:bg-red-blue/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                                                                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                                                        <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
-                                                                      </svg>                   
+                                                                        <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
+                                                                        <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375Zm9.586 4.594a.75.75 0 0 0-1.172-.938l-2.476 3.096-.908-.907a.75.75 0 0 0-1.06 1.06l1.5 1.5a.75.75 0 0 0 1.116-.062l3-3.75Z" clip-rule="evenodd" />
+                                                                      </svg>
+                                                                                        
                                                                 </button>
                                                                 @endif
                                                             </td>
@@ -467,11 +503,13 @@
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
             <div class=" flex flex-col w-5/12 mx-auto rounded-lg shadow-xl overflow-y-auto" style="max-height: 90%;">
                     <div class="flex flex-row justify-between px-6 py-3 bg-white text-white rounded-tl-lg rounded-tr-lg">
-                        <svg wire:click="scmodalassignation('0', '0')" class="w-6 h-6 cursor-pointer text-gray-500 ml-auto  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodalassignation(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                            </svg>
+                        </button>
                     </div>
                     @if($mauser != null)
                         <div class="flex bg-white px-8">

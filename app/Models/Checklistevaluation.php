@@ -26,4 +26,11 @@ class Checklistevaluation extends Model
     {
         return $this->belongsToMany(Concepts::class, 'checklistevaluation_concepts', 'id_checklistevaluation', 'id_concepts');
     }
+
+    public function conceptsxchklistfilter($idresponsable)
+    {
+        return $this->belongsToMany(Concepts::class, 'checklistevaluation_concepts', 'id_checklistevaluation', 'id_concepts')->when($idresponsable != '', function ($query) use ($idresponsable){
+            return $query->where('concepts.id_user', $idresponsable);
+        })->get();
+    }
 }

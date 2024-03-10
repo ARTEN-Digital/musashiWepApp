@@ -33,11 +33,11 @@ class Skillsmatrix extends Component
     use WithFileUploads; 
     use WithPagination;
 
-    public $numoperators = 0, $numtrainings = 0;
+    public $numoperators = 0, $numprocess= 0;
 
     public $search, $areafilter, $linefilter, $categoryfilter, $modelfilter;
 
-    public $usersarea = [], $infoarea = null;
+    public $usersarea = [], $infoarea = null, $processxarea = [];
 
     //variables para modal de asignación de capacitación
     public $modalassignation = false, $mauser, $matraining, $maidprocess, $madatestart;
@@ -46,7 +46,7 @@ class Skillsmatrix extends Component
     public $modallevels = false, $mluser, $mltraining, $mlidprocess, $mlstatusprocess, $mldatel2;
 
     //variables para modal de checklist
-    public $modalchecklist = false, $mcuser, $mctraining, $mcprocess, $mcusercheck, $mcstarevldate, $mcselconcepstatus = [], $mcselconcepcomment = [];
+    public $modalchecklist = false, $mcuser, $mctraining, $mcprocess, $mcusercheck, $mcstarevldate, $mcselconcepstatus = [], $mcselconcepcomment = [], $mcresponsables = [], $mcrsblefilter;
 
     protected $rules = [];
     protected $validationAttributes  = [
@@ -67,11 +67,24 @@ class Skillsmatrix extends Component
     } 
 
     public function getuserarea(){
-        $this->usersarea = User::where('active', 1)->where('id_area', $this->areafilter)->get();
+        if($this->areafilter != ''){
+            $this->usersarea = User::where('active', 1)
+            ->where('id_area', $this->areafilter)
+            ->when($this->search != '', function ($query){
+                return $query->where(function ($query) 
+                { 
+                    $query->orWhere('users.name', 'LIKE', '%' . $this->search . '%')->orWhere('users.lastname', 'LIKE', '%' . $this->search . '%')->orWhere('users.payroll', 'LIKE', '%' . $this->search . '%');
+                });
+            })->get();
 
-        $this->infoarea = Areas::where('id', $this->areafilter)->first();
+            $this->infoarea = Areas::where('id', $this->areafilter)->first();
 
-        $this->numoperators = count($this->usersarea);
+            $this->numoperators = count($this->usersarea);
+            $this->numprocess = count($this->infoarea->processesfilters($this->linefilter, $this->categoryfilter, $this->modelfilter));
+        }
+        else{
+            $this->usersarea = [];
+        }
     }
 
     public function statusprocessxuser($idUser, $idProcess){
@@ -217,24 +230,12 @@ class Skillsmatrix extends Component
             $this->modallevels = true;
         } else {
             $this->modalchecklist = true;
-            $this->modallevels = false;
-
+            $this->modallevels = false;            
             $this->mcuser = User::where('id', $idUser)->first();
             $this->mcprocess = Process::where('id', $idProcess)->first();
-            $this->mctraining = Trainings::where('id_process', $idProcess)->first();
-            $this->mcusercheck = Userchecklist::where('id_user', $idUser)->first();
-            $this->mcstarevldate = ($this->mcusercheck != null) ? $this->mcusercheck->datestarteval : date('Y-m-d');
 
-            if($this->mcusercheck != null){
-                $useranswers = Useranswerchecklist::where('id_user_checklist', $this->mcusercheck->id)->get();
-                foreach ($useranswers as $ua) {
-                    if($ua->status != null)
-                        $this->mcselconcepstatus[$ua->id_concept] = true;
+           $this->getmodalchecklistdata($idUser, $idProcess);
 
-                    if($ua->comment != null)
-                        $this->mcselconcepcomment[$ua->id_concept] = $ua->comment;
-                }
-            }
         }
     }
 
@@ -304,20 +305,7 @@ class Skillsmatrix extends Component
                 }
         }
 
-        $this->mctraining = Trainings::where('id_process', $this->mcprocess->id)->first();
-        $this->mcusercheck = Userchecklist::where('id_user', $this->mcuser->id)->first();
-        $this->mcstarevldate = ($this->mcusercheck != null) ? $this->mcusercheck->datestarteval : date('Y-m-d');
-
-        if($this->mcusercheck != null){
-            $useranswers = Useranswerchecklist::where('id_user_checklist', $this->mcusercheck->id)->get();
-            foreach ($useranswers as $ua) {
-                if($ua->status != null)
-                    $this->mcselconcepstatus[$ua->id_concept] = true;
-
-                if($ua->comment != null)
-                    $this->mcselconcepcomment[$ua->id_concept] = $ua->comment;
-            }
-        }
+        $this->getmodalchecklistdata($this->mcuser->id, $this->mcprocess->id);
 
         $this->alert('success', 'Evaluación realizada con éxito.', [
             'position' => 'center',
@@ -332,6 +320,24 @@ class Skillsmatrix extends Component
 
         $aux = ($operator != null) ? $operator->name . ' ' . $operator->lastname : '';
         return $aux;
+    }
+
+    public function getmodalchecklistdata($idUser, $idProcess){
+        
+        $this->mctraining = Trainings::where('id_process', $idProcess)->first();
+        $this->mcusercheck = Userchecklist::where('id_user', $idUser)->first();
+        $this->mcstarevldate = ($this->mcusercheck != null) ? $this->mcusercheck->datestarteval : date('Y-m-d');
+
+        if($this->mcusercheck != null){
+            $useranswers = Useranswerchecklist::where('id_user_checklist', $this->mcusercheck->id)->get();
+            foreach ($useranswers as $ua) {
+                if($ua->status != null)
+                    $this->mcselconcepstatus[$ua->id_concept] = true;
+
+                if($ua->comment != null)
+                    $this->mcselconcepcomment[$ua->id_concept] = $ua->comment;
+            }
+        }
     }
 
 }
