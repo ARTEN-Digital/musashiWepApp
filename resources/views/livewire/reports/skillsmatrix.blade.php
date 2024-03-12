@@ -1,4 +1,23 @@
 <div>
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="getuserarea, scmodalassignation, trainingassignation, scmodallevel, changelevel, scmodalchecklist, savechecklist" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="grid grid-cols-12 gap-5" style="height:90vh">
         <div class="col-start-1 col-end-4 bg-white rounded shadow-lg">
             <div class="flex-col lg:flex-row flex py-3 px-4">

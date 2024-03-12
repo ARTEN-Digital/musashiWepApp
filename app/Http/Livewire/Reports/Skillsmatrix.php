@@ -228,6 +228,7 @@ class Skillsmatrix extends Component
         if ($this->modalchecklist == true) {
             $this->modalchecklist = false;
             $this->modallevels = true;
+            $this->reset(['mcuser', 'mctraining', 'mcprocess', 'mcusercheck', 'mcstarevldate', 'mcselconcepstatus', 'mcselconcepcomment', 'mcresponsables', 'mcrsblefilter']);
         } else {
             $this->modalchecklist = true;
             $this->modallevels = false;            
@@ -244,6 +245,8 @@ class Skillsmatrix extends Component
             'mcstarevldate' => 'required',
         ];
         $this->validate();
+
+        //dd($this->mcusercheck);
 
         $usercheckid = '';
         if($this->mcusercheck != null){
@@ -262,12 +265,15 @@ class Skillsmatrix extends Component
             ]);
         }
 
-        foreach ($this->mcselconcepstatus as $key => $value) {
-            //dd($this->mcselconcepstatus);
-            $auxstatus = ($value != false) ? $auxstatus = '1' : $auxstatus = null;
 
-            $aux = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
-            if($aux != null){
+        $numprocess = (count($this->mctraining->checklistevaluations->first()->concepts));
+        $numanswers = 0;
+        foreach ($this->mcselconcepstatus as $key => $value) {
+           
+            $auxstatus = ($value != false) ? $auxstatus = '1' && $numanswers++ : $auxstatus = null;
+
+            $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            if($auxusercheck != null){
                 DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
                     'status' => $auxstatus,
                     'id_evaluator' => Auth::user()->id,
@@ -305,6 +311,21 @@ class Skillsmatrix extends Component
                 }
         }
 
+        if($numanswers == $numprocess){
+            DB::table('user_process_statuses')->where('id_user', $this->mcuser->id)->where('id_process', $this->mcprocess->id)->update([
+                'status' => 'l2',
+                'l2_date' => date('Y-m-d H:m'),
+                'updated_at' => date('Y-m-d'),
+            ]);
+        }
+        else{
+            DB::table('user_process_statuses')->where('id_user', $this->mcuser->id)->where('id_process', $this->mcprocess->id)->update([
+                'status' => 'l1',
+                'l1_date' => date('Y-m-d H:m'),
+                'updated_at' => date('Y-m-d H:m'),
+            ]);
+        }
+
         $this->getmodalchecklistdata($this->mcuser->id, $this->mcprocess->id);
 
         $this->alert('success', 'Evaluación realizada con éxito.', [
@@ -325,7 +346,7 @@ class Skillsmatrix extends Component
     public function getmodalchecklistdata($idUser, $idProcess){
         
         $this->mctraining = Trainings::where('id_process', $idProcess)->first();
-        $this->mcusercheck = Userchecklist::where('id_user', $idUser)->first();
+        $this->mcusercheck = Userchecklist::where('id_user', $idUser)->where('id_checklist', $this->mctraining->checklistevaluations->first()->id,)->first();
         $this->mcstarevldate = ($this->mcusercheck != null) ? $this->mcusercheck->datestarteval : date('Y-m-d');
 
         if($this->mcusercheck != null){
