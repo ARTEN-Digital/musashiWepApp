@@ -26,6 +26,13 @@ return new class extends Migration {
                 ->onDelete('CASCADE');
             
             $table
+                ->foreign('id_applicant')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            
+            $table
                 ->foreign('id_evaluator')
                 ->references('id')
                 ->on('users')
@@ -42,6 +49,7 @@ return new class extends Migration {
         Schema::table('user_answers_checklist', function (Blueprint $table) {
             $table->dropForeign(['id_user_checklist']);
             $table->dropForeign(['id_concept']);
+            $table->dropForeign(['id_applicant']);
             $table->dropForeign(['id_evaluator']);
         });
     }

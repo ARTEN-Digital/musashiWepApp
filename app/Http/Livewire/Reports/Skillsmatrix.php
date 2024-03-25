@@ -16,6 +16,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Auth;
+use Mail;
 use App\Models\Areas; 
 use App\Models\Categories; 
 use App\Models\Lines; 
@@ -32,8 +33,8 @@ class Skillsmatrix extends Component
     use LivewireAlert;
     use WithFileUploads; 
     use WithPagination;
-
-    public $numoperators = 0, $numprocess= 0;
+  
+    public $numoperators = 0, $numconcepts= 0;
 
     public $search, $areafilter, $linefilter, $categoryfilter, $modelfilter;
 
@@ -46,7 +47,7 @@ class Skillsmatrix extends Component
     public $modallevels = false, $mluser, $mltraining, $mlidprocess, $mlstatusprocess, $mldatel2;
 
     //variables para modal de checklist
-    public $modalchecklist = false, $mcuser, $mctraining, $mcprocess, $mcusercheck, $mcstarevldate, $mcselconcepstatus = [], $mcselconcepcomment = [], $mcresponsables = [], $mcrsblefilter;
+    public $modalchecklist = false, $mcuser, $mctraining, $mcprocess, $mcusercheck, $mcstarevldate, $mcselfirststatus = [], $mcshadowoperators = [], $mcapplicomments = [], $mcselsecondstatus = [], $mcevalcomments = [], $mcrsblefilter, $mcresponsables = [];
 
     protected $rules = [];
     protected $validationAttributes  = [
@@ -80,7 +81,7 @@ class Skillsmatrix extends Component
             $this->infoarea = Areas::where('id', $this->areafilter)->first();
 
             $this->numoperators = count($this->usersarea);
-            $this->numprocess = count($this->infoarea->processesfilters($this->linefilter, $this->categoryfilter, $this->modelfilter));
+            $this->numconcepts = count($this->infoarea->processesfilters($this->linefilter, $this->categoryfilter, $this->modelfilter));
         }
         else{
             $this->usersarea = [];
@@ -228,7 +229,7 @@ class Skillsmatrix extends Component
         if ($this->modalchecklist == true) {
             $this->modalchecklist = false;
             $this->modallevels = true;
-            $this->reset(['mcuser', 'mctraining', 'mcprocess', 'mcusercheck', 'mcstarevldate', 'mcselconcepstatus', 'mcselconcepcomment', 'mcresponsables', 'mcrsblefilter']);
+            $this->reset(['mcuser', 'mctraining', 'mcprocess', 'mcusercheck', 'mcstarevldate', 'mcselfirststatus', 'mcevalcomments', 'mcresponsables', 'mcrsblefilter']);
         } else {
             $this->modalchecklist = true;
             $this->modallevels = false;            
@@ -259,64 +260,178 @@ class Skillsmatrix extends Component
         else{
             $usercheckid = DB::table('user_checklist')->insertGetId([
                 'id_user' => $this->mcuser->id,
-                'id_checklist' => $this->mctraining->checklistevaluations->first()->id,
+                 'id_checklist' => $this->mctraining->checklistevaluations->first()->id,
                 'datestarteval' => $this->mcstarevldate,
                 'created_at' => date('Y-m-d H:m'),
             ]);
         }
 
+        $numconcepts = (count($this->mctraining->checklistevaluations->first()->concepts));
+        $numfirstanswers = 0;
 
-        $numprocess = (count($this->mctraining->checklistevaluations->first()->concepts));
-        $numanswers = 0;
-        foreach ($this->mcselconcepstatus as $key => $value) {
-           
-            $auxstatus = ($value != false) ? $auxstatus = '1' && $numanswers++ : $auxstatus = null;
-
+        foreach ($this->mcselfirststatus as $key => $value){
             $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            if($value != false){
+                $auxstatus = '1';
+                $numfirstanswers++;
+                $secondstatus = null;
+                $this->mcselsecondstatus[$key] = 'null';
+            }else{
+                $auxstatus = null;
+                $secondstatus = $auxusercheck->secondstatus;
+            }
             if($auxusercheck != null){
                 DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
-                    'status' => $auxstatus,
-                    'id_evaluator' => Auth::user()->id,
+                    'firststatus' => $auxstatus,
+                    'secondstatus' => $secondstatus, 
+                    'id_applicant' => Auth::user()->id,
                     'datefirsteval' => date('Y-m-d H:m'),
                     'updated_at' => date('Y-m-d H:m'),
                 ]);
             }
             else{
                 DB::table('user_answers_checklist')->insert([
-                    'status' => $auxstatus,
+                    'firststatus' => $auxstatus,
                     'id_user_checklist' => $usercheckid,
                     'id_concept' => $key,
-                    'id_evaluator' => Auth::user()->id,
+                    'id_applicant' => Auth::user()->id,
                     'datefirsteval' => date('Y-m-d H:m'),
                     'created_at' => date('Y-m-d H:m'),
                 ]);
             }
         }
 
-        foreach ($this->mcselconcepcomment as $key => $value) {
-                $aux = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
-                if($aux != null){
-                    DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
-                        'comment' => $value,
-                        'updated_at' => date('Y-m-d H:m'),
-                    ]);
-                }
-                else{
-                    DB::table('user_answers_checklist')->insert([
-                        'comment' => $value,
-                        'id_user_checklist' => $usercheckid,
-                        'id_concept' => $key,
-                        'created_at' => date('Y-m-d H:m'),
-                    ]);
-                }
+        foreach ($this->mcshadowoperators as $key => $value){
+            $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            if($auxusercheck != null){
+                DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
+                    'shadowoperator' => $value,
+                    'updated_at' => date('Y-m-d H:m'),
+                ]);
+            }
+            else{
+                DB::table('user_answers_checklist')->insert([
+                    'shadowoperator' => $value,
+                    'id_user_checklist' => $usercheckid,
+                    'id_concept' => $key,
+                    'created_at' => date('Y-m-d H:m'),
+                ]);
+            }
         }
 
-        if($numanswers == $numprocess){
+        foreach ($this->mcapplicomments as $key => $value){
+            $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            if($auxusercheck != null){
+                DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
+                    'applicantcomment' => $value,
+                    'updated_at' => date('Y-m-d H:m'),
+                ]);
+            }
+            else{
+                DB::table('user_answers_checklist')->insert([
+                    'applicantcomment' => $value,
+                    'id_user_checklist' => $usercheckid,
+                    'id_concept' => $key,
+                    'created_at' => date('Y-m-d H:m'),
+                ]);
+            }
+        }
+
+        
+
+        foreach ($this->mcselsecondstatus as $key => $value){
+            $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            $firstmailstatus = null;
+            switch ($value) {
+                case '1':
+                    $firststatus = null;
+                    $numfirstanswers--;
+                    $firstmailstatus = null;
+                    break;
+                case '2':
+                    $firststatus = $auxusercheck->firststatus;
+                    $firstmailstatus = 'send';
+                    break;
+                case 'null':
+                    $value = null;
+                    $firststatus = $auxusercheck->firststatus;
+                    break;
+                case null:
+                        $firststatus = $auxusercheck->firststatus;
+                    break;
+            }
+            if($auxusercheck != null){
+                DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
+                    'firststatus' => $firststatus,
+                    'secondstatus' => $value,
+                    'id_evaluator' => Auth::user()->id,
+                    'datesecondeval' => date('Y-m-d H:m'),
+                    'firststatusmail' => $firstmailstatus,
+                    'updated_at' => date('Y-m-d H:m'),
+                ]);
+            }
+            else{
+                DB::table('user_answers_checklist')->insert([
+                    'firststatus' => $firststatus,
+                    'secondstatus' => $value,
+                    'id_user_checklist' => $usercheckid,
+                    'id_concept' => $key,
+                    'id_evaluator' => Auth::user()->id,
+                    'datesecondeval' => date('Y-m-d H:m'),
+                    'firststatusmail' => $firstmailstatus,
+                    'created_at' => date('Y-m-d H:m'),
+                ]);
+            }
+        }
+
+        foreach ($this->mcevalcomments as $key => $value){
+            $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
+            if($auxusercheck != null){
+                DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where('id_concept', $key)->update([
+                    'evaluatorcomment' => $value,
+                    'updated_at' => date('Y-m-d H:m'),
+                ]);
+            }
+            else{
+                DB::table('user_answers_checklist')->insert([
+                    'evaluatorcomment' => $value,
+                    'id_user_checklist' => $usercheckid,
+                    'id_concept' => $key,
+                    'created_at' => date('Y-m-d H:m'),
+                ]);
+            }
+        }
+
+        if($numfirstanswers == $numconcepts){
             DB::table('user_process_statuses')->where('id_user', $this->mcuser->id)->where('id_process', $this->mcprocess->id)->update([
                 'status' => 'l2',
                 'l2_date' => date('Y-m-d H:m'),
                 'updated_at' => date('Y-m-d'),
             ]);
+
+            foreach($this->mctraining->checklistevaluations->first()->concepts as $data){
+                $auxuseranswer = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $data->id)->first();
+
+                if($auxuseranswer->firststatusmail == null){
+                    // $mailuser = $this->mcuser;
+                    // $mailprocess = $this->mcprocess;
+                    // $mailarea = Areas::where('id', $this->areafilter)->first();
+                    // $mailsubject = 'Nueva evaluación para revisar.';
+                    // $email = $data->user->email;
+                    
+                    // Mail::send('emails.newchecktraining',['mailprocess' => $mailprocess, 'mailarea' => $mailarea, 'mailuser' => $mailuser, 'email' => $email], function($msj) use($email,  $mailsubject, $mailprocess, $mailarea, $mailuser){
+                    //     $msj->subject($mailsubject);
+                    //     $msj->to($email);
+                    //     });
+                    
+                    DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where
+                    ('id_concept', $data->id)->update([
+                        'firststatusmail' => 'send',
+                    ]);
+                }
+            
+            } 
+
         }
         else{
             DB::table('user_process_statuses')->where('id_user', $this->mcuser->id)->where('id_process', $this->mcprocess->id)->update([
@@ -330,14 +445,14 @@ class Skillsmatrix extends Component
 
         $this->alert('success', 'Evaluación realizada con éxito.', [
             'position' => 'center',
-            'timer' => 3000,
+            'timer' => 3000, 
             'toast' => true,
            ]);
     }
 
-    public function getshadowoperator($iduserchecklist, $id_concept){
+    public function getapplicant($iduserchecklist, $id_concept){
 
-        $operator = User::leftJoin('user_answers_checklist', 'users.id', 'user_answers_checklist.id_evaluator')->where('user_answers_checklist.id_user_checklist', $iduserchecklist)->where('user_answers_checklist.id_concept', $id_concept)->select('users.*')->first();
+        $operator = User::leftJoin('user_answers_checklist', 'users.id', 'user_answers_checklist.id_applicant')->where('user_answers_checklist.id_user_checklist', $iduserchecklist)->where('user_answers_checklist.id_concept', $id_concept)->select('users.*')->first();
 
         $aux = ($operator != null) ? $operator->name . ' ' . $operator->lastname : '';
         return $aux;
@@ -352,13 +467,25 @@ class Skillsmatrix extends Component
         if($this->mcusercheck != null){
             $useranswers = Useranswerchecklist::where('id_user_checklist', $this->mcusercheck->id)->get();
             foreach ($useranswers as $ua) {
-                if($ua->status != null)
-                    $this->mcselconcepstatus[$ua->id_concept] = true;
+                if($ua->firststatus != null){
+                    $this->mcselfirststatus[$ua->id_concept] = true;
+                }else{
+                    $this->mcselfirststatus[$ua->id_concept] = false;
+                }
 
-                if($ua->comment != null)
-                    $this->mcselconcepcomment[$ua->id_concept] = $ua->comment;
+                if($ua->shadowoperator != null)
+                    $this->mcshadowoperators[$ua->id_concept] = $ua->shadowoperator;
+                    
+                if($ua->applicantcomment != null)
+                    $this->mcapplicomments[$ua->id_concept] = $ua->applicantcomment;
+                
+                $this->mcselsecondstatus[$ua->id_concept] = $ua->secondstatus;
+
+                if($ua->evaluatorcomment != null)
+                    $this->mcevalcomments[$ua->id_concept] = $ua->evaluatorcomment;
             }
         }
+
     }
 
 }

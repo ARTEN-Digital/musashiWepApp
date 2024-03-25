@@ -67,5 +67,5 @@ Route::middleware(['auth:sanctum', 'verified'])
 
 
 Route::get('/emailprueba', function(){
-    return view('emails.assigmentpetition');
+    return view('emails.newchecktraining');
 });

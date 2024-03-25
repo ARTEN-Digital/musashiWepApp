@@ -41,7 +41,7 @@ class Checklistcreatetopic extends Component
 
     public function render()
     {
-        $trainers = User::where('active', true)->where('id_usertype', 2)->get();
+        $trainers = User::where('active', true)->get();
         $topics = Topics::get();
 
         return view('livewire.trainings.checklistcreatetopic')->with('topics', $topics)->with('trainers', $trainers);

@@ -50,7 +50,7 @@
                     <p class="">Área:</p>
                     <select wire:change="getuserarea" wire:model.defer="areafilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 bg-neutral-200 text-neutral-500">
                         <option value="">Seleccionar...</option>
-                        @foreach($areas  as $area)
+                        @foreach($areas as $area)
                             <option value="{{$area->id}}">{{$area->name}}</option>
                         @endforeach
                     </select>
@@ -59,7 +59,7 @@
                     <p class="">Línea:</p>
                     <select wire:change="getuserarea" @if($areafilter == null) disabled @endif wire:model.defer="linefilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Seleccionar...</option>
-                        @foreach($lines  as $line)
+                        @foreach($lines as $line)
                             <option value="{{$line->id}}">{{$line->name}}</option>
                         @endforeach
                     </select>
@@ -68,7 +68,7 @@
                     <p class="">Categoría:</p>
                     <select wire:change="getuserarea" @if($areafilter == null) disabled @endif wire:model.defer="categoryfilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Seleccionar...</option>
-                        @foreach($categories  as $category)
+                        @foreach($categories as $category)
                             <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
@@ -107,7 +107,7 @@
                     <p class="text-sm">Operadores mostrados</p>
                 </div>
                 <div class="flex ml-8">
-                    <p class="font-semibold mr-2 underline decoration-2">{{$numprocess}}</p>
+                    <p class="font-semibold mr-2 underline decoration-2">{{$numconcepts}}</p>
                     <p class="text-sm">Operaciones mostradas</p>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                                             @endforeach
                                         @endif
                                         
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Total procesos</th>
+                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Total procesos iniciados</th>
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Porcentaje</th>
                                     </tr>
                                 </thead>
@@ -187,7 +187,7 @@
                                                 @endforeach
                                             @endif
                                             <td class="p-3 font-bold text-base text-center">{{$totalprocess}}</td>
-                                            @php $porcentage = ($numprocess != 0) ? (($totalprocess * 100)/ $numprocess) : 0; @endphp
+                                            @php $porcentage = ($numconcepts != 0) ? (($totalprocess * 100)/ $numconcepts) : 0; @endphp
                                             <td class="p-3 font-bold text-base text-center @if($porcentage >= 60) text-green-500 @else text-red-500 @endif">{{$porcentage}}%</td>
                                         </tr>
                                     @endforeach
@@ -199,12 +199,14 @@
                                             @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
                                                 @php $userscertificade = 0; @endphp
                                                 @foreach($usersarea as $up)
-                                                    @if($this->statusprocessxuser($up->id, $pxa->id) != null && $this->statusprocessxuser($up->id, $pxa->id)->status == 'l4')
-                                                    @php $userscertificade++; @endphp
+                                                    @if($this->statusprocessxuser($up->id, $pxa->id) != null) 
+                                                        @if($this->statusprocessxuser($up->id, $pxa->id)->status == 'l4' || $this->statusprocessxuser($up->id, $pxa->id)->status == 'l3')
+                                                            @php $userscertificade++; @endphp
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                                 @php $porcentageusers = ($numoperators != 0) ? (($userscertificade * 100)/ $numoperators) : 0; @endphp
-                                                <td class="p-3">{{$userscertificade}} / <span class="font-semibold @if($porcentageusers >= 60) text-green-500 @else text-red-500 @endif">{{$porcentageusers}}%</span></td>
+                                                <td class="p-3">{{$userscertificade}} / <span class="font-semibold @if($porcentageusers >= 60) text-gr  een-500 @else text-red-500 @endif">{{$porcentageusers}}%</span></td>
                                             @endforeach
                                         @endif
 
@@ -312,39 +314,56 @@
                                     <table class="min-w-full divide-y text-sm">
                                         <thead class="bg-neutral-400 text-white">
                                             <tr>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Tópico</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">#</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Concepto</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal">Entrenamiento cubierto</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Operador sombra</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Responsable</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Comentario</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Tópico</th>
+                                                <th class="p-1 w-12 text-sm font-normal">#</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Concepto</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Entrenamiento cubierto</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Evaluador</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Operador sombra</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Comentarios evaluador</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Resultado de evaluación</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Responsable</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Comentarios responsable</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
+                                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
                                             @if($mctraining != null)
                                                 @foreach ($mctraining->checklistevaluations->first()->conceptsxchklistfilter($mcrsblefilter) as $cpts)
                                                     <tr>
-                                                        <td class="p-1">{{$cpts->topics->name}}</td>
-                                                        <td class="p-1">{{$cpts->number}}</td>
-                                                        <td class="p-1">{{$cpts->concept}}
+                                                        <td class="py-1 px-3">{{$cpts->topics->name}}</td>
+                                                        <td class="py-1 px-3">{{$cpts->number}}</td>
+                                                        <td class="py-1 px-3">{{$cpts->concept}}
                                                         </td>
-                                                        <td class="p-1 text-center">
-                                                            <input wire:model="mcselconcepstatus.{{ $cpts->id }}"  class="before:content[''] peer relative h-8 w-8 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-500 before:opacity-0 before:transition-opacity checked:bg-blue-500  checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                        <td class="p-1">
+                                                        <td class="py-1 px-3 text-center">
+                                                            <input wire:model.defer="mcselfirststatus.{{ $cpts->id }}" class="before:content[''] peer relative h-8 w-8 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-500 before:opacity-0 before:transition-opacity checked:bg-blue-500  checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10 my-auto" type="checkbox">
+                                                        </td>
+                                                        <td class="py-1 px-3">
                                                             @if($mcusercheck != null)
                                                             <p class="text-sm text-neutral-400">
-                                                                {{$this->getshadowoperator($mcusercheck->id, $cpts->id)}}
+                                                                {{$this->getapplicant($mcusercheck->id, $cpts->id)}}
                                                             </p>
                                                             @endif
                                                         </td>
-                                                        <td class="p-1">
+                                                        <td class="py-1 px-3">
+                                                            <input wire:model.defer="mcshadowoperators.{{ $cpts->id }}" type="text" class=" border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm">
+                                                        </td>
+                                                        <td class="py-1 px-3"> 
+                                                            <textarea wire:model.defer="mcapplicomments.{{ $cpts->id }}" class="border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm"></textarea>
+                                                        </td>
+                                                        <td class="py-1 px-3 text-center">
+                                                             <select  wire:model.defer="mcselsecondstatus.{{$cpts->id}}" onchange="changestatus2({{ $cpts->id }}, this.value)" id="select_{{ $cpts->id }}" class="border-gray-300 rounded-md shadow-sm border-4 rounded-md text-gray-700 text-sm">
+                                                                <option value="null">Sin calificación</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="py-1 px-3 text-center">
                                                             <p class="text-sm text-neutral-400">
                                                                 {{$cpts->user->name . ' ' . $cpts->user->lastname}}
                                                             </p>
                                                         </td>
-                                                        <td class="p-1">
-                                                            <textarea wire:model.defer="mcselconcepcomment.{{ $cpts->id }}" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700"></textarea>
+                                                        <td class="py-1 px-3"> 
+                                                            <textarea wire:model.defer="mcevalcomments.{{ $cpts->id }}" class="border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm"></textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -391,7 +410,6 @@
 
 
                     <div class="flex flex-col bg-white py-4 px-8">
-                        <p class="text-sm text-right">Historial</p>
                         <div class="overflow-x-auto">
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <div class="overflow-hidden border md:rounded-lg">
@@ -640,11 +658,33 @@
         function closemdatetrainingexpired(){
             document.getElementById('modaldatetrainingexpired').classList.add('hidden');
         }
+        
+        function changestatus2(idinput, status){
+                var select = document.getElementById('select_' + idinput);
+                switch (status) {
+                    case '2':
+                        select.classList.remove('border-gray-300');
+                        select.classList.add('border-green-500');
+                        select.classList.remove('border-red-500');
+                        break;
+                
+                    case '1':
+                        select.classList.remove('border-gray-300');
+                        select.classList.add('border-red-500');
+                        select.classList.remove('border-green-500');
+                        break;
+                    
+                    case 'null':
+                        select.classList.add('border-gray-300');
+                        select.classList.remove('border-red-500');
+                        select.classList.remove('border-green-500');
+                        break;
+                }
+            }
     </script>
     @push('js')
         <script>
-            function changelvl(checkbox, idprocess, lvl)
-            {
+            function changelvl(checkbox, idprocess, lvl){
                 var msg = '';
                 var status = '';
 
@@ -675,6 +715,7 @@
                 })
             }
                 
+            
         </script>
     @endpush
 

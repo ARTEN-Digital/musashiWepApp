@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->text('status');
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_process');
-            $table->date('l1_date');
-            $table->date('l2_date');
-            $table->date('l3_date');
-            $table->date('l4_date');
+            $table->timestamp('l1_date');
+            $table->timestamp('l2_date');
+            $table->timestamp('l3_date');
+            $table->timestamp('l4_date');
             $table->timestamps();
         });
     }

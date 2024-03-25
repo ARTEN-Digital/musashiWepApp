@@ -37,8 +37,8 @@ class Assignmentusers extends Component
     protected $listeners = ['assigment', 'assigmentagain', 'unassigment'];
 
     public function render(){
-        $leaders = User::where('is_leader', true)->get();
-        $areas = Areas::get();
+        $leaders = User::where('is_leader', true)->orderBy('name', 'ASC')->get();
+        $areas = Areas::orderBy('name', 'ASC')->get();
 
         if(Auth::user()->is_leader){
             $this->leaderfilteradmin = Auth::user()->id;
@@ -50,6 +50,7 @@ class Assignmentusers extends Component
             ->leftJoin('leader_users', 'users.id', 'leader_users.id_user')
             ->where('leader_users.id_leader', $this->leaderfilteradmin)
             ->where('users.active', true)
+            ->orderBy('users.name', 'ASC')
             ->select('users.*', 'user_types.name as usertype_name', 'positions.name as positions_name', 'areas.name as area_name', 'leader_users.id_leader as liderpet', 'leader_users.status as statusleader')
             ->get();
 
@@ -67,6 +68,7 @@ class Assignmentusers extends Component
             ->when($this->areafilter != '', function ($query){
                 return $query->where('areas.id', $this->areafilter);
             })
+            ->orderBy('users.name', 'ASC')
             ->get();
 
         return view('livewire.users.assignmentusers')->with('leaders', $leaders)->with('areas', $areas)->with('usersassigment', $usersassigment)->with('userstoassigmentfree', $userstoassigmentfree);

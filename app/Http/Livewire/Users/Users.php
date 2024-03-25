@@ -38,6 +38,7 @@ class Users extends Component
             ->orWhere('users.payroll', 'LIKE', '%' . $this->search . '%')
             //->where('users.id_usertype', '!=', '5')
             ->select('users.*', 'user_types.name as usertype_name', 'positions.name as positions_name', 'areas.name as area_name')
+            ->orderBy('name', 'ASC')
             ->get();
 
         // $operators = User::leftJoin('user_types', 'users.id_usertype', 'user_types.id')

@@ -32,7 +32,7 @@ class Assignment extends Component
 
     public function render()
     {
-        $leaders = Users::where('is_leader', true)->get();
+        $leaders = User::where('is_leader', true)->get();
         $areas = Areas::get();
 
         return view('livewire.assignment.assignment')->with('leaders', $leaders)->with('areas', $areas);

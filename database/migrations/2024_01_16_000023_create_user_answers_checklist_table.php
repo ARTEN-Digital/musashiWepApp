@@ -12,12 +12,19 @@ return new class extends Migration {
     {
         Schema::create('user_answers_checklist', function (Blueprint $table) {
             $table->id();
-            $table->text('status');
+            $table->text('firststatus')->nullable();
             $table->unsignedBigInteger('id_user_checklist');
             $table->unsignedBigInteger('id_concept');
-            $table->unsignedBigInteger('id_evaluator');
-            $table->text('comment');
-            $table->date('datefirsteval');
+            $table->unsignedBigInteger('id_applicant')->nullable();
+            $table->text('shadowoperator')->nullable();
+            $table->text('applicantcomment')->nullable();
+            $table->timestamp('datefirsteval')->nullable();
+            $table->text('secondstatus')->nullable();
+            $table->unsignedBigInteger('id_evaluator')->nullable();
+            $table->text('evaluatorcomment')->nullable();
+            $table->timestamp('datesecondeval')->nullable();
+            $table->text('firststatusmail')->nullable();
+            $table->text('secondstatusmail')->nullable();
             $table->timestamps();
         });
     }

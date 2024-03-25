@@ -74,3 +74,15 @@
 }
 
 /*reports*/
+
+.shadow-red:hover{
+    filter: drop-shadow(
+        0 0 1px rgba(247, 107, 107, 0.8) 
+    );
+}
+
+.shadow-green:hover{
+    filter: drop-shadow(
+        0 0 1px rgba(135, 247, 107, 0.8) 
+    );
+}

@@ -28,12 +28,15 @@ class Trainingschecklist extends Component
 
     public $idTraining, $trainingname;
 
-    public $idchkselect;
+    public $idchkselect, $allconcepts = [], $search;
+
+    public $modalconcepts = false, $msconceptselect = [];
 
     protected $listeners = ['aftercreateeditConcept', 'deleteconcept'];
 
     public function render()
     {
+
         $actualtraining = training::where('id', $this->idTraining)->first();
 
         if(count($actualtraining->checklistevaluations) == 0){
@@ -82,5 +85,22 @@ class Trainingschecklist extends Component
             'timer' => 5000,
             'toast' => true,
            ]);
+    }
+
+    public function scmodalconcepts(){
+        if ($this->modalconcepts == true) {
+            $this->modalconcepts = false;
+        } else {
+            $this->modalconcepts = true;
+
+            $this->getconcepts();
+            
+        }
+    }
+
+    public function getconcepts(){
+        $this->allconcepts = Concepts::leftJoin('topics', 'concepts.id_topics', 'topics.id')->when($this->search != '', function ($query){
+            $query->orWhere('concepts.concept', 'LIKE', '%' . $this->search . '%')->orWhere('concepts.number', 'LIKE', '%' . $this->search . '%')->orWhere('topics.name', 'LIKE', '%' . $this->search . '%');
+        })->orderBy('concepts.concept', 'ASC')->get();
     }
 }

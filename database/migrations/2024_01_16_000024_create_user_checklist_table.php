@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_checklist');
-            $table->date('datestarteval');
+            $table->timestamp('datestarteval');
             $table->timestamps();
         });
     }

@@ -55,9 +55,9 @@ class Userscreate extends Component
 
     public function render()
     {
-        $roles = Usertype::get();
-        $positions = Positions::get();
-        $areas = Areas::get();
+        $roles = Usertype::orderBy('name', 'ASC')->get();
+        $positions = Positions::orderBy('name', 'ASC')->get();
+        $areas = Areas::orderBy('name', 'ASC')->get();
 
         return view('livewire.users.userscreate')->with('roles', $roles)->with('positions', $positions)->with('areas', $areas);
     }
