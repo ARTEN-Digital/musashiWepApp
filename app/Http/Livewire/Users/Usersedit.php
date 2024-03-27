@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Models\Areas;
 use App\Models\Positions;
 use App\Models\Usertype;
+use App\Models\Userhistory;
 use Illuminate\Validation\Rules\Password;
 
 class Usersedit extends Component
@@ -153,7 +154,15 @@ class Usersedit extends Component
                 'updated_at' => date('Y-m-d H:m:s'),
                 'image_profile' => $path_doc,
             ]);
-        }   
+        }
+        
+        Userhistory::create([
+            'id_user' => $this->iduserselect,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Edición de usuario.',
+            'description' => '',
+            'dateaction' => date('Y-m-d H:m'),
+        ]);
 
         $this->alert('success', 'Usuario actualizado con éxito.', [
             'position' => 'center',

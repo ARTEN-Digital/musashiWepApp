@@ -32,4 +32,10 @@ class Process extends Model
         return $this->belongsToMany(Models::class, 'process_models', 'id_process', 'id_model');
     }
 
+    public function training(){
+        return $this->hasOne(Trainings::class, 'id_process', 'id')->latestOfMany();
+    }
+
+
+
 }

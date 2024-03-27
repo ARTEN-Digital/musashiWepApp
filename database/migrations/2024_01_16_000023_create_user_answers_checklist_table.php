@@ -24,7 +24,6 @@ return new class extends Migration {
             $table->text('evaluatorcomment')->nullable();
             $table->timestamp('datesecondeval')->nullable();
             $table->text('firststatusmail')->nullable();
-            $table->text('secondstatusmail')->nullable();
             $table->timestamps();
         });
     }

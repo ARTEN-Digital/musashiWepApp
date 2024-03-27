@@ -1,201 +1,162 @@
 <div>
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="getuserarea, scmodalassignation, trainingassignation, scmodallevel, changelevel, scmodalchecklist, savechecklist" >
+        <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
+        <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
+            <div class="flex justify-center items-center">
+                <div
+                class="
+                    loader
+                    ease-linear
+                    rounded-full
+                    border-8 border-t-8 border-gray-200
+                    h-32
+                    w-32
+                "
+                ></div>
+                <div class="absolute">Cargando...</div>
+            </div>
+        </div> 
+    </div>
+
     <div class="flex" style="height:90vh">
         <div class="w-full p-5 bg-white rounded shadow-lg">
             <p class="text-xl font-bold">Asignación de capacitaciones</p>
             <div class="flex my-3">
+                <div class="flex flex-col w-1/4 mx-5">
+                    <label class="w-full">Área</label>
+                    <select wire:change="getuserarea" wire:model.defer="areafilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 bg-neutral-200 text-neutral-500">
+                        <option value="">Seleccionar...</option>
+                        @foreach($areas as $area)
+                            <option value="{{$area->id}}">{{$area->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="flex flex-col w-1/4">
-                    <label class="w-full">Líder</label>
+                    <label class="w-full">Solicitante</label>
                     <select class="w-full my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
                         <option value="">Hector Azua</option>
                         <option value="">Jhon Quistiano</option>
                         <option value="">Fernanda Bueno</option>
                     </select>
                 </div>
-                <div class="flex flex-col w-1/4 mx-5">
-                    <label class="w-full">Área</label>
-                    <select class="w-full my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-2 px-3 text-gray-700">
-                        <option value="">Área 1</option>
-                        <option value="">Área 2</option>
-                        <option value="">Área 3</option>
-                    </select>
-                </div>
+                
             </div>
 
             <div class="my-3 flex">
                 <div class="flex">
-                    <p class="font-semibold mr-2 underline decoration-2">30</p>
+                    <p class="font-semibold mr-2 underline decoration-2">{{$numoperators}}</p>
                     <p class="text-sm">Operadores mostrados</p>
                 </div>
                 <div class="flex ml-8">
-                    <p class="font-semibold mr-2 underline decoration-2">5</p>
-                    <p class="text-sm">Capacitaciones mostradas</p>
+                    <p class="font-semibold mr-2 underline decoration-2">{{$numconcepts}}</p>
+                    <p class="text-sm">Operaciones mostradas</p>
                 </div>
             </div>
 
             <div class="flex flex-col">
                 <div class="overflow-x-auto">
                     <div class="inline-block min-w-full py-2 align-middle">
-                        <div class="overflow-hidden border md:rounded-lg">
+                        <div class="overflow-hidden border rounded-lg">
                             <table class="min-w-full divide-y text-sm">
                                 <thead class="bg-neutral-400 text-white">
                                     <tr>
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Nómina</th>
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Nombre</th>
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Puesto</th>
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Rol</th>
 
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Proc 1</th>
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Proc 2</th>
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Proc 3</th>
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Proc 4</th>
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Proc 5</th>
+                                        @if($infoarea != null)
+                                            @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
+                                                <th scope="col" class="p-3 w-fit text-xs font-normal text-left rtl:text-right">{{$pxa->number_process . '-' . $pxa->name}}</th>
+                                            @endforeach
+                                        @endif
                                         
-                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Total procesos</th>
+                                        <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Total procesos iniciados</th>
                                         <th scope="col" class="p-3 w-fit text-sm font-normal text-left rtl:text-right">Porcentaje</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach($usersarea as $up)
+                                        <tr>
+                                            <td class="p-3">{{$up->payroll}}</td>
+                                            <td class="p-3">{{$up->name . ' ' . $up->lastname}}</td>
+                                            <td class="p-3">{{$up->position->name}}</td>
+                                            @if($infoarea != null)
+                                                @php $totalprocess = 0; @endphp
+                                                @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
+                                                   
+                                                    <td class="p-3">
+                                                        @if($this->statusprocessxuser($up->id, $pxa->id) == null)
+                                                            <button wire:click="scmodalassignation({{$up->id}}, {{$pxa->id}})" class="bg-neutral-200 hover:bg-neutral-200 text-neutral-400 text-xs px-2 py-1 rounded-lg w-20">
+                                                                Sin asignar
+                                                            </button>
+                                                        @else
+                                                            @switch($this->statusprocessxuser($up->id, $pxa->id)->status)
+                                                                @case('pending')
+                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
+                                                                        Pendiente
+                                                                    </button>
+                                                                     @break
+                                                                @case('l1')
+                                                                    @php $totalprocess++; @endphp
+                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                        ET
+                                                                    </button>
+                                                                    @break
+                                                                @case('l2')
+                                                                    @php $totalprocess++; @endphp
+                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                        EE
+                                                                    </button>
+                                                                    @break
+                                                                @case('l3')
+                                                                    @php $totalprocess++; @endphp
+                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                        H
+                                                                    </button>
+                                                                    @break
+                                                                @case('l4')
+                                                                    @php $totalprocess++; @endphp
+                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
+                                                                        C
+                                                                    </button>
+                                                                    @break
+                                                                @default
+                                                                    
+                                                            @endswitch
+                                                        @endif
+                                                    </td>
+                                                @endforeach
+                                            @endif
+                                            <td class="p-3 font-bold text-base text-center">{{$totalprocess}}</td>
+                                            @php $porcentage = ($numconcepts != 0) ? (($totalprocess * 100)/ $numconcepts) : 0; @endphp
+                                            <td class="p-3 font-bold text-base text-center @if($porcentage >= 60) text-green-500 @else text-red-500 @endif">{{$porcentage}}%</td>
+                                        </tr>
+                                    @endforeach
                                     <tr>
-                                        <td class="p-3">13431</td>
-                                        <td class="p-3">Hilario Ojeda</td>
-                                        <td class="p-3">Líder</td>
-                                        <td class="p-3">Operador</td>
-                                        <td class="p-3">
-                                            <button onclick="showmchecklist()" class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                                                C
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button onclick="showmhistory()" class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                ET
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                EE
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                H
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Expirado
-                                            </button>
-                                        </td>
-                                        <td class="p-3 font-bold text-base text-center">5</td>
-                                        <td class="p-3 font-bold text-base text-center text-red-500">20%</td>
-                                    </tr>
+                                        <td class="p-3">Número de operadores certificados por proceso</td>
+                                        <td></td>
+                                        <td></td>
+                                        @if($infoarea != null)
+                                            @foreach($infoarea->processesfilters($linefilter, $categoryfilter, $modelfilter) as $pxa)
+                                                @php $userscertificade = 0; @endphp
+                                                @foreach($usersarea as $up)
+                                                    @if($this->statusprocessxuser($up->id, $pxa->id) != null) 
+                                                        @if($this->statusprocessxuser($up->id, $pxa->id)->status == 'l4' || $this->statusprocessxuser($up->id, $pxa->id)->status == 'l3')
+                                                            @php $userscertificade++; @endphp
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                                @php $porcentageusers = ($numoperators != 0) ? (($userscertificade * 100)/ $numoperators) : 0; @endphp
+                                                <td class="p-3">{{$userscertificade}} / <span class="font-semibold @if($porcentageusers >= 60) text-gr  een-500 @else text-red-500 @endif">{{$porcentageusers}}%</span></td>
+                                            @endforeach
+                                        @endif
 
-                                    <tr>
-                                        <td class="p-3">13431</td>
-                                        <td class="p-3">Hilario Ojeda</td>
-                                        <td class="p-3">Líder</td>
-                                        <td class="p-3">Operador</td>
-                                        <td class="p-3">
-                                            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                                                C
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button onclick="showmdatetraining()" class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Pendiente
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                                                Sin asignar
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                                                Sin asignar
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button onclick="showmdatetrainingexpired()" class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Expirado
-                                            </button>
-                                        </td>
-                                        <td class="p-3 font-bold text-base text-center">5</td>
-                                        <td class="p-3 font-bold text-base text-center text-green-500">60%</td>
                                     </tr>
-                                    
-                                    <tr>
-                                        <td class="p-3">13431</td>
-                                        <td class="p-3">Hilario Ojeda</td>
-                                        <td class="p-3">Líder</td>
-                                        <td class="p-3">Operador</td>
-                                        <td class="p-3">
-                                            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                                                C
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                ET
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                EE
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                                                H
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Expirado
-                                            </button>
-                                        </td>
-                                        <td class="p-3 font-bold text-base text-center">5</td>
-                                        <td class="p-3 font-bold text-base text-center text-red-500">20%</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="p-3">13431</td>
-                                        <td class="p-3">Hilario Ojeda</td>
-                                        <td class="p-3">Líder</td>
-                                        <td class="p-3">Operador</td>
-                                        <td class="p-3">
-                                            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                                                C
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Pendiente
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                                                Sin asignar
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                                                Sin asignar
-                                            </button>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                                                Expirado
-                                            </button>
-                                        </td>
-                                        <td class="p-3 font-bold text-base text-center">5</td>
-                                        <td class="p-3 font-bold text-base text-center text-green-500">60%</td>
-                                    </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
+                 </div>
             </div>
             
         </div>
@@ -203,7 +164,7 @@
     </div>
 
     <!--modal checklist de capacitación-->
-    <div id="modalchecklist" class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
+    <div id="modalchecklist" class="top-20 @if(!$modalchecklist) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
@@ -213,33 +174,45 @@
                             Checklist de capacitación
                         </h2>
                     
-                        <svg onclick="closemchecklist()" class="w-6 h-6 cursor-pointer text-gray-500  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodalchecklist(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                            </svg>
+                        </button>
                     </div>
 
                     <div class="flex bg-white py-3">
-                        <div class="w-1/4 px-16">
-                            <img src="/imgs/user.png" class="h-32 w-32 mx-auto shadow-xl rounded-full" alt="">
-                        </div>
-                        <div class="w-3/4 text-gray-500">
-                            <p class="text-lg font-semibold">343117 - Hilario Ojeda</p>
-                            <p class="text-sm my-1">Ball Joint - Ensamble</p>
-                            <p class="text-sm my-1">Modelo: 123456</p>
-                            <p class="text-sm my-1">Línea: Línea 360</p>
-                        </div>
+                        @if ($mcuser != null)
+                            <div class="w-1/4 px-16">
+                                <img src="{{$mcuser->image_profile}}" class="h-32 w-32 object-cover mx-auto shadow-xl rounded-full" alt="">
+                            </div>
+                            <div class="w-3/4 text-gray-500">
+                                <p class="text-lg font-semibold">{{$mcuser->payroll . ' - ' . $mcuser->name . ' ' . $mcuser->lastname}}</p>
+                                <p class="text-sm my-1">{{$mcuser->area->name}} - {{$mcuser->position->name}}</p>
+                                <p class="text-sm my-1">Proceso: {{$mcprocess->name}}</p>
+                                <p class="text-sm my-1">Capacitación: {{$mctraining->name}}</p>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="flex bg-white py-3">
                         <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Fecha de inicio de entrenamiento</p>
-                                <input type="date" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 bg-neutral-400 text-white">
+                                <input wire:model.defer="mcstarevldate" type="datetime-local" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 bg-neutral-400 text-white">
+                                <div class="text-center">
+                                    <span class="text-red-500 text-xs italic">
+                                        @error('mcstarevldate')
+                                            {{$message}}
+                                        @enderror
+                                    </span>
+                                </div>
+                            
                             </div>
                         </div>
-                        <div class="w-1/4 my-1">
+                        {{-- <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Operador sombra:</p>
                                 <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
@@ -249,21 +222,26 @@
                                     <option value="">opcion 4</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Responsable:</p>
-                                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
-                                    <option value="">opcion 1</option>
-                                    <option value="">opcion 2</option>
-                                    <option value="">opcion 3</option>
-                                    <option value="">opcion 4</option>
+                                @if($mctraining != null && $mcuser != null && $mcprocess != null)
+                                <select wire:change="getmodalchecklistdata({{$mcuser->id}}, {{$mcprocess->id}})" wire:model.defer="mcrsblefilter" class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
+                                    <option value="">Seleccionar...</option>
+                                        @foreach($mctraining->checklistevaluations->first()->concepts as $cpts)
+                                            @if(!in_array($cpts->user, $mcresponsables))
+                                                @php array_push($mcresponsables, $cpts->user); @endphp
+                                                <option value="{{$cpts->user->id}}">{{$cpts->user->name . ' ' . $cpts->user->lastname}}</option>
+                                            @endif
+                                        @endforeach
                                 </select>
+                                @endif
                             </div>
                         </div>
                         <div class="w-1/4 my-1 mx-auto">
                             <p class="my-1 text-sm text-transparent">n</p>
-                            <button class="w-1/2 ml-auto px-4 py-1 text-white font-semibold text-white  bg-neutral-400 hover:bg-neutral-500 rounded cursor-pointer"> 
+                            <button wire:click="savechecklist" class="w-1/2 ml-auto px-4 py-1 text-white font-semibold text-white  bg-neutral-400 hover:bg-neutral-500 rounded cursor-pointer"> 
                                 Guardar 
                             </button>
                         </div>
@@ -277,120 +255,60 @@
                                     <table class="min-w-full divide-y text-sm">
                                         <thead class="bg-neutral-400 text-white">
                                             <tr>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Tópicos</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">#</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Conceptos</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Entrenamiento cubierto</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Evaluación</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left rtl:text-right">Resultado</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Tópico</th>
+                                                <th class="p-1 w-12 text-sm font-normal">#</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Concepto</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Entrenamiento cubierto</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Evaluador</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Operador sombra</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Comentarios evaluador</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Resultado de evaluación</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Responsable</th>
+                                                <th class="p-1 w-12 text-sm font-normal">Comentarios responsable</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:bg-neutral-400 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td class="p-1">Entrenamiento</td>
-                                                <td class="p-1">9.9</td>
-                                                <td class="p-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus id quam fuga tempora quos. Ab.
-                                                </td>
-                                                <td class="p-5">
-                                                    <input  class="before:content[''] peer relative h-6 w-6 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-neutral-400 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-neutral-400 checked:before:bg-neutral-400 hover:before:opacity-10 my-auto" type="checkbox" name="" id=""></td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-1/2 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                                <td class="p-1">
-                                                    <input type="text" class="w-3/4 mx-auto my-1 border-neutral-400 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm border rounded py-1 px-3 text-gray-700">
-                                                </td>
-                                            </tr>
-
+                                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                                            @if($mctraining != null)
+                                                @foreach ($mctraining->checklistevaluations->first()->conceptsxchklistfilter($mcrsblefilter) as $cpts)
+                                                    <tr>
+                                                        <td class="py-1 px-3">{{$cpts->topics->name}}</td>
+                                                        <td class="py-1 px-3">{{$cpts->number}}</td>
+                                                        <td class="py-1 px-3">{{$cpts->concept}}
+                                                        </td>
+                                                        <td class="py-1 px-3 text-center">
+                                                            <input wire:model.defer="mcselfirststatus.{{ $cpts->id }}" class="before:content[''] peer relative h-8 w-8 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-400 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-500 before:opacity-0 before:transition-opacity checked:bg-blue-500  checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10 my-auto" type="checkbox">
+                                                        </td>
+                                                        <td class="py-1 px-3">
+                                                            @if($mcusercheck != null)
+                                                            <p class="text-sm text-neutral-400">
+                                                                {{$this->getapplicant($mcusercheck->id, $cpts->id)}}
+                                                            </p>
+                                                            @endif
+                                                        </td>
+                                                        <td class="py-1 px-3">
+                                                            <input wire:model.defer="mcshadowoperators.{{ $cpts->id }}" type="text" class=" border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm">
+                                                        </td>
+                                                        <td class="py-1 px-3"> 
+                                                            <textarea wire:model.defer="mcapplicomments.{{ $cpts->id }}" class="border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm"></textarea>
+                                                        </td>
+                                                        <td class="py-1 px-3 text-center">
+                                                             <select  wire:model.defer="mcselsecondstatus.{{$cpts->id}}" onchange="changestatus2({{ $cpts->id }}, this.value)" id="select_{{ $cpts->id }}" class="border-gray-300 rounded-md shadow-sm border-4 rounded-md text-gray-700 text-sm">
+                                                                <option value="null">Sin calificación</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="py-1 px-3 text-center">
+                                                            <p class="text-sm text-neutral-400">
+                                                                {{$cpts->user->name . ' ' . $cpts->user->lastname}}
+                                                            </p>
+                                                        </td>
+                                                        <td class="py-1 px-3"> 
+                                                            <textarea wire:model.defer="mcevalcomments.{{ $cpts->id }}" class="border-gray-300 focus:border-gray-400 focus:ring focus:ring-gray-400 rounded-md shadow-sm border rounded py-1 px-3 text-gray-700 text-sm"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -402,125 +320,151 @@
     </div>
 
     <!--modal de historial-->
-    <div id="modalhistorylist" class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
+    <div id="modalhistorylist" class="top-20 @if(!$modallevels) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
             <div class=" flex flex-col w-7/12 mx-auto rounded-lg shadow-xl overflow-y-auto" style="max-height: 90%;">
                     <div class="flex flex-row justify-between px-6 py-3 bg-white text-white rounded-tl-lg rounded-tr-lg">
-                        <svg onclick="closemmhistory()" class="w-6 h-6 cursor-pointer text-gray-500 ml-auto  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodallevel(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                            </svg>
+                        </button>
+                        
                     </div>
 
-                    <div class="flex py-1 bg-white text-sm font-semibold px-8">
-                        <p class="mr-5">343117</p>
-                        <p>Hilario Ojeda</p>
-                    </div>
+                    @if($mluser != null)
+                        <div class="flex py-1 bg-white font-semibold px-8">
+                            <p class="mr-5">{{$mluser->payroll}}</p>
+                            <p>{{$mluser->name . ' ' . $mluser->lastname}}</p>
+                        </div>
+                    @endif
 
-                    <div class="flex py-1 bg-white font-bold px-8">
-                        <p>Ensamble de Ball Joint</p>
-                    </div>
+                    @if($mltraining != null)
+                        <div class="flex py-1 text-xl bg-white font-bold px-8">
+                            {{$mltraining->name}}
+                        </div>
+                    @endif
 
-                    <div class="flex flex-col bg-white px-8">
-                        <p class="text-sm text-right">Historial</p>
+
+                    <div class="flex flex-col bg-white py-4 px-8">
                         <div class="overflow-x-auto">
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <div class="overflow-hidden border md:rounded-lg">
                                     <table class="min-w-full divide-y text-sm">
                                         <thead class="bg-neutral-400 text-white">
                                             <tr>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Nivel</th>
+                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-center">Nivel</th>
                                                 <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Fecha de modificación</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Rol</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Líder</th>
-                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left"></th>
+                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Capacitador</th>
+                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Checklist</th>
+                                                
+                                                {{-- <th scope="col" class="p-1 w-fit text-sm font-normal text-center">Comentarios</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                            <tr>
-                                                <td class="flex p-2">
-                                                    <input  class="before:content[''] peer relative h-5 w-5 mx-auto cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-yellow-500 before:opacity-0 before:transition-opacity checked:bg-yellow-500 checked:bg-yellow-500 checked:before:yellow-500 hover:before:opacity-10 my-auto mx-3" type="checkbox" name="" id="" checked>
-                                                    <p class="mx-3">Nivel 1 ET</p>
-                                                </td>
-                                                <td class="p-2">
-                                                    <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
-                                                </td>
-                                                <td class="p-2">
-                                                    Capacitador
-                                                </td>
-                                                <td class="p-2">
-                                                    Mayte del Angel
-                                                </td>
-                                                <td class="p-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                    </svg>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="flex p-2">
-                                                    <input  class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-orangeColor before:opacity-0 before:transition-opacity checked:bg-orangeColor checked:orangeColor checked:before:orangeColor hover:before:opacity-10 my-auto mx-3" type="checkbox" name="" id="" checked>
-                                                    <p class="mx-3">Nivel 2 EE</p>
-                                                </td>
-                                                <td class="p-2">
-                                                    <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
-                                                </td>
-                                                <td class="p-2">
-                                                    Capacitador
-                                                </td>
-                                                <td class="p-2">
-                                                    Mayte del Angel
-                                                </td>
-                                                <td class="p-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                    </svg>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="flex p-2">
-                                                    <input  class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-greenColor before:opacity-0 before:transition-opacity checked:bg-greenColor checked:greenColor checked:before:greenColor hover:before:opacity-10 my-auto mx-3" type="checkbox" name="" id="" checked>
-                                                    <p class="mx-3">Nivel 3 H</p>
-                                                </td>
-                                                <td class="p-2">
-                                                    <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
-                                                </td>
-                                                <td class="p-2">
-                                                    Capacitador
-                                                </td>
-                                                <td class="p-2">
-                                                    Mayte del Angel
-                                                </td>
-                                                <td class="p-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                    </svg>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="flex p-2">
-                                                    <input  class="before:content[''] peer relative h-5 w-5 mx-3 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blueColor before:opacity-0 before:transition-opacity checked:bg-blueColor checked:blueColor checked:before:blueColor hover:before:opacity-10 my-auto" type="checkbox" name="" id="" checked>
-                                                    <p class="mx-3">Nivel 4 C</p>
-                                                </td>
-                                                <td class="p-2">
-                                                    <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
-                                                </td>
-                                                <td class="p-2">
-                                                    Capacitador
-                                                </td>
-                                                <td class="p-2">
-                                                    Mayte del Angel
-                                                </td>
-                                                <td class="p-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                    </svg>
-                                                </td>
-                                            </tr>
-
+                                            @if($mltraining != null)
+                                                @foreach ($mltraining->allLeves as $lvl)
+                                                <tr>
+                                                    @switch($lvl->id)
+                                                        @case(1)
+                                                                <td class="flex p-2">
+                                                                    <input onchange="changelvl(this, '{{$mlstatusprocess->id}}', 'l1')" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-yellow-500 before:opacity-0 before:transition-opacity checked:bg-yellow-500 checked:bg-yellow-500 checked:before:yellow-500 hover:before:opacity-10 my-auto mx-3" type="checkbox"
+                                                                    @if($mlstatusprocess->status == 'l1' || $mlstatusprocess->status == 'l2' || $mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
+                                                                        checked    
+                                                                    @endif>
+                                                                    <p class="mx-3">Nivel 1 ET</p>
+                                                                </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->l1_date != null)
+                                                                        <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1" value="{{$mlstatusprocess->l1_date}}" disabled>
+                                                                    @else
+                                                                        <p class="text-neutral-400 text-sm">NA</p>
+                                                                    @endif
+                                                                </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->trainerl1 != null)
+                                                                    {{$mlstatusprocess->trainerl1->name . ' ' . $mlstatusprocess->trainerl1->lastname}}
+                                                                    @endif
+                                                                </td>
+                                                                <td class="p-2"></td>
+                                                            @break
+                                                        @case(2)
+                                                            <td class="flex p-2">
+                                                                <input onchange="changelvl(this, '{{$mlstatusprocess->id}}', 'l2')" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-orangeColor before:opacity-0 before:transition-opacity checked:bg-orangeColor checked:orangeColor checked:before:orangeColor hover:before:opacity-10 my-auto mx-3" type="checkbox" @if($mlstatusprocess->status == 'l2' || $mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
+                                                                checked @endif>
+                                                                <p class="mx-3">Nivel 2 EE</p>
+                                                            </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->l2_date != null)
+                                                                        <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1" value="{{$mlstatusprocess->l2_date}}" disabled>
+                                                                    @else
+                                                                        <p class="text-neutral-400 text-sm">NA</p>
+                                                                    @endif
+                                                            </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->trainerl2 != null)
+                                                                {{$mlstatusprocess->trainerl2->name . ' ' . $mlstatusprocess->trainerl2->lastname}}
+                                                                @endif
+                                                            </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->status == 'l1' || $mlstatusprocess->status == 'l2' || $mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
+                                                                <button wire:click="scmodalchecklist({{$mluser->id}}, {{$mlidprocess}})" class="bg-blue-500 hover:bg-red-blue/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                                                        <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
+                                                                        <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375Zm9.586 4.594a.75.75 0 0 0-1.172-.938l-2.476 3.096-.908-.907a.75.75 0 0 0-1.06 1.06l1.5 1.5a.75.75 0 0 0 1.116-.062l3-3.75Z" clip-rule="evenodd" />
+                                                                      </svg>
+                                                                                        
+                                                                </button>
+                                                                @endif
+                                                            </td>
+                                                            @break
+                                                        @case(3)
+                                                                <td class="flex p-2">
+                                                                    <input onchange="changelvl(this, '{{$mlstatusprocess->id}}', 'l3')" class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-greenColor before:opacity-0 before:transition-opacity checked:bg-greenColor checked:greenColor checked:before:greenColor hover:before:opacity-10 my-auto mx-3" type="checkbox" @if($mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
+                                                                    checked @endif>
+                                                                    <p class="mx-3">Nivel 3 H</p>
+                                                                </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->l3_date != null)
+                                                                        <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1" value="{{$mlstatusprocess->l3_date}}" disabled>
+                                                                    @else
+                                                                        <p class="text-neutral-400 text-sm">NA</p>
+                                                                    @endif
+                                                                </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->trainerl3 != null)
+                                                                    {{$mlstatusprocess->trainerl3->name . ' ' . $mlstatusprocess->trainerl3->lastname}}
+                                                                    @endif
+                                                                </td>
+                                                                <td class="p-2"></td>
+                                                            @break
+                                                        @case(4)
+                                                            <td class="flex p-2">
+                                                                <input onchange="changelvl(this, '{{$mlstatusprocess->id}}', 'l4')" class="before:content[''] peer relative h-5 w-5 mx-3 cursor-pointer appearance-none rounded-md border border-neutral-300 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blueColor before:opacity-0 before:transition-opacity checked:bg-blueColor checked:blueColor checked:before:blueColor hover:before:opacity-10 my-auto" type="checkbox" @if($mlstatusprocess->status == 'l4') checked @endif>
+                                                                <p class="mx-3">Nivel 4 C</p>
+                                                            </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->l4_date != null)
+                                                                    <input type="datetime-local" class="border-neutral-400 focus:border-neutral-400 text-sm  focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1" value="{{$mlstatusprocess->l4_date}}" disabled>
+                                                                @else
+                                                                     <p class="text-neutral-400 text-sm">NA</p>
+                                                                @endif
+                                                            </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->trainerl4 != null)
+                                                                    {{$mlstatusprocess->trainerl4->name . ' ' . $mlstatusprocess->trainerl4->lastname}}
+                                                                @endif
+                                                            </td>
+                                                            <td class="p-2"></td>
+                                                            @break
+                                                    @endswitch
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -532,36 +476,52 @@
     </div>
 
     {{-- modal de  fecha de capacitación--}}
-    <div id="modaldatetraining" class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
+    <div id="modaldatetraining" class="top-20 @if(!$modalassignation) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
             <div class=" flex flex-col w-5/12 mx-auto rounded-lg shadow-xl overflow-y-auto" style="max-height: 90%;">
                     <div class="flex flex-row justify-between px-6 py-3 bg-white text-white rounded-tl-lg rounded-tr-lg">
-                        <svg onclick="closemdatetraining()" class="w-6 h-6 cursor-pointer text-gray-500 ml-auto  hover:stroke-2"  fill="none"
+                        <button wire:click="scmodalassignation(0,0)" class="closebttn">
+                            <svg  class="w-6 h-6 text-white"  fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </div>
-
-                    <div class="flex bg-white px-8">
-                        <p class="mr-5">343117</p>
-                        <p>Hilario Ojeda</p>
-                    </div>
-
-                    <div class="flex py-5 bg-white font-bold px-8">
-                        <p class="text-center w-full">Ensamble de Ball Joint</p>
-                    </div>
-
-                    <div class="flex flex-col py-2 bg-white px-8">
-                        <p class="text-center w-full my-4">Fecha prevista de capacitación</p>
-
-                        <input type="datetime-local" class="w-1/2 mx-auto border-neutral-400 focus:border-neutral-400 focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
-
-                        <button class="w-fit mx-auto px-4 py-1 my-5 text-white font-semibold text-white  bg-neutral-400 hover:bg-neutral-500 rounded cursor-pointer"> 
-                            Guardar 
+                            </svg>
                         </button>
+                    </div>
+                    @if($mauser != null)
+                        <div class="flex bg-white px-8">
+                            <p class="mr-5">{{$mauser->payroll}}</p>
+                            <p>{{$mauser->name . ' ' . $mauser->lastname}}</p>
+                        </div>
+                    @endif
+                    @if($matraining != null)
+                        <div class="flex py-3 bg-white font-bold px-8">
+                            <p class="text-center w-full">Capacitación #{{$matraining->id}} - {{$matraining->name}}</p>
+                        </div>
+                    @else
+                        <div class="flex py-3 bg-white font-bold px-8">
+                            <p class="text-center w-full text-red-500 animate-pulse">Proceso sin capacitacion a asignar</p>
+                        </div>
+                    @endif
+                    <div class="flex flex-col py-2 bg-white px-8">
+                        @if($matraining != null)
+                            <p class="text-center w-full my-2">Fecha prevista de capacitación:</p>
+
+                            <input wire:model.defer="madatestart" type="datetime-local" class="w-1/2 mx-auto border-neutral-400 focus:border-neutral-400 focus:ring focus:ring-neutral-400  rounded-md shadow-sm appearance-none border rounded p-1">
+                            <div class="text-center">
+                                <span class="text-red-500 text-xs italic">
+                                    @error('madatestart')
+                                        {{$message}}
+                                    @enderror
+                                </span>
+                            </div>
+                        
+                            <button wire:click="trainingassignation({{$mauser->id}})" class="w-fit mx-auto px-4 py-1 my-5 text-white font-semibold text-white  bg-neutral-400 hover:bg-neutral-500 rounded cursor-pointer"> 
+                                Guardar 
+                            </button>
+                        @endif
                     </div>
                     
             </div>
@@ -604,10 +564,11 @@
             </div>
         </div>
     </div>
+   
 
 </div>
 
-<script>
+    <script>
         function showmchecklist(){
             document.getElementById('modalchecklist').classList.remove('hidden');
         }
@@ -639,9 +600,64 @@
         function closemdatetrainingexpired(){
             document.getElementById('modaldatetrainingexpired').classList.add('hidden');
         }
-</script>
-@push('js')
-    <script>
-
+        
+        function changestatus2(idinput, status){
+                var select = document.getElementById('select_' + idinput);
+                switch (status) {
+                    case '2':
+                        select.classList.remove('border-gray-300');
+                        select.classList.add('border-green-500');
+                        select.classList.remove('border-red-500');
+                        break;
+                
+                    case '1':
+                        select.classList.remove('border-gray-300');
+                        select.classList.add('border-red-500');
+                        select.classList.remove('border-green-500');
+                        break;
+                    
+                    case 'null':
+                        select.classList.add('border-gray-300');
+                        select.classList.remove('border-red-500');
+                        select.classList.remove('border-green-500');
+                        break;
+                }
+            }
     </script>
-@endpush
+    
+    @push('js')
+        <script>
+            function changelvl(checkbox, idprocess, lvl){
+                var msg = '';
+                var status = '';
+
+                if(checkbox.checked){
+                    msg = '¿Seguro que deseas otorgar este nivel?';
+                    status = 'give';
+                }
+                else{
+                    msg = '¿Seguro que deseas quitar este nivel?';
+                    status = 'eliminate';
+                }
+            
+                Swal.fire({
+                    title: msg,  
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3088d9',
+                    cancelButtonColor: '#EF4444',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.Livewire.emit('changelevel', idprocess, lvl, status);
+                    }
+                    else{
+                        checkbox.checked = false;
+                    }
+                })
+            }
+                
+            
+        </script>
+    @endpush

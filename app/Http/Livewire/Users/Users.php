@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Auth;
 use App\Models\User;
+use App\Models\Userhistory;
 
 class Users extends Component
 {
@@ -25,6 +26,8 @@ class Users extends Component
     use WithPagination;
  
     public $search = '';
+
+    public $modaluserhistory = false, $mhuser, $mharea;
 
     protected $listeners = ['aftercreateuser', 'afteredituser', 'deleteuser', 'afterimportuser', 'activeuser'];
     
@@ -75,6 +78,14 @@ class Users extends Component
                 'updated_at' => date('Y-m-d H:m:s'),
             ]);
 
+            Userhistory::create([
+                'id_user' => $idUser,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Baja de usuario.',
+                'description' => '',
+                'dateaction' => date('Y-m-d H:m'),
+            ]);
+
             $this->alert('success', 'Desactivado con éxito', [
                 'position' => 'center',
                 'timer' => 3000,
@@ -97,11 +108,29 @@ class Users extends Component
             'updated_at' => date('Y-m-d H:m:s'),
         ]);
 
+        Userhistory::create([
+            'id_user' => $iduser,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Activación de usuario.',
+            'description' => '',
+            'dateaction' => date('Y-m-d H:m'),
+        ]);
+
         $this->alert('success', 'Activado con éxito', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => true,
         ]);
+    }
+
+    public function scmodalhistory($idUser){
+        if($this->modaluserhistory == true){
+            $this->modaluserhistory = false;
+            $this->reset(['mhuser']);
+        }else{
+            $this->modaluserhistory = true;
+            $this->mhuser = User::where('id', $idUser)->first();
+        }
     }
 
 }

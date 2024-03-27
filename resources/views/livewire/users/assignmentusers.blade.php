@@ -49,7 +49,7 @@
             </div>
             @if(!Auth::user()->is_leader)
                 <div class="flex flex-col my-3">
-                    <label class="w-full text-sm text-neutral-400 font-semibold">Coordinador / Líder</label>
+                    <label class="w-full text-sm text-neutral-400 font-semibold">Solicitante</label>
                     <select wire:model="leaderfilteradmin" class="w-5/12 mr-3 my-2 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-2 text-gray-700">
                         <option value="">Selecciona</option>
                         @foreach ($leaders as $leader)
@@ -58,7 +58,7 @@
                     </select>
                 </div>
                 <div>
-                    <p class="text-sm font-semibold">Personal asignado a líder</p>
+                    <p class="text-sm font-semibold">Personal asignado a solicitante</p>
                 </div>
             @else
                 <div>
@@ -192,7 +192,7 @@
             </div>
 
             <div class="flex flex-col mx-4 my-3 text-neutral-400">
-                <p class="font-semibold text-sm">Líder al que pertenece</p>
+                <p class="font-semibold text-sm">Solicitante al que pertenece</p>
                 <select wire:model="leaderfilter" class="inputAssigment">
                     <option value="">Seleccionar</option> 
                     @foreach ($leaders as $leader)
@@ -281,7 +281,7 @@
 
             window.Livewire.on('assiguseragain', iduser => {
                 Swal.fire({
-                    title: 'Este usuario ya tiene un líder ¿Quieres hacer una petición para asignarlo?',
+                    title: 'Este usuario ya tiene un solicitante ¿Quieres hacer una petición para asignarlo?',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3088d9',

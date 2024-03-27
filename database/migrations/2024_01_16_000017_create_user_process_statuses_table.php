@@ -15,10 +15,14 @@ return new class extends Migration {
             $table->text('status');
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_process');
-            $table->timestamp('l1_date');
-            $table->timestamp('l2_date');
-            $table->timestamp('l3_date');
-            $table->timestamp('l4_date');
+            $table->timestamp('l1_date')->nullable();
+            $table->unsignedBigInteger('id_trainer_l1')->nullable();
+            $table->timestamp('l2_date')->nullable();
+            $table->unsignedBigInteger('id_trainer_l2')->nullable();
+            $table->timestamp('l3_date')->nullable();
+            $table->unsignedBigInteger('id_trainer_l3')->nullable();
+            $table->timestamp('l4_date')->nullable();
+            $table->unsignedBigInteger('id_trainer_l4')->nullable();
             $table->timestamps();
         });
     }

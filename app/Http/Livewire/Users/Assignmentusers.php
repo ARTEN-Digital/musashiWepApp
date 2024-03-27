@@ -24,6 +24,7 @@ use App\Models\Areas;
 use App\Models\Positions;
 use App\Models\Usertype;
 use App\Models\Leaderuser;
+use App\Models\Userhistory;
 use Illuminate\Validation\Rules\Password;
 
 class Assignmentusers extends Component
@@ -90,6 +91,15 @@ class Assignmentusers extends Component
                 'id_user' => $iduser,
                 'status' => 1,
                 'created_at' => date('Y-m-d'),
+            ]);
+
+            
+            Userhistory::create([
+                'id_user' => $iduser,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Asignación de solicitante',
+                'description' => 'Solicitante asignado: ' . $this->getusername($this->leaderfilteradmin),
+                'dateaction' => date('Y-m-d H:m'),
             ]);
             
             $this->alert('success', 'Usuario asignado correctamente.', [
@@ -162,6 +172,14 @@ class Assignmentusers extends Component
             'id_leader' => 0,
         ]);
 
+        Userhistory::create([
+            'id_user' => $iduser,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Desasignación de solicitante',
+            'description' => '',
+            'dateaction' => date('Y-m-d H:m'),
+        ]);
+
         $this->alert('success', 'Usuario desasignado correctamente.', [
             'position' => 'center',
             'timer' => 3000,
@@ -183,6 +201,14 @@ class Assignmentusers extends Component
 
         User::where('id', $iduser)->update([
             'id_leader' => $newleader->id,
+        ]);
+
+        Userhistory::create([
+            'id_user' => $iduser,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Cambio de solicitante',
+            'description' => 'Solicitante asignado: ' . $this->getusername($newleader->id),
+            'dateaction' => date('Y-m-d H:m'),
         ]);
 
         $this->alert('success', 'Usuario transferido correctamente.', [
@@ -269,6 +295,7 @@ class Assignmentusers extends Component
     }
 
     public function getusername($iduser){
+        //dd($iduser);
         $user = User::where('id', $iduser)->first();
         $name = $user->name . ' ' . $user->lastname;
         return $name;

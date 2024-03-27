@@ -90,10 +90,18 @@ class Importusers extends Component
                 'name' => $ud[2],
                 'active' => 1,
             ]);
+
+            Userhistory::create([
+                'id_user' => $ud[5],
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Activación de usuario.',
+                'description' => '',
+                'dateaction' => date('Y-m-d H:m'),
+            ]);
         }
 
         foreach ($this->usernew as $key => $un) {
-            User::insert([
+            $idnewuser = DB::table('users')->insertGetId([
                 'lastname' => $un[1],
                 'name' => $un[2],
                 'payroll' => $un[0],
@@ -108,6 +116,14 @@ class Importusers extends Component
                 'image_profile' => '',
                 'active' => 1,
                 'created_at' => date('Y-m-d'),
+            ]);
+
+            Userhistory::create([
+                'id_user' => $idnewuser,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Alta de usuario.',
+                'description' => '',
+                'dateaction' => date('Y-m-d H:m'),
             ]);
         }
 

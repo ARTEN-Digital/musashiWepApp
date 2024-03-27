@@ -1,5 +1,5 @@
 <div>
-    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="showeditConcept">
+    <div class="top-20  left-0 z-50 fixed   max-h-full overflow-y-auto"   wire:loading wire:target="showeditConcept, addconceptstochecklist, scmodalconcepts">
         <div class="flex justify-center h-screen items-center  bg-gray-100 antialiased top-0 opacity-70 left-0  z-40 w-full h-full fixed "  ></div>
         <div class="flex justify-center h-screen items-center   antialiased top-0  left-0  z-50 w-full h-full fixed " >
             <div class="flex justify-center items-center">
@@ -151,9 +151,16 @@
                         <div class="w-full my-1">
                             <input wire:input="getconcepts" type="text" wire:model.defer="search" class="w-1/3 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700" placeholder="Buscar...">
                         </div>
+                        <button wire:click="addconceptstochecklist" class="w-fit h-fit my-auto mr-5 py-2 px-3 bg-neutral-400 hover:bg-neutral-500 text-white rounded-lg flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-white mr-3">
+                                <path d="M4.08 5.227A3 3 0 0 1 6.979 3H17.02a3 3 0 0 1 2.9 2.227l2.113 7.926A5.228 5.228 0 0 0 18.75 12H5.25a5.228 5.228 0 0 0-3.284 1.153L4.08 5.227Z" />
+                                <path fill-rule="evenodd" d="M5.25 13.5a3.75 3.75 0 1 0 0 7.5h13.5a3.75 3.75 0 1 0 0-7.5H5.25Zm10.5 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm3.75-.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                              </svg>
+                            Guardar
+                        </button>
                     </div>
 
-                    <div class="flex flex-col bg-white px-8">
+                    <div class="flex flex-col bg-white px-8 overflow-y-auto" style="height: 65vh;">
                         <div class="overflow-x-auto">
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <div class="overflow-hidden border md:rounded-lg">
@@ -178,7 +185,7 @@
                                                     </td>
                                                     <td class="p-3">{{$cpts->user->name . ' ' . $cpts->user->lastname}}</td>
                                                     <td class="p-3 text-center">
-                                                        <input wire:model="msconceptselect.{{ $cpts->id }}" class="before:content[''] peer relative h-8 w-8 mx-auto cursor-pointerappearance-none rounded-md border border-neutral-400 transition-allbefore:absolute before:top-2/4 before:left-2/4 before:block before:h-12before:w-12 before:-translate-y-2/4 before:-translate-x-2/4before:rounded-full before:bg-blue-500 before:opacity-0before:transition-opacity checked:bg-blue-500  checked:bg-blue-500checked:before:bg-blue-500 hover:before:opacity-10 my-auto"type="checkbox" name="" id="">
+                                                        <input wire:model.defer="msconceptselect.{{ $cpts->id }}" class="before:content[''] peer relative h-8 w-8 mx-auto cursor-pointerappearance-none rounded-md border border-neutral-400 transition-allbefore:absolute before:top-2/4 before:left-2/4 before:block before:h-12before:w-12 before:-translate-y-2/4 before:-translate-x-2/4before:rounded-full before:bg-blue-500 before:opacity-0before:transition-opacity checked:bg-blue-500  checked:bg-blue-500checked:before:bg-blue-500 hover:before:opacity-10 my-auto" type="checkbox">
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function processstatuses($idprocess)
     {
-        return $this->hasOne(Userprocessstatus::class, 'id', 'id_user')->where('id_process', $idprocess)->latestOfMany();
+        return $this->hasOne(Userprocessstatus::class, 'id_user', 'id')->where('id_process', $idprocess)->first();
     }
 
     public function area()
@@ -77,4 +77,10 @@ class User extends Authenticatable
     {
         return in_array($this->email, config('auth.super_admins'));
     }
+
+    public function history()
+    {
+        return $this->hasMany(Userhistory::class, 'id_user');
+    }
+
 }

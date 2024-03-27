@@ -32,20 +32,23 @@
 
 /*cruds*/
 .closebttn{
-    @apply bg-neutral-200 hover:bg-neutral-400 p-1 rounded-full w-fit ml-auto my-auto;
+    @apply bg-neutral-300 hover:bg-neutral-400 p-1 rounded-full w-fit ml-auto my-auto;
 }
 
 
 /*users*/
 
 .headertableusers{
-    @apply py-4 px-4 text-sm font-normal text-left rtl:text-right
+    @apply p-4 text-sm font-normal text-left rtl:text-right
 }
 
 .inputGeneral{
     @apply w-full my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-2 text-gray-700;
 }
 
+.headertabletrainingsusers{
+    @apply p-2 text-sm font-normal text-left rtl:text-right
+}
 
 /*assigmentusers*/
 .inputAssigment{
@@ -75,14 +78,14 @@
 
 /*reports*/
 
-.shadow-red:hover{
+.shadow-b{
     filter: drop-shadow(
-        0 0 1px rgba(247, 107, 107, 0.8) 
+        0 0 5px rgba(109, 109, 109, 0.8) 
     );
 }
 
-.shadow-green:hover{
+.shadow-bl:hover{
     filter: drop-shadow(
-        0 0 1px rgba(135, 247, 107, 0.8) 
+        0 0 4px rgba(219, 73, 68, 0.8) 
     );
 }

@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Models\Areas;
 use App\Models\Positions;
 use App\Models\Usertype;
+use App\Models\Userhistory;
 use Illuminate\Validation\Rules\Password;
 
 class Userscreate extends Component
@@ -108,6 +109,14 @@ class Userscreate extends Component
             'active' => true,
             'created_at' => date('d-m-Y H:m'),
             'image_profile' => $path_doc,
+        ]);
+
+        Userhistory::create([
+            'id_user' => $usuario->id,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Alta de usuario.',
+            'description' => '',
+            'dateaction' => date('Y-m-d H:m'),
         ]);
 
         $this->alert('success', 'Usuario creado con éxito.', [

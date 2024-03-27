@@ -27,6 +27,7 @@ use App\Models\Userchecklist;
 use App\Models\Useranswerchecklist;
 use App\Models\Trainings;  
 use App\Models\Process;  
+use App\Models\Userhistory;
  
 class Skillsmatrix extends Component
 {
@@ -57,8 +58,7 @@ class Skillsmatrix extends Component
 
     protected $listeners = ['changelevel'];
 
-    public function render()
-    {
+    public function render(){
         $areas = Areas::get();
         $lines = Lines::get();
         $categories = Categories::get();
@@ -117,6 +117,14 @@ class Skillsmatrix extends Component
             'created_at' => $this->madatestart,
         ]);
 
+        Userhistory::create([
+            'id_user' => $idUser,
+            'id_whomadeaction' => Auth::user()->id,
+            'action' => 'Asignación de capacitación.',
+            'description' => 'Capacitación: ' . $this->matraining->name,
+            'dateaction' => date('Y-m-d H:m'),
+        ]);
+
         $this->reset(['madatestart', 'modalassignation']);
 
         $this->alert('success', 'Capacitación asignada con éxito.', [
@@ -146,27 +154,61 @@ class Skillsmatrix extends Component
                     DB::table('user_process_statuses')->where('id', $idprocess)->update([
                         'status' => 'l1',
                         'l1_date' => date('Y-m-d H:m'),
+                        'id_trainer_l1' => Auth::user()->id,
                         'updated_at' => date('Y-m-d H:m'),
+                    ]);
+
+                    Userhistory::create([
+                        'id_user' => $this->mluser->id,
+                        'id_whomadeaction' => Auth::user()->id,
+                        'action' => 'Aumento de nivel en capacitacion.',
+                        'description' => 'Nivel: ET, Capacitación: ' . $this->mltraining->name,
+                        'dateaction' => date('Y-m-d H:m'),
                     ]);
                 }
                 else{
                     DB::table('user_process_statuses')->where('id', $idprocess)->update([
                         'status' => 'pending',
                         'l1_date' => null,
+                        'id_trainer_l1' => null,
                         'l2_date' => null,
+                        'id_trainer_l2' => null,
                         'l3_date' => null,
+                        'id_trainer_l3' => null,
                         'l4_date' => null,
+                        'id_trainer_l4' => null,
                         'updated_at' => date('Y-m-d H:m'),
                     ]);
+
+                    Userhistory::create([
+                        'id_user' => $this->mluser->id,
+                        'id_whomadeaction' => Auth::user()->id,
+                        'action' => 'Baja de nivel en capacitacion.',
+                        'description' => 'Sin nivel, Capacitación: ' . $this->mltraining->name,
+                        'dateaction' => date('Y-m-d H:m'),
+                    ]);
                 }
+
+                
                 break;
 
             case 'l2':
                     if ($status == "give") {
                         DB::table('user_process_statuses')->where('id', $idprocess)->update([
                             'status' => 'l2',
+                            'l1_date' => date('Y-m-d H:m'),
                             'l2_date' => date('Y-m-d H:m'),
+                            'id_trainer_l1' => Auth::user()->id,
+                            'id_trainer_l2' => Auth::user()->id,
                             'updated_at' => date('Y-m-d'),
+                        ]);
+
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Aumento de nivel en capacitacion.',
+                            'description' => 'Nivel: EE, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     else{
@@ -174,8 +216,19 @@ class Skillsmatrix extends Component
                             'status' => 'l1',
                             'updated_at' => date('Y-m-d H:m'),
                             'l2_date' => null,
+                            'id_trainer_l2' => null,
                             'l3_date' => null,
+                            'id_trainer_l3' => null,
                             'l4_date' => null,
+                            'id_trainer_l4' => null,
+                        ]);
+
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Baja de nivel en capacitacion.',
+                            'description' => 'Nivel: ET, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     break;
@@ -184,16 +237,38 @@ class Skillsmatrix extends Component
                     if ($status == "give") {
                         DB::table('user_process_statuses')->where('id', $idprocess)->update([
                             'status' => 'l3',
+                            'l1_date' => date('Y-m-d H:m'),
+                            'l2_date' => date('Y-m-d H:m'),
                             'l3_date' => date('Y-m-d H:m'),
+                            'id_trainer_l1' => Auth::user()->id,
+                            'id_trainer_l2' => Auth::user()->id,
+                            'id_trainer_l3' => Auth::user()->id,
                             'updated_at' => date('Y-m-d H:m'),
+                        ]);
+
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Aumento de nivel en capacitacion.',
+                            'description' => 'Nivel: H, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     else{
                         DB::table('user_process_statuses')->where('id', $idprocess)->update([
                             'status' => 'l2',
                             'l3_date' => null,
+                            'id_trainer_l3' => null,    
                             'l4_date' => null,
+                            'id_trainer_l4' => null,
                             'updated_at' => date('Y-m-d H:m'),
+                        ]);
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Baja de nivel en capacitacion.',
+                            'description' => 'Nivel: EE, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     break;
@@ -201,15 +276,39 @@ class Skillsmatrix extends Component
                     if ($status == "give") {
                         DB::table('user_process_statuses')->where('id', $idprocess)->update([
                             'status' => 'l4',
+                            'l1_date' => date('Y-m-d H:m'),
+                            'l2_date' => date('Y-m-d H:m'),
+                            'l3_date' => date('Y-m-d H:m'),
                             'l4_date' => date('Y-m-d H:m'),
+                            'id_trainer_l1' => Auth::user()->id,
+                            'id_trainer_l2' => Auth::user()->id,
+                            'id_trainer_l3' => Auth::user()->id,
+                            'id_trainer_l4' => Auth::user()->id,
                             'updated_at' => date('Y-m-d H:m'),
+                        ]);
+
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Aumento de nivel en capacitacion.',
+                            'description' => 'Nivel: C, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     else{
                         DB::table('user_process_statuses')->where('id', $idprocess)->update([
                             'status' => 'l3',
                             'l4_date' => null,
+                            'id_trainer_l4' => null,
                             'updated_at' => date('Y-m-d H:m'),
+                        ]);
+
+                        Userhistory::create([
+                            'id_user' => $this->mluser->id,
+                            'id_whomadeaction' => Auth::user()->id,
+                            'action' => 'Baja de nivel en capacitacion.',
+                            'description' => 'Nivel: H, Capacitación: ' . $this->mltraining->name,
+                            'dateaction' => date('Y-m-d H:m'),
                         ]);
                     }
                     break;
@@ -268,6 +367,7 @@ class Skillsmatrix extends Component
 
         $numconcepts = (count($this->mctraining->checklistevaluations->first()->concepts));
         $numfirstanswers = 0;
+        $numsecondanswers = 0;
 
         foreach ($this->mcselfirststatus as $key => $value){
             $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
@@ -275,7 +375,8 @@ class Skillsmatrix extends Component
                 $auxstatus = '1';
                 $numfirstanswers++;
                 $secondstatus = null;
-                $this->mcselsecondstatus[$key] = 'null';
+                if($auxusercheck != null && $auxusercheck->secondstatus == 1)
+                    $this->mcselsecondstatus[$key] = 'null';
             }else{
                 $auxstatus = null;
                 $secondstatus = $auxusercheck->secondstatus;
@@ -337,7 +438,6 @@ class Skillsmatrix extends Component
             }
         }
 
-        
 
         foreach ($this->mcselsecondstatus as $key => $value){
             $auxusercheck = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $key)->first();
@@ -346,11 +446,27 @@ class Skillsmatrix extends Component
                 case '1':
                     $firststatus = null;
                     $numfirstanswers--;
+                    $numsecondanswers--;
                     $firstmailstatus = null;
+                    
+                    if($auxusercheck != null){
+                        $mailuser = $this->mcuser;
+                        $mailprocess = $this->mcprocess;
+                        $mailarea = Areas::where('id', $this->areafilter)->first();
+                        $mailsubject = 'Concepto de evaluacíon no aprovado.';
+                        $email = User::where('id', $auxusercheck->id_applicant)->first()->email;
+
+                        Mail::send('emails.rejectevaluation',['mailprocess' => $mailprocess, 'mailarea' => $mailarea, 'mailuser' => $mailuser, 'email' => $email], function($msj) use($email,  $mailsubject, $mailprocess, $mailarea, $mailuser){
+                            $msj->subject($mailsubject);
+                            $msj->to($email);
+                        });
+                    }
+
                     break;
                 case '2':
                     $firststatus = $auxusercheck->firststatus;
                     $firstmailstatus = 'send';
+                    $numsecondanswers++;
                     break;
                 case 'null':
                     $value = null;
@@ -409,20 +525,28 @@ class Skillsmatrix extends Component
                 'updated_at' => date('Y-m-d'),
             ]);
 
+            Userhistory::create([
+                'id_user' => $this->mcuser->id,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Aumento de nivel en capacitacion.',
+                'description' => 'Nivel: EE, Capacitación: ' . $this->mctraining->name,
+                'dateaction' => date('Y-m-d H:m'),
+            ]);
+
             foreach($this->mctraining->checklistevaluations->first()->concepts as $data){
                 $auxuseranswer = Useranswerchecklist::where('id_user_checklist', $usercheckid)->where('id_concept', $data->id)->first();
 
                 if($auxuseranswer->firststatusmail == null){
-                    // $mailuser = $this->mcuser;
-                    // $mailprocess = $this->mcprocess;
-                    // $mailarea = Areas::where('id', $this->areafilter)->first();
-                    // $mailsubject = 'Nueva evaluación para revisar.';
-                    // $email = $data->user->email;
+                    $mailuser = $this->mcuser;
+                    $mailprocess = $this->mcprocess;
+                    $mailarea = Areas::where('id', $this->areafilter)->first();
+                    $mailsubject = 'Nueva evaluación para revisar.';
+                    $email = $data->user->email;
                     
-                    // Mail::send('emails.newchecktraining',['mailprocess' => $mailprocess, 'mailarea' => $mailarea, 'mailuser' => $mailuser, 'email' => $email], function($msj) use($email,  $mailsubject, $mailprocess, $mailarea, $mailuser){
-                    //     $msj->subject($mailsubject);
-                    //     $msj->to($email);
-                    //     });
+                    Mail::send('emails.newchecktraining',['mailprocess' => $mailprocess, 'mailarea' => $mailarea, 'mailuser' => $mailuser, 'email' => $email], function($msj) use($email,  $mailsubject, $mailprocess, $mailarea, $mailuser){
+                        $msj->subject($mailsubject);
+                        $msj->to($email);
+                        });
                     
                     DB::table('user_answers_checklist')->where('id_user_checklist', $usercheckid)->where
                     ('id_concept', $data->id)->update([
@@ -438,6 +562,30 @@ class Skillsmatrix extends Component
                 'status' => 'l1',
                 'l1_date' => date('Y-m-d H:m'),
                 'updated_at' => date('Y-m-d H:m'),
+            ]);
+
+            Userhistory::create([
+                'id_user' => $this->mcuser->id,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Baja de nivel en capacitacion.',
+                'description' => 'Nivel: ET, Capacitación: ' . $this->mctraining->name,
+                'dateaction' => date('Y-m-d H:m'),
+            ]);
+        }
+
+        if($numsecondanswers == $numconcepts){
+            DB::table('user_process_statuses')->where('id_user', $this->mcuser->id)->where('id_process', $this->mcprocess->id)->update([
+                'status' => 'l3',
+                'l3_date' => date('Y-m-d H:m'),
+                'updated_at' => date('Y-m-d'),
+            ]);
+
+            Userhistory::create([
+                'id_user' => $this->mcuser->id,
+                'id_whomadeaction' => Auth::user()->id,
+                'action' => 'Aumento de nivel en capacitacion.',
+                'description' => 'Nivel: H, Capacitación: ' . $this->mctraining->name,
+                'dateaction' => date('Y-m-d H:m'),
             ]);
         }
 

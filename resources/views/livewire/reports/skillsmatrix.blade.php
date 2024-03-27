@@ -145,37 +145,37 @@
                                                    
                                                     <td class="p-3">
                                                         @if($this->statusprocessxuser($up->id, $pxa->id) == null)
-                                                            <button wire:click="scmodalassignation({{$up->id}}, {{$pxa->id}})" class="bg-neutral-200 hover:bg-neutral-200 text-neutral-400 text-xs px-2 py-1 rounded-lg w-20">
+                                                            <button  class="bg-neutral-200 hover:bg-neutral-200 text-neutral-400 text-xs px-2 py-1 rounded-lg w-20 cursor-default">
                                                                 Sin asignar
                                                             </button>
                                                         @else
                                                             @switch($this->statusprocessxuser($up->id, $pxa->id)->status)
                                                                 @case('pending')
-                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
+                                                                    <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold cursor-default">
                                                                         Pendiente
                                                                     </button>
                                                                      @break
                                                                 @case('l1')
                                                                     @php $totalprocess++; @endphp
-                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                    <button class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold cursor-default">
                                                                         ET
                                                                     </button>
                                                                     @break
                                                                 @case('l2')
                                                                     @php $totalprocess++; @endphp
-                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                    <button class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold cursor-default">
                                                                         EE
                                                                     </button>
                                                                     @break
                                                                 @case('l3')
                                                                     @php $totalprocess++; @endphp
-                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
+                                                                    <button class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold cursor-default">
                                                                         H
                                                                     </button>
                                                                     @break
                                                                 @case('l4')
                                                                     @php $totalprocess++; @endphp
-                                                                    <button wire:click="scmodallevel({{$up->id}}, {{$pxa->id}})" class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
+                                                                    <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold cursor-default">
                                                                         C
                                                                     </button>
                                                                     @break
@@ -223,7 +223,7 @@
     </div>
 
     <!--modal checklist de capacitación-->
-    <div id="modalchecklist" class="top-20 @if(!$modalchecklist) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
+    {{-- <div id="modalchecklist" class="top-20 @if(!$modalchecklist) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
@@ -271,17 +271,6 @@
                             
                             </div>
                         </div>
-                        {{-- <div class="w-1/4 my-1">
-                            <div class="mx-auto w-3/4">
-                                <p class="my-1 text-sm">Operador sombra:</p>
-                                <select class="w-full mr-3 my-1 border-gray-300 focus:border-primaryColor focus:ring focus:ring-primaryColor rounded-md shadow-sm appearance-none border rounded py-1 px-3 text-gray-700">
-                                    <option value="">opcion 1</option>
-                                    <option value="">opcion 2</option>
-                                    <option value="">opcion 3</option>
-                                    <option value="">opcion 4</option>
-                                </select>
-                            </div>
-                        </div> --}}
                         <div class="w-1/4 my-1">
                             <div class="mx-auto w-3/4">
                                 <p class="my-1 text-sm">Responsable:</p>
@@ -376,10 +365,10 @@
                     </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!--modal de historial-->
-    <div id="modalhistorylist" class="top-20 @if(!$modallevels) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
+    {{-- <div id="modalhistorylist" class="top-20 @if(!$modallevels) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
@@ -418,9 +407,8 @@
                                             <tr>
                                                 <th scope="col" class="p-1 w-fit text-sm font-normal text-center">Nivel</th>
                                                 <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Fecha de modificación</th>
+                                                <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Capacitador</th>
                                                 <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Checklist</th>
-                                                {{-- <th scope="col" class="p-1 w-fit text-sm font-normal text-left">Líder</th> --}}
-                                                {{-- <th scope="col" class="p-1 w-fit text-sm font-normal text-center">Comentarios</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -443,12 +431,12 @@
                                                                         <p class="text-neutral-400 text-sm">NA</p>
                                                                     @endif
                                                                 </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->trainerl1 != null)
+                                                                    {{$mlstatusprocess->trainerl1->name . ' ' . $mlstatusprocess->trainerl1->lastname}}
+                                                                    @endif
+                                                                </td>
                                                                 <td class="p-2"></td>
-                                                                {{-- <td class="p-2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
-                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                                    </svg>
-                                                                </td> --}}
                                                             @break
                                                         @case(2)
                                                             <td class="flex p-2">
@@ -464,6 +452,11 @@
                                                                     @endif
                                                             </td>
                                                             <td class="p-2">
+                                                                @if($mlstatusprocess->trainerl2 != null)
+                                                                {{$mlstatusprocess->trainerl2->name . ' ' . $mlstatusprocess->trainerl2->lastname}}
+                                                                @endif
+                                                            </td>
+                                                            <td class="p-2">
                                                                 @if($mlstatusprocess->status == 'l1' || $mlstatusprocess->status == 'l2' || $mlstatusprocess->status == 'l3' || $mlstatusprocess->status == 'l4')
                                                                 <button wire:click="scmodalchecklist({{$mluser->id}}, {{$mlidprocess}})" class="bg-blue-500 hover:bg-red-blue/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -474,11 +467,6 @@
                                                                 </button>
                                                                 @endif
                                                             </td>
-                                                            {{-- <td class="p-2">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                                </svg>
-                                                            </td> --}}
                                                             @break
                                                         @case(3)
                                                                 <td class="flex p-2">
@@ -493,12 +481,12 @@
                                                                         <p class="text-neutral-400 text-sm">NA</p>
                                                                     @endif
                                                                 </td>
+                                                                <td class="p-2">
+                                                                    @if($mlstatusprocess->trainerl3 != null)
+                                                                    {{$mlstatusprocess->trainerl3->name . ' ' . $mlstatusprocess->trainerl3->lastname}}
+                                                                    @endif
+                                                                </td>
                                                                 <td class="p-2"></td>
-                                                                {{-- <td class="p-2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
-                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                                    </svg>
-                                                                </td> --}}
                                                             @break
                                                         @case(4)
                                                             <td class="flex p-2">
@@ -512,12 +500,12 @@
                                                                      <p class="text-neutral-400 text-sm">NA</p>
                                                                 @endif
                                                             </td>
+                                                            <td class="p-2">
+                                                                @if($mlstatusprocess->trainerl4 != null)
+                                                                    {{$mlstatusprocess->trainerl4->name . ' ' . $mlstatusprocess->trainerl4->lastname}}
+                                                                @endif
+                                                            </td>
                                                             <td class="p-2"></td>
-                                                            {{-- <td class="p-2">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
-                                                                </svg>
-                                                            </td> --}}
                                                             @break
                                                     @endswitch
                                                 </tr>
@@ -531,10 +519,10 @@
                     </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- modal de  fecha de capacitación--}}
-    <div id="modaldatetraining" class="top-20 @if(!$modalassignation) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
+    {{-- <div id="modaldatetraining" class="top-20 @if(!$modalassignation) hidden @endif left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
@@ -584,9 +572,9 @@
                     
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div id="modaldatetrainingexpired" class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
+    {{-- <div id="modaldatetrainingexpired" class="top-20 hidden left-0 z-50 max-h-full overflow-y-auto">
         <div class="flex justify-center h-screen items-center  bg-gray-800 antialiased top-0 opacity-70 left-0  z-30 w-full h-full fixed "></div>
         
         <div class="flex text-gray-500 text:md justify-center h-screen items-center antialiased top-0  left-0  z-40 w-full h-full fixed">
@@ -621,236 +609,101 @@
                     
             </div>
         </div>
-    </div>
+    </div> --}}
    
 
 </div>
 
     <script>
-        function showmchecklist(){
-            document.getElementById('modalchecklist').classList.remove('hidden');
-        }
+        // function showmchecklist(){
+        //     document.getElementById('modalchecklist').classList.remove('hidden');
+        // }
 
-        function closemchecklist(){
-            document.getElementById('modalchecklist').classList.add('hidden');
-        }
+        // function closemchecklist(){
+        //     document.getElementById('modalchecklist').classList.add('hidden');
+        // }
 
-        function showmhistory(){
-            document.getElementById('modalhistorylist').classList.remove('hidden');
-        }
+        // function showmhistory(){
+        //     document.getElementById('modalhistorylist').classList.remove('hidden');
+        // }
 
-        function closemmhistory(){
-            document.getElementById('modalhistorylist').classList.add('hidden');
-        }
+        // function closemmhistory(){
+        //     document.getElementById('modalhistorylist').classList.add('hidden');
+        // }
 
-        function showmdatetraining(){
-            document.getElementById('modaldatetraining').classList.remove('hidden');
-        }
+        // function showmdatetraining(){
+        //     document.getElementById('modaldatetraining').classList.remove('hidden');
+        // }
 
-        function closemdatetraining(){
-            document.getElementById('modaldatetraining').classList.add('hidden');
-        }
+        // function closemdatetraining(){
+        //     document.getElementById('modaldatetraining').classList.add('hidden');
+        // }
 
-        function showmdatetrainingexpired(){
-            document.getElementById('modaldatetrainingexpired').classList.remove('hidden');
-        }
+        // function showmdatetrainingexpired(){
+        //     document.getElementById('modaldatetrainingexpired').classList.remove('hidden');
+        // }
 
-        function closemdatetrainingexpired(){
-            document.getElementById('modaldatetrainingexpired').classList.add('hidden');
-        }
+        // function closemdatetrainingexpired(){
+        //     document.getElementById('modaldatetrainingexpired').classList.add('hidden');
+        // }
         
-        function changestatus2(idinput, status){
-                var select = document.getElementById('select_' + idinput);
-                switch (status) {
-                    case '2':
-                        select.classList.remove('border-gray-300');
-                        select.classList.add('border-green-500');
-                        select.classList.remove('border-red-500');
-                        break;
+        // function changestatus2(idinput, status){
+        //         var select = document.getElementById('select_' + idinput);
+        //         switch (status) {
+        //             case '2':
+        //                 select.classList.remove('border-gray-300');
+        //                 select.classList.add('border-green-500');
+        //                 select.classList.remove('border-red-500');
+        //                 break;
                 
-                    case '1':
-                        select.classList.remove('border-gray-300');
-                        select.classList.add('border-red-500');
-                        select.classList.remove('border-green-500');
-                        break;
+        //             case '1':
+        //                 select.classList.remove('border-gray-300');
+        //                 select.classList.add('border-red-500');
+        //                 select.classList.remove('border-green-500');
+        //                 break;
                     
-                    case 'null':
-                        select.classList.add('border-gray-300');
-                        select.classList.remove('border-red-500');
-                        select.classList.remove('border-green-500');
-                        break;
-                }
-            }
+        //             case 'null':
+        //                 select.classList.add('border-gray-300');
+        //                 select.classList.remove('border-red-500');
+        //                 select.classList.remove('border-green-500');
+        //                 break;
+        //         }
+        //     }
     </script>
+    
     @push('js')
         <script>
-            function changelvl(checkbox, idprocess, lvl){
-                var msg = '';
-                var status = '';
+            // function changelvl(checkbox, idprocess, lvl){
+            //     var msg = '';
+            //     var status = '';
 
-                if(checkbox.checked){
-                    msg = '¿Seguro que deseas otorgar este nivel?';
-                    status = 'give';
-                }
-                else{
-                    msg = '¿Seguro que deseas quitar este nivel?';
-                    status = 'eliminate';
-                }
+            //     if(checkbox.checked){
+            //         msg = '¿Seguro que deseas otorgar este nivel?';
+            //         status = 'give';
+            //     }
+            //     else{
+            //         msg = '¿Seguro que deseas quitar este nivel?';
+            //         status = 'eliminate';
+            //     }
             
-                Swal.fire({
-                    title: msg,  
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3088d9',
-                    cancelButtonColor: '#EF4444',
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'Cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.Livewire.emit('changelevel', idprocess, lvl, status);
-                    }
-                    else{
-                        checkbox.checked = false;
-                    }
-                })
-            }
+            //     Swal.fire({
+            //         title: msg,  
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonColor: '#3088d9',
+            //         cancelButtonColor: '#EF4444',
+            //         confirmButtonText: 'Si',
+            //         cancelButtonText: 'Cancelar',
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             window.Livewire.emit('changelevel', idprocess, lvl, status);
+            //         }
+            //         else{
+            //             checkbox.checked = false;
+            //         }
+            //     })
+            // }
                 
             
         </script>
     @endpush
-
-    {{-- <tr>
-        <td class="p-3">13431</td>
-        <td class="p-3">Hilario Ojeda</td>
-        <td class="p-3">Líder</td>
-        <td class="p-3">Operador</td>
-        <td class="p-3">
-            <button onclick="showmchecklist()" class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                C
-            </button>
-        </td>
-        <td class="p-3">
-            <button onclick="showmhistory()" class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                ET
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                EE
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                H
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Expirado
-            </button>
-        </td>
-        <td class="p-3 font-bold text-base text-center">5</td>
-        <td class="p-3 font-bold text-base text-center text-red-500">20%</td>
-    </tr>
-
-    <tr>
-        <td class="p-3">13431</td>
-        <td class="p-3">Hilario Ojeda</td>
-        <td class="p-3">Líder</td>
-        <td class="p-3">Operador</td>
-        <td class="p-3">
-            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                C
-            </button>
-        </td>
-        <td class="p-3">
-            <button onclick="showmdatetraining()" class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Pendiente
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                Sin asignar
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                Sin asignar
-            </button>
-        </td>
-        <td class="p-3">
-            <button onclick="showmdatetrainingexpired()" class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Expirado
-            </button>
-        </td>
-        <td class="p-3 font-bold text-base text-center">5</td>
-        <td class="p-3 font-bold text-base text-center text-green-500">60%</td>
-    </tr>
-    
-    <tr>
-        <td class="p-3">13431</td>
-        <td class="p-3">Hilario Ojeda</td>
-        <td class="p-3">Líder</td>
-        <td class="p-3">Operador</td>
-        <td class="p-3">
-            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                C
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-yellow-500 hover:bg-yellow-500/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                ET
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-orangeColor hover:bg-orangeColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                EE
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-greenColor hover:bg-greenColor/80 px-3 py-1 rounded-lg w-16 text-white font-semibold">
-                H
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Expirado
-            </button>
-        </td>
-        <td class="p-3 font-bold text-base text-center">5</td>
-        <td class="p-3 font-bold text-base text-center text-red-500">20%</td>
-    </tr>
-
-    <tr>
-        <td class="p-3">13431</td>
-        <td class="p-3">Hilario Ojeda</td>
-        <td class="p-3">Líder</td>
-        <td class="p-3">Operador</td>
-        <td class="p-3">
-            <button class="bg-blueColor hover:bg-blueColor/80 px-3 py-1 rounded-lg w-16 text-center text-white font-semibold">
-                C
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-neutral-400 hover:bg-neutral-500 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Pendiente
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                Sin asignar
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-neutral-200 hover:bg-neutral-200 text-neutral-500 text-xs px-2 py-1 rounded-lg w-fit">
-                Sin asignar
-            </button>
-        </td>
-        <td class="p-3">
-            <button class="bg-red-500 hover:bg-red-500/80 px-3 py-1 rounded-lg w-fit text-white font-semibold">
-                Expirado
-            </button>
-        </td>
-        <td class="p-3 font-bold text-base text-center">5</td>
-        <td class="p-3 font-bold text-base text-center text-green-500">60%</td>
-    </tr> --}}

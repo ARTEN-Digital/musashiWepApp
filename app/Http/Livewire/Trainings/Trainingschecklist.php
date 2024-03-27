@@ -92,15 +92,33 @@ class Trainingschecklist extends Component
             $this->modalconcepts = false;
         } else {
             $this->modalconcepts = true;
-
             $this->getconcepts();
-            
         }
     }
 
     public function getconcepts(){
-        $this->allconcepts = Concepts::leftJoin('topics', 'concepts.id_topics', 'topics.id')->when($this->search != '', function ($query){
+        $this->allconcepts = Concepts::when($this->search != '', function ($query){
             $query->orWhere('concepts.concept', 'LIKE', '%' . $this->search . '%')->orWhere('concepts.number', 'LIKE', '%' . $this->search . '%')->orWhere('topics.name', 'LIKE', '%' . $this->search . '%');
-        })->orderBy('concepts.concept', 'ASC')->get();
+        })->orderBy('id', 'ASC')->get();
+    }
+
+    public function addconceptstochecklist(){
+        //dd($this->msconceptselect);
+        foreach ($this->msconceptselect as $key => $value) {
+            if($value == true){
+                DB::table('checklistevaluation_concepts')->insert([
+                    'id_checklistevaluation' => $this->idchkselect,
+                    'id_concepts' => $key,
+                ]);
+            }
+        }
+
+        $this->modalconcepts = false;
+
+        $this->alert('success', 'Concepto actualizado con éxito.', [
+            'position' => 'center',
+            'timer' => 5000,
+            'toast' => true,
+           ]);
     }
 }
